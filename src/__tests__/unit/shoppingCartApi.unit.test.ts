@@ -1,42 +1,61 @@
-import { getCatalog, getItem } from "../../shoppingCartApi";
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-
-const catalog = {
-    "0": {
+import { getCatalog, getItem, addToCart, CatalogArr } from "../../shoppingCartApi";
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import data from '../../cart.json';
+// basically mocking
+const catalog = [
+    {
+        id: 1,
+        title: "kesha",
+        price: 100,
+        description: "kesha",
         category: "men's clothing",
-        id: 1,
+        image: "cla",
+        rating: { rate: 2, count: 5},
     },
-    "1": {
-        category: "women's clothing",
+    {
         id: 15,
+        title: "kesha",
+        price: 100,
+        description: "kesha",
+        category: "women's clothing",
+        image: "cla",
+        rating: { rate: 2, count: 5},
     },
-    "2": {
+    {
+        id: 2,
+        title: "kesha",
+        price: 100,
+        description: "kesha",
         category: "jewelry",
-        id: 1,
+        image: "cla",
+        rating: { rate: 2, count: 5},
     }
-}
+]
+
+vi.mock("../../cart.json", () => {
+    return {
+        default: [],
+    }
+})
 
 describe("getCatalog", () => {
     it(("gets the men's catalog"), () => {
-        expect(getCatalog("men", catalog)).toStrictEqual({"1": catalog["0"], "2": catalog["2"]});
+        expect(getCatalog("men", catalog)).toStrictEqual([catalog[0], catalog[2]]);
     })
     it(("gets the women's catalog"), () => {
-        expect(getCatalog("women", catalog)).toStrictEqual({"1": catalog["1"], "2": catalog["2"]});
+        expect(getCatalog("women", catalog)).toStrictEqual([catalog[1], catalog[2]]);
     })
 
 })
 
-describe("getItem", () => {
-    it(("gets the item from the specified catalog(men)"), () => {
-        const catalogMen = getCatalog("men", catalog);
-        expect(getItem(catalogMen, 1)).toStrictEqual(catalog["0"]);
-    })
-    it(("gets the item from the specified catalog(women)"), () => {
-        const catalogWomen = getCatalog("women", catalog);
-        expect(getItem(catalogWomen, 1)).toStrictEqual(catalog["1"]);
-    })
-    it(("gets the item from the specified catalog(women)"), () => {
-        const catalogWomen = getCatalog("women", catalog);
-        expect(getItem(catalogWomen, 2)).toStrictEqual(catalog["2"]);
+describe("addToCart", () => {
+    const catalogMen = getCatalog("men", catalog);
+    const catalogWomen = getCatalog("women", catalog);
+    it("adds an item(s) to cart", () => {
+        console.log(data);
+        addToCart(catalogMen[0]);
+        addToCart(catalogWomen[0]);
+        addToCart(catalogWomen[1]);
+        expect(data).toStrictEqual([catalog[0], catalog[1], catalog[2]]);
     })
 })

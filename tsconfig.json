@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
   },
   "files": [],
   "references": [
