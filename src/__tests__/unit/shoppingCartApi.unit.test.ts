@@ -32,9 +32,19 @@ const catalog = [
     }
 ]
 
+type CatalogObj<T> = T extends readonly (infer U)[] ? U : never;
+
+
 vi.mock("../../cart.json", () => {
     return {
-        default: [],
+        default: []
+    }
+})
+
+vi.mock("../../shoppingCartApi.ts", async (originalImport) => {
+    return {
+        ...await originalImport<typeof import("../../shoppingCartApi.ts")>(),
+        addToCart: (item: CatalogObj<CatalogArr>) => data.push(item),
     }
 })
 
@@ -52,7 +62,6 @@ describe("addToCart", () => {
     const catalogMen = getCatalog("men", catalog);
     const catalogWomen = getCatalog("women", catalog);
     it("adds an item(s) to cart", () => {
-        console.log(data);
         addToCart(catalogMen[0]);
         addToCart(catalogWomen[0]);
         addToCart(catalogWomen[1]);

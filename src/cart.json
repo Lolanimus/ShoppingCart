@@ -1,3 +1,26 @@
 [
-    
+  {
+    "id": 2,
+    "title": "kesha",
+    "price": 100,
+    "description": "kesha",
+    "category": "jewelry",
+    "image": "cla",
+    "rating": {
+      "rate": 2,
+      "count": 5
+    }
+  },
+  {
+    "id": 2,
+    "title": "kesha",
+    "price": 100,
+    "description": "kesha",
+    "category": "jewelry",
+    "image": "cla",
+    "rating": {
+      "rate": 2,
+      "count": 5
+    }
+  }
 ]

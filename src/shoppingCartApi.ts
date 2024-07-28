@@ -1,3 +1,7 @@
+import fs from 'fs';
+import path from 'path';
+import data from './cart.json';
+
 type CatalogObj = { 
     id: number,
     title: string,
@@ -11,8 +15,7 @@ type CatalogObj = {
     },
 };
 type CatalogArr = CatalogObj[];
-import data from './cart.json';
-
+const cart: CatalogArr = data;
 
 const fetchData = async (url: string) => {
     const data = await fetch(url);
@@ -29,6 +32,11 @@ const getCatalog = (sex: string, catalog: CatalogArr) => {
     return returnedCatalog;
 };
 
+const addToCart = (item: CatalogObj) => {
+    cart.push(item);
+    const updatedData = JSON.stringify(cart, null, 2);
+    fs.writeFileSync(path.resolve(__dirname, "./cart.json"), updatedData);
+}
 
 export { getCatalog, addToCart, fetchData };
 export type { CatalogArr };
