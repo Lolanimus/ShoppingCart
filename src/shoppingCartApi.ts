@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import data from './cart.json';
 
 type CatalogObj = { 
     id: number,
@@ -14,8 +13,15 @@ type CatalogObj = {
         count: number,
     },
 };
+type CartObj = CatalogObj & { quantity: number, size?: string };
 type CatalogArr = CatalogObj[];
-const cart: CatalogArr = data;
+type CartArr = CartObj[];
+
+const cart: CartArr = [];
+
+const updateCart = (updatedData: object[]) => {
+    fs.writeFileSync(path.resolve(__dirname, "./cart.json"), JSON.stringify(updatedData, null, 2));
+}
 
 const fetchData = async (url: string) => {
     const data = await fetch(url);
@@ -32,11 +38,37 @@ const getCatalog = (sex: string, catalog: CatalogArr) => {
     return returnedCatalog;
 };
 
-const addToCart = (item: CatalogObj) => {
-    cart.push(item);
-    const updatedData = JSON.stringify(cart, null, 2);
-    fs.writeFileSync(path.resolve(__dirname, "./cart.json"), updatedData);
+const getTotalPrice = () => {
+    let totalPrice = 0;
+    cart.forEach((item) => {
+        totalPrice += item.quantity * item.price;
+    })
+    return totalPrice;
 }
 
-export { getCatalog, addToCart, fetchData };
-export type { CatalogArr };
+const addToCart = (item: CatalogObj, size?: string) => {
+    const cartItem = {
+        ...item,
+        quantity: 1,
+        size,
+    };
+    cart.push(cartItem);
+    updateCart(cart);
+}
+
+const deleteFromCart = (id: number) => {
+    cart.splice(id, 1);
+    updateCart(cart);
+}
+
+const incrementQuantityCart = (id: number, isIncrement: boolean) => {
+    isIncrement ? cart[id].quantity += 1 : (cart[id].quantity > 1 ? cart[id].quantity -= 1 : deleteFromCart(id));
+    updateCart(cart);
+}
+
+const clearCart = () => {
+    updateCart([]);
+}
+
+export { getCatalog, getTotalPrice, addToCart, updateCart, deleteFromCart, incrementQuantityCart, clearCart, fetchData };
+export type { CatalogArr, CatalogObj, CartObj, CartArr };
