@@ -1,6 +1,5 @@
-import { rewriteCart } from "../../cartManipulation";
-import { getCart, getCatalog, addToCart, incrementQuantityCart, clearCart, deleteFromCart, getTotalPrice, CartArr } from "../../shoppingCartApi";
-import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { getCart, getCatalog, addToCart, incrementQuantityCart, clearCart, deleteFromCart, getTotalPrice } from "../../shoppingCartApi";
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 // basically mocking
 const catalog = [
@@ -51,7 +50,7 @@ describe("addToCart", () => {
     })
 
     afterEach(() => {
-        //clearCart();
+        clearCart();
     })
 
     const catalogMen = getCatalog("men", catalog);
