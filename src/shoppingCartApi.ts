@@ -1,5 +1,4 @@
-import fs from 'fs';
-import path from 'path';
+import * as cartManipulations from "./cartManipulation";
 
 type CatalogObj = { 
     id: number,
@@ -17,10 +16,20 @@ type CartObj = CatalogObj & { quantity: number, size?: string };
 type CatalogArr = CatalogObj[];
 type CartArr = CartObj[];
 
-const cart: CartArr = [];
+// eslint-disable-next-line no-var
+var cart: CartArr = [];
 
-const updateCart = (updatedData: object[]) => {
-    fs.writeFileSync(path.resolve(__dirname, "./cart.json"), JSON.stringify(updatedData, null, 2));
+const updateCart = () => {
+    cartManipulations.rewriteCart(cart);
+}
+
+const setCart = (updatedData: CartArr) => {
+    cart = updatedData;
+    updateCart();
+}
+
+const getCart = () => {
+    return cart;
 }
 
 const fetchData = async (url: string) => {
@@ -30,7 +39,7 @@ const fetchData = async (url: string) => {
 }
 
 const getCatalog = (sex: string, catalog: CatalogArr) => {
-    const returnedCatalog: CatalogObj[] = [];
+    const returnedCatalog: CatalogArr = [];
     const category = sex + "'s clothing";
     catalog.forEach((obj) => {
         obj.category === category || obj.category === "jewelry" ? returnedCatalog.push(obj) : null;
@@ -52,23 +61,26 @@ const addToCart = (item: CatalogObj, size?: string) => {
         quantity: 1,
         size,
     };
-    cart.push(cartItem);
-    updateCart(cart);
+    const tempCart = getCart();
+    tempCart.push(cartItem);
+    setCart(tempCart);
 }
 
 const deleteFromCart = (id: number) => {
-    cart.splice(id, 1);
-    updateCart(cart);
+    const tempCart = getCart();
+    tempCart.splice(id, 1);
+    setCart(tempCart);
 }
 
 const incrementQuantityCart = (id: number, isIncrement: boolean) => {
-    isIncrement ? cart[id].quantity += 1 : (cart[id].quantity > 1 ? cart[id].quantity -= 1 : deleteFromCart(id));
-    updateCart(cart);
+    const tempCart = getCart();
+    isIncrement ? tempCart[id].quantity += 1 : (tempCart[id].quantity > 1 ? tempCart[id].quantity -= 1 : deleteFromCart(id));
+    setCart(tempCart);
 }
 
 const clearCart = () => {
-    updateCart([]);
+    setCart([]);
 }
 
-export { getCatalog, getTotalPrice, addToCart, updateCart, deleteFromCart, incrementQuantityCart, clearCart, fetchData };
+export { getCart, getCatalog, getTotalPrice, addToCart, updateCart, deleteFromCart, incrementQuantityCart, clearCart, fetchData };
 export type { CatalogArr, CatalogObj, CartObj, CartArr };
