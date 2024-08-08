@@ -1,23 +1,27 @@
 import { render, screen } from '@testing-library/react';
-import { expect, describe, it } from 'vitest';
-import userEvent from '@testing-library/user-event'
+import { expect, describe, it, vi } from 'vitest';
 import GenderNav from './GenderNav';
+import userEvent from '@testing-library/user-event';
 
 describe("GenderNav", () => {
     const user = userEvent.setup();
 
     it("renders the nav", () => {
         render(<GenderNav />);
-        const nav = screen.getByRole("navigation") as HTMLElement;
-        expect(nav).toBeInTheDocument();
-        expect(screen.getByTestId("navLinkMen")).toBeInTheDocument();
-        expect(screen.getByTestId("navLinkWomen")).toBeInTheDocument();
+        expect(screen.getByRole("navigation")).toBeInTheDocument();
+        const genderNavLinks = screen.getAllByRole("link");
+        expect(genderNavLinks.length).toBe(2);
+        expect(genderNavLinks[0].textContent).toBe("Men");
+        expect(genderNavLinks[1].textContent).toBe("Women");
     });
 
-    it("clicking links works", async () => {
+    it("links work when you click on them", async () => {
+        const spy = vi.spyOn(history, "pushState");
         render(<GenderNav />);
-        await user.click(screen.getByTestId("navLinkMen"));
-        await user.click(screen.getByTestId("navLinkWomen"));
-
-    });
+        const genderNavLinks = screen.getAllByRole("link");
+        await user.click(genderNavLinks[0]);
+        expect(spy).toBeCalledTimes(1);
+        await user.click(genderNavLinks[1]);
+        expect(spy).toBeCalledTimes(2);
+    })
 });
