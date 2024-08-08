@@ -4,10 +4,10 @@ const GenderNav = () => {
     return (
         <BrowserRouter>
             <nav>
-                <NavLink to="catalog/men" data-testid="navLinkMen">
+                <NavLink to="catalog/men">
                     Men
                 </NavLink>
-                <NavLink to="catalog/women" data-testid="navLinkWomen">
+                <NavLink to="catalog/women">
                     Women
                 </NavLink>
             </nav>
