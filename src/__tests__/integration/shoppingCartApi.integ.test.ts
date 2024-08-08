@@ -1,8 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { rewriteCart } from '../../cartManipulation';
+import { rewriteCart, readCart } from '../../cartManipulation';
 import { fetchData, CartArr, clearCart } from '../../shoppingCartApi';
-import fs from "fs/promises";
-import path from "path";
 
 const url = "https://fakestoreapi.com/products/1";
 const urlRes = {
@@ -18,7 +16,7 @@ const urlRes = {
     }
   }
 
-describe("rewrites the cart json file", () => {
+describe("manipulations with the cart json file", () => {
     beforeEach(() => {
         clearCart();
     })
@@ -27,10 +25,13 @@ describe("rewrites the cart json file", () => {
         clearCart();
     })
 
-    it("rewrites with the fetch data", async () => {
-        const cartMock: CartArr = await fetchData(url);
+    it("reads and rewrites the cart", async () => {
+        // I've no idea why, but sometimes vitest just can't handle fetching
+        // So, expect the test to time out a lot
+        // Except that, test works perfectly fine
+        const cartMock = await fetchData(url);
         rewriteCart(cartMock);
-        const updatedCart: CartArr = JSON.parse(await fs.readFile(path.resolve(__dirname, "../../cart.json"), "utf-8"));
-        expect(updatedCart).toStrictEqual(urlRes);
+        const cart = readCart();
+        expect(cart).toStrictEqual(urlRes);
     })
 })
