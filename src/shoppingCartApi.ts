@@ -33,9 +33,19 @@ const getCart = () => {
 }
 
 const fetchData = async (url: string) => {
-    const data = await fetch(url);
-    const json = await data.json();
-    return json;
+    try {
+        const data = await fetch(url);
+        if(data.ok && data.status == 200) {
+            const json = await data.json();
+            return json;
+        } else {
+            throw { code: data.status, message: data.statusText };
+        }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+        console.error("Error: " + error);
+    }
+
 }
 
 const getCatalog = (sex: string, catalog: CatalogArr) => {

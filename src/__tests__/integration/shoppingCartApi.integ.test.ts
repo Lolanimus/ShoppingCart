@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { rewriteCart, readCart } from '../../cartManipulation';
-import { fetchData, CartArr, clearCart } from '../../shoppingCartApi';
+import { fetchData, clearCart } from '../../shoppingCartApi';
 
 const url = "https://fakestoreapi.com/products/1";
 const urlRes = {
