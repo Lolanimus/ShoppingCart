@@ -1,48 +1,36 @@
-import { getCatalog, getTotalPrice, fetchData, addToCart, deleteFromCart, incrementQuantityCart, CartArr, clearCart } from "../../shoppingCartApi";
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { rewriteCart } from '../../cartManipulation';
+import { fetchData, CartArr, clearCart } from '../../shoppingCartApi';
 import fs from "fs/promises";
 import path from "path";
-const data: CartArr = await fetchData("https://fakestoreapi.com/products");
 
-describe("fetching an item", async () => {
-    it("getting catalog and item from fetched data(women)", () => {
-        const catalogMen = getCatalog("men", data);
-        expect(catalogMen[0].id).toBe(1);
-    })
-    it("getting catalog and item from fetched data(women)", () => {
-        const catalogWomen = getCatalog("women", data);
-        expect(catalogWomen[0].id).toBe(15);
-    })
-})
-
-// use only for each it you wanna call
-describe("manipulating data", async () => {
-    const catalogMen = getCatalog("men", data);
-    const catalogWomen = getCatalog("women", data);
-    const checkCart = (expected: object[]) => {
-        const file = path.resolve(__dirname, "../../cart.json");
-        (async () => await fs.readFile(file))()
-        .then(res => {
-            expect(JSON.parse(res.toString())).toStrictEqual(expected);
-        })
-        .then(() => clearCart());
+const url = "https://fakestoreapi.com/products/1";
+const urlRes = {
+    "id": 1,
+    "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+    "price": 109.95,
+    "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    "category": "men's clothing",
+    "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    "rating": {
+      "rate": 3.9,
+      "count": 120
     }
-    
-    it("adds items to a cart", async () => {
-        addToCart(catalogMen[0]);
-        addToCart(catalogWomen[2]);
-        checkCart([{...catalogMen[0], quantity: 1}, {...catalogWomen[2], quantity: 1}]);
+  }
+
+describe("rewrites the cart json file", () => {
+    beforeEach(() => {
+        clearCart();
     })
-    it("adds and deletes items from a cart", async () => {
-        addToCart(catalogWomen[1]);
-        addToCart(catalogWomen[2]);
-        deleteFromCart(0);
-        checkCart([{...catalogWomen[2], quantity: 1}]);
+
+    afterEach(() => {
+        clearCart();
     })
-    it.only("increments/decrements quantity of an item in a cart, checks for a total price", () => {
-        addToCart(catalogWomen[2]);
-        incrementQuantityCart(0, true);
-        expect(getTotalPrice()).toBe(79.98);
-        checkCart([{...catalogWomen[2], quantity: 2}]);
+
+    it("rewrites with the fetch data", async () => {
+        const cartMock: CartArr = await fetchData(url);
+        rewriteCart(cartMock);
+        const updatedCart: CartArr = JSON.parse(await fs.readFile(path.resolve(__dirname, "../../cart.json"), "utf-8"));
+        expect(updatedCart).toStrictEqual(urlRes);
     })
 })
