@@ -26,8 +26,8 @@ describe("QuantityChanger", () => {
 
     it("renders correctly", () => {
         renderQuantityChanger(context);
-        expect(screen.getByRole('button', { name: '-' }));
-        expect(screen.getByRole('span', { name: context.state.title }));
-        expect(screen.getByRole('button', { name: '+' }));
+        expect(screen.getByRole('button', { name: '-' })).toBeInTheDocument();
+        expect(screen.getByTestId("quantity")).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: '+' })).toBeInTheDocument();
     })
 })

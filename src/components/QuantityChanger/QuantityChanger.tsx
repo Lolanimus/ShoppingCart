@@ -1,6 +1,10 @@
 const QuantityChanger = () => {
     return(
-        <div>keka</div>
+        <>
+            <button>-</button>
+            <span data-testid="quantity">1</span>
+            <button>+</button>
+        </>
     )
 }
 
