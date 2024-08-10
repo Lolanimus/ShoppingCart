@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import { expect, describe, it, vi, beforeEach, afterEach } from 'vitest';
+import { expect, describe, it, beforeEach, afterEach } from 'vitest';
 import userEvent from '@testing-library/user-event'
 import QuantityChanger from './QuantityChanger';
-import data from "../../__mocks__/data";
-import { incrementQuantityCart, CartObj, clearCart, addToCart, getCart } from '../../shoppingCartApi';
-import { act, createContext } from 'react';
+import * as data from "../../__mocks__/data";
+import { clearCart, addToCart } from '../../shoppingCartApi';
+import { getCart } from '../../cart';
 
 
 describe("QuantityChanger", () => {    
@@ -12,7 +12,7 @@ describe("QuantityChanger", () => {
 
     beforeEach(() => {
         clearCart();
-        addToCart(data[id]);
+        addToCart(data.contents[id]);
     })
 
     afterEach(() => {
@@ -32,9 +32,7 @@ describe("QuantityChanger", () => {
         render(<QuantityChanger id={id} />);
         const increases = screen.getByRole('button', { name: "+" });
         const quantity = screen.getByTestId("quantity");
-        await act(async () => {
-            await user.click(increases);
-        })
+        await user.click(increases);
         expect(quantity.textContent).toBe("2");
     })
 })

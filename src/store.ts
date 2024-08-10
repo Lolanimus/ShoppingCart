@@ -1,18 +1,44 @@
-import { CartArr, getCart, setCart } from "./shoppingCartApi";
-
-const subscribers = new Set<typeof setCart>();
+import { getCart, setCart } from "./cart";
+import * as api from "./shoppingCartApi";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let listeners: any = [];
 
 const store = {
-    subscribe: (cb: typeof setCart) => {
-        subscribers.add(cb);
-        return () => subscribers.delete(cb);
+    subscribe: (listener: unknown) => {
+        listeners = [...listeners, listener];
+        return () => {
+            listeners = listeners.filter((l: unknown) => l !== listener);
+        };
     },
+
     getSnapshot: () => {
         return getCart();
     },
-    setCart: (cart: CartArr) => {
-        setCart(cart);
-        subscribers.forEach(cb => cb());
+
+    addToCart: (item: CatalogObj, size?: string) => {
+        api.addToCart(item, size);
+        emitChange();
+    },
+
+    incrementQuantityCart: (id: number, isIncrement: boolean) => {
+        api.incrementQuantityCart(id, isIncrement);
+        emitChange();
+    },
+
+    deleteFromCart: (id: number) => {
+        api.deleteFromCart(id);
+        emitChange();
+    },
+
+    clearCart: () => {
+        api.clearCart();
+        emitChange()
+    }
+}
+
+function emitChange() {
+    for (const listener of listeners) {
+      listener();
     }
 }
 
