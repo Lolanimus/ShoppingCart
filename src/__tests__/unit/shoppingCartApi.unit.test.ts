@@ -1,51 +1,19 @@
-import { getCart, getCatalog, addToCart, incrementQuantityCart, clearCart, deleteFromCart, getTotalPrice } from "../../shoppingCartApi";
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-
-// basically mocking
-const catalog = [
-    {
-        id: 1,
-        title: "kesha",
-        price: 100,
-        description: "kesha",
-        category: "men's clothing",
-        image: "cla",
-        rating: { rate: 2, count: 5}
-    },
-    {
-        id: 15,
-        title: "kesha",
-        price: 100,
-        description: "kesha",
-        category: "women's clothing",
-        image: "cla",
-        rating: { rate: 2, count: 5}
-    },
-    {
-        id: 2,
-        title: "kesha",
-        price: 100,
-        description: "kesha",
-        category: "jewelry",
-        image: "cla",
-        rating: { rate: 2, count: 5}
-    }
-]
-
-vi.mock("../../cartManipulation");
+import { getCatalog, addToCart, incrementQuantityCart, clearCart, deleteFromCart, getTotalPrice } from "../../shoppingCartApi";
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { getCart } from "../../cart";
+import * as data from "../../__mocks__/data";
 
 describe("getCatalog", () => {
     it(("gets the men's catalog"), () => {
-        expect(getCatalog("men", catalog)).toStrictEqual([catalog[0], catalog[2]]);
+        expect(getCatalog("men", data.contents)).toStrictEqual([data.contents[0], data.contents[1]]);
     })
     it(("gets the women's catalog"), () => {
-        expect(getCatalog("women", catalog)).toStrictEqual([catalog[1], catalog[2]]);
+        expect(getCatalog("women", data.contents)).toStrictEqual([data.contents[1], data.contents[2]]);
     })
 })
 
 describe("addToCart", () => {
     beforeEach(() => {
-        vi.resetModules();
         clearCart();
     })
 
@@ -53,39 +21,42 @@ describe("addToCart", () => {
         clearCart();
     })
 
-    const catalogMen = getCatalog("men", catalog);
-    const catalogWomen = getCatalog("women", catalog);
+    // 0(men), 1(jewelery)
+    const catalogMen = getCatalog("men", data.contents);
+    // 1(jewelery), 2(women)
+    const catalogWomen = getCatalog("women", data.contents);
 
     it("adds an item(s) to cart", () => {
         addToCart(catalogMen[0], 's');
-        addToCart(catalogWomen[0], 'm');
-        addToCart(catalogWomen[1]);
-        expect(getCart()).toStrictEqual([{...catalog[0], quantity: 1, size: 's'}, {...catalog[1], quantity: 1, size: 'm'}, {...catalog[2], quantity: 1, size: undefined}]);
+        addToCart(catalogWomen[0]);
+        addToCart(catalogWomen[1], 'm');
+        expect(getCart()).toStrictEqual([{...data.contents[0], quantity: 1, size: 's'}, {...data.contents[1], quantity: 1, size: undefined}, {...data.contents[2], quantity: 1, size: 'm'}]);
     })
 
     it("changes the quantity", () => {
         addToCart(catalogMen[0], 's');
-        addToCart(catalogWomen[0], 'm');
-        addToCart(catalogWomen[1]);
+        addToCart(catalogWomen[0]);
+        addToCart(catalogWomen[1], 'm');
         incrementQuantityCart(0, true);
         incrementQuantityCart(2, false);
-        expect(getCart()).toStrictEqual([{...catalog[0], quantity: 2, size: 's'}, {...catalog[1], quantity: 1, size: 'm'}]);
+        expect(getCart()).toStrictEqual([{...data.contents[0], quantity: 2, size: 's'}, {...data.contents[1], quantity: 1, size: undefined}]);
     })
 
     it("deletes an entry", () => {
         addToCart(catalogMen[0], 's');
-        addToCart(catalogWomen[0], 'm');
-        addToCart(catalogWomen[1]);
+        addToCart(catalogWomen[0]);
+        addToCart(catalogWomen[1], 'm');
         deleteFromCart(2);
-        expect(getCart()).toStrictEqual([{...catalog[0], quantity: 1, size: 's'}, {...catalog[1], quantity: 1, size: 'm'}]);
+        expect(getCart()).toStrictEqual([{...data.contents[0], quantity: 1, size: 's'}, {...data.contents[1], quantity: 1, size: undefined}]);
     })
 
     it("gets the total price of a cart", () => {
         addToCart(catalogMen[0], 's');
-        addToCart(catalogWomen[0], 'm');
-        addToCart(catalogWomen[1]);
+        addToCart(catalogWomen[0]);
+        addToCart(catalogWomen[1], 'm');
         incrementQuantityCart(0, true);
         incrementQuantityCart(0, true);
-        expect(getTotalPrice()).toBe(500);
+        expect(getCart()[0].quantity).toBe(3);
+        expect(getTotalPrice()).toBe(1081.84);
     })
 })
