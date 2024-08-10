@@ -31,8 +31,19 @@ describe("QuantityChanger", () => {
         const user = userEvent.setup();
         render(<QuantityChanger id={id} />);
         const increases = screen.getByRole('button', { name: "+" });
+        const decreases = screen.getByRole('button', { name: "-" });
         const quantity = screen.getByTestId("quantity");
         await user.click(increases);
         expect(quantity.textContent).toBe("2");
+        await user.click(decreases);
+        expect(quantity.textContent).toBe("1");
+    })
+
+    it("doesn't crash when quantity < 1", async () => {
+        const user = userEvent.setup();
+        render(<QuantityChanger id={id} />);
+        const decreases = screen.getByRole('button', { name: "-" });
+        await user.click(decreases);
+        expect(screen.queryByTestId("quantityDiv")).not.toBeInTheDocument();
     })
 })
