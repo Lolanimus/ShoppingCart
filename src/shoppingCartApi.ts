@@ -92,5 +92,5 @@ const clearCart = () => {
     setCart([]);
 }
 
-export { getCart, getCatalog, getTotalPrice, addToCart, updateCart, deleteFromCart, incrementQuantityCart, clearCart, fetchData };
+export { setCart, getCart, getCatalog, getTotalPrice, addToCart, updateCart, deleteFromCart, incrementQuantityCart, clearCart, fetchData };
 export type { CatalogArr, CatalogObj, CartObj, CartArr };
