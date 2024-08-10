@@ -1,43 +1,13 @@
-import * as cartManipulations from "./cartManipulation";
+import { setCart, getCart } from "./cart";
 
-type CatalogObj = { 
-    id: number,
-    title: string,
-    price: number,
-    description: string,
-    category: string,
-    image: string,
-    rating: {
-        rate: number,
-        count: number,
-    },
-};
-type CartObj = CatalogObj & { quantity: number, size?: string };
-type CatalogArr = CatalogObj[];
-type CartArr = CartObj[];
-
-// eslint-disable-next-line no-var
-var cart: CartArr = [];
-
-const updateCart = () => {
-    cartManipulations.rewriteCart(cart);
-}
-
-const setCart = (updatedData: CartArr) => {
-    cart = updatedData;
-    updateCart();
-}
-
-const getCart = () => {
-    return cart;
-}
-
-const fetchData = async (url: string) => {
+const fetchData = async (url: string): Promise<CatalogArr> => {
+    let res: CatalogArr = [];
+    
     try {
-        const data = await fetch(url);
+        const data = await fetch(url)!;
         if(data.ok && data.status == 200) {
-            const json = await data.json();
-            return json;
+            const json: CatalogArr | CatalogObj = await data.json()!;
+            res = json !instanceof Array ? json : [json];
         } else {
             throw { code: data.status, message: data.statusText };
         }
@@ -46,19 +16,21 @@ const fetchData = async (url: string) => {
         console.error("Error: " + error);
     }
 
+    return res;
 }
 
 const getCatalog = (sex: string, catalog: CatalogArr) => {
     const returnedCatalog: CatalogArr = [];
     const category = sex + "'s clothing";
     catalog.forEach((obj) => {
-        obj.category === category || obj.category === "jewelry" ? returnedCatalog.push(obj) : null;
+        (obj.category === category || obj.category === "jewelery") ? returnedCatalog.push(obj) : null;
     });
     return returnedCatalog;
 };
 
 const getTotalPrice = () => {
     let totalPrice = 0;
+    const cart = getCart();
     cart.forEach((item) => {
         totalPrice += item.quantity * item.price;
     })
@@ -92,5 +64,4 @@ const clearCart = () => {
     setCart([]);
 }
 
-export { getCart, getCatalog, getTotalPrice, addToCart, updateCart, deleteFromCart, incrementQuantityCart, clearCart, fetchData };
-export type { CatalogArr, CatalogObj, CartObj, CartArr };
+export { getCatalog, getTotalPrice, addToCart, deleteFromCart, incrementQuantityCart, clearCart, fetchData };
