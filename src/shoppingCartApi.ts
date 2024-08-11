@@ -48,15 +48,19 @@ const addToCart = (item: CatalogObj, size?: string) => {
     setCart(tempCart);
 }
 
-const deleteFromCart = (id: number) => {
+const deleteFromCart = (productId: number) => {
     const tempCart = getCart();
-    tempCart.splice(id, 1);
+    tempCart.forEach((product, i) => {
+        product.id === productId && tempCart.splice(i, 1);
+    })
     setCart(tempCart);
 }
 
-const incrementQuantityCart = (id: number, isIncrement: boolean) => {
+const incrementQuantityCart = (productId: number, isIncrement: boolean) => {
     const tempCart = getCart();
-    isIncrement ? tempCart[id].quantity += 1 : (tempCart[id].quantity > 1 ? tempCart[id].quantity -= 1 : deleteFromCart(id));
+    tempCart.forEach(product => {
+        product.id === productId && (isIncrement ? product.quantity += 1 : (product.quantity > 1 ? product.quantity -= 1 : deleteFromCart(productId)))
+    })
     setCart(tempCart);
 }
 
