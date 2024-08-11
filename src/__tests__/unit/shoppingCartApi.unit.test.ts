@@ -37,8 +37,8 @@ describe("addToCart", () => {
         addToCart(catalogMen[0], 's');
         addToCart(catalogWomen[0]);
         addToCart(catalogWomen[1], 'm');
-        incrementQuantityCart(0, true);
-        incrementQuantityCart(2, false);
+        incrementQuantityCart(data.contents[0].id, true);
+        incrementQuantityCart(data.contents[2].id, false);
         expect(getCart()).toStrictEqual([{...data.contents[0], quantity: 2, size: 's'}, {...data.contents[1], quantity: 1, size: undefined}]);
     })
 
@@ -46,7 +46,7 @@ describe("addToCart", () => {
         addToCart(catalogMen[0], 's');
         addToCart(catalogWomen[0]);
         addToCart(catalogWomen[1], 'm');
-        deleteFromCart(2);
+        deleteFromCart(data.contents[2].id);
         expect(getCart()).toStrictEqual([{...data.contents[0], quantity: 1, size: 's'}, {...data.contents[1], quantity: 1, size: undefined}]);
     })
 
@@ -54,8 +54,8 @@ describe("addToCart", () => {
         addToCart(catalogMen[0], 's');
         addToCart(catalogWomen[0]);
         addToCart(catalogWomen[1], 'm');
-        incrementQuantityCart(0, true);
-        incrementQuantityCart(0, true);
+        incrementQuantityCart(data.contents[0].id, true);
+        incrementQuantityCart(data.contents[0].id, true);
         expect(getCart()[0].quantity).toBe(3);
         expect(getTotalPrice()).toBe(1081.84);
     })
