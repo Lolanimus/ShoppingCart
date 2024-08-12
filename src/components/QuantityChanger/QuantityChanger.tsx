@@ -1,17 +1,12 @@
-import { useSyncExternalStore } from "react";
 import store from "../../store";
 
-const QuantityChanger = (props: {id: number}) => {
-    const id = props.id;
-    const storeHook = useSyncExternalStore(store.subscribe, store.getSnapshot);
+const QuantityChanger = (props: {storeHook: CartObj}) => {
     return (
-        storeHook[id] && (
-            <div data-testid="quantityDiv">
-                <button onClick={() => store.incrementQuantityCart(id, false)}>-</button>
-                <span data-testid="quantity">{storeHook[id].quantity}</span>
-                <button onClick={() => store.incrementQuantityCart(id, true)}>+</button>
-            </div>
-        )
+        <div data-testid="quantityDiv">
+            <button onClick={() => store.incrementQuantityCart(props.storeHook.id, false)}>-</button>
+            <span data-testid="quantity">{props.storeHook.quantity}</span>
+            <button onClick={() => store.incrementQuantityCart(props.storeHook.id, true)}>+</button>
+        </div>
     )
 }
 

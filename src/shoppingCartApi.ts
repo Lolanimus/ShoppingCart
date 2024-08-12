@@ -53,15 +53,15 @@ const deleteFromCart = (productId: number) => {
     tempCart.forEach((product, i) => {
         product.id === productId && tempCart.splice(i, 1);
     })
-    setCart(tempCart);
+    setCart([...tempCart]);
 }
 
 const incrementQuantityCart = (productId: number, isIncrement: boolean) => {
     const tempCart = getCart();
     tempCart.forEach(product => {
-        product.id === productId && (isIncrement ? product.quantity += 1 : (product.quantity > 1 ? product.quantity -= 1 : deleteFromCart(productId)))
+        product.id === productId ? (isIncrement ? product.quantity += 1 : (product.quantity > 1 ? product.quantity -= 1 : deleteFromCart(productId))) : null;
     })
-    setCart(tempCart);
+    setCart([...tempCart]);
 }
 
 const clearCart = () => {
