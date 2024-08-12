@@ -1,4 +1,4 @@
-import { getCart, setCart } from "./cart";
+import { getCart } from "./cart";
 import * as api from "./shoppingCartApi";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let listeners: any = [];

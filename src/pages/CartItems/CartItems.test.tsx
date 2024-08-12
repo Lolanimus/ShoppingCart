@@ -1,48 +1,30 @@
-import { render, screen } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import { expect, describe, it } from 'vitest';
-import userEvent from '@testing-library/user-event'
 import CartItems from './CartItems';
+import { addToCart } from '../../shoppingCartApi';
+import * as data from "../../__mocks__/data"
 
-const data = [
-    {
-      "id": 1,
-      "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-      "price": 109.95,
-      "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-      "category": "men's clothing",
-      "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-      "rating": {
-        "rate": 3.9,
-        "count": 120
-      },
-      "size": 's',
-      "quantity": 1,
-    },
-    {
-      "id": 2,
-      "title": "Mens Casual Premium Slim Fit T-Shirts ",
-      "price": 22.3,
-      "description": "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.",
-      "category": "men's clothing",
-      "image": "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
-      "rating": {
-        "rate": 4.1,
-        "count": 259
-      },
-      "size": 'l',
-      "quantity": 2,
-    },
-]
-
-describe.only("CartItems", () => {
-    it("renders correctly", () => {  
-        const { asFragment } = render(<CartItems cartItems={data} />);
-        expect(asFragment()).toMatchSnapshot();
+describe("CartItems", () => {
+  it("renders correctly(with size specified)", () => {  
+    const itemIndex = 2;
+    data.contents.forEach((obj) => {
+      addToCart(obj, "m");
     })
+    render(<CartItems />);
+    const items = document.querySelectorAll(`ul > li`)!;
+    const item = items[itemIndex] as HTMLElement;
+    const img = within(item).getByRole("img");
+    expect(img.getAttribute('src')).toBe(data.contents[itemIndex].image);
+    const itemInfo = within(item).getByRole("list");
+    const itemTitle = within(itemInfo).getByTestId("title");
+    expect(itemTitle.textContent).toBe(data.contents[itemIndex].title);
+    const itemSize = within(itemInfo).getByTestId("size");
+    expect(itemSize.textContent).toBe("m");
+    const itemQuantityChanger = within(itemInfo).getByTestId("quantityDiv");
+    expect(itemQuantityChanger).toBeInTheDocument();
+    const itemPrice = within(itemInfo).getByTestId("price");
+    expect(itemPrice.textContent).toBe("" + data.contents[itemIndex].price);
+    const itemDeleteButton = within(itemInfo).getByRole("button", {name: "Delete"});
+    expect(itemDeleteButton).toBeInTheDocument();
+  })
 })
-
-type CartItemProps = {
-    cartItems: typeof data;
-}
-
-export type {CartItemProps};

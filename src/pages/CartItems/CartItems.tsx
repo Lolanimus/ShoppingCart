@@ -1,30 +1,38 @@
-import { CartItemProps } from "./CartItems.test";
+import { useSyncExternalStore } from "react";
+import store from "../../store";
+import QuantityChanger from "../../components/QuantityChanger/QuantityChanger";
 
-const CartItems: React.FC<CartItemProps> = ({cartItems}) => {
-    console.log(cartItems);
-    const result = cartItems.length > 0 ? (
+const CartItems = () => {
+    const storeHook = useSyncExternalStore(store.subscribe, store.getSnapshot);
+    const result = storeHook.length > 0 ? (
         <ul>
-            {cartItems.map(item => (
+            {storeHook.map(item => (
                 <li key={item.id}>
                     <section id="itemImg">
                         <img src={item.image} alt={item.title} />
                     </section>
                     <aside id="itemSettings">
-                        <ul>
+                        <ol>
                             <li>
-                                <span>{item.title}</span>
+                                <span data-testid="title">{item.title}</span>
                             </li>
                             <li>
-                                <span>{item.size}</span>
+                                { 
+                                    item.size !== undefined ? (
+                                        <span data-testid="size">{item.size}</span>
+                                    ) : (
+                                        <span data-testid="size">N/A</span>
+                                    )
+                                }
+                            </li> 
+                            <li>
+                                <QuantityChanger storeHook={item} />
                             </li>
                             <li>
-                                {/* <QuantityChanger /> */}
+                                <span data-testid="price">{item.price}</span>
                             </li>
-                            <li>
-                                <span>{item.price}</span>
-                            </li>
-                            <button>delete</button>
-                        </ul>
+                            <button>Delete</button>
+                        </ol>
                     </aside>
                 </li>
             ))}
