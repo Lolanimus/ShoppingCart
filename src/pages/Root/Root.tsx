@@ -4,9 +4,9 @@ const Root = () => {
     return(
         <>
             <header>
-                <GenderNav />
+                {/* <GenderNav />
                 <Logo />
-                <Cart />
+                <Cart /> */}
             </header>
             <body>
                 <Outlet />

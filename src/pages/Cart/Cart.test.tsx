@@ -1,4 +1,4 @@
-import { render, screen, act, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { expect, describe, it, beforeEach, afterEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import * as data from "../../__mocks__/data";
@@ -40,7 +40,7 @@ describe("Cart", () => {
             expect(totalLabel).toBeInTheDocument();
             const total = screen.getByTestId("total");
             const buyBtn = screen.getByRole("button", {name: "Buy"});
-            expect(total.textContent).toBe("" + getTotalPrice());
+            expect(total.textContent).toBe("$" + getTotalPrice());
             expect(buyBtn).toBeEnabled();
         })
 

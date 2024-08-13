@@ -35,7 +35,7 @@ const Cart = () => {
                     <div>
                         {
                             total > 0 ? (
-                                <span data-testid="total">{total}</span>
+                                <span data-testid="total">{`$${total}`}</span>
                             ) : (
                                 <span data-testid="total">N/A</span>
                             )

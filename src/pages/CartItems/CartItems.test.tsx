@@ -60,7 +60,7 @@ describe("CartItems", () => {
     const itemQuantityChanger = within(itemInfo).getByTestId("quantityDiv");
     expect(itemQuantityChanger).toBeInTheDocument();
     const itemPrice = within(itemInfo).getByTestId("price");
-    expect(itemPrice.textContent).toBe("" + data.contents[itemIndex].price);
+    expect(itemPrice.textContent).toBe("$" + data.contents[itemIndex].price);
     const itemDeleteButton = within(itemInfo).getByRole("button", {name: "Delete"});
     expect(itemDeleteButton).toBeInTheDocument();
   })
@@ -86,7 +86,7 @@ describe("CartItems", () => {
     await user.click(increseQuantity);
     expect(quantity.textContent).toBe("2");
     const price = screen.getByTestId("price");
-    expect(price.textContent).toBe("" + (parseInt(quantity.textContent!) * data.contents[itemIndex].price));
+    expect(price.textContent).toBe("$" + (parseInt(quantity.textContent!) * data.contents[itemIndex].price).toFixed(2));
   })
 
   it("delete button works(one item)", async () => {

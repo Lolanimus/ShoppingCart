@@ -34,7 +34,7 @@ const getTotalPrice = () => {
     cart.forEach((item) => {
         totalPrice += item.quantity * item.price;
     })
-    return totalPrice;
+    return parseFloat(totalPrice.toFixed(2));
 }
 
 const addToCart = (item: CatalogObj, size?: string) => {

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useSyncExternalStore } from "react";
 import store from "../../store";
 import QuantityChanger from "../../components/QuantityChanger/QuantityChanger";
@@ -40,19 +41,29 @@ const CartItems = (props: CartItemsProps) => {
                                 <span data-testid="title">{item.title}</span>
                             </li>
                             <li>
-                                { 
-                                    item.size !== undefined ? (
-                                        <span data-testid="size">{item.size}</span>
-                                    ) : (
-                                        <span data-testid="size">N/A</span>
-                                    )
-                                }
+                                <div>
+                                    Size
+                                </div>
+                                <div>
+                                    { 
+                                        item.size !== undefined ? (
+                                            <span data-testid="size">{item.size}</span>
+                                        ) : (
+                                            <span data-testid="size">N/A</span>
+                                        )
+                                    }
+                                </div>
                             </li> 
                             <li>
                                 <QuantityChanger storeHook={item} />
                             </li>
                             <li>
-                                <span data-testid="price" >{item.price * item.quantity}</span>
+                                <div>
+                                    Price
+                                </div>
+                                <div data-testid="price">
+                                    <span>{`$${(item.price * item.quantity).toFixed(2)}`}</span>
+                                </div>
                             </li>
                             <button onClick={() => store.deleteFromCart(item.id)}>Delete</button>
                         </ol>
