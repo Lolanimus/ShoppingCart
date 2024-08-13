@@ -1,11 +1,15 @@
-import { render, within } from '@testing-library/react';
-import { expect, describe, it, beforeEach } from 'vitest';
+import { render, within, screen } from '@testing-library/react';
+import { expect, describe, it, beforeEach, afterEach } from 'vitest';
 import CartItems from './CartItems';
 import { addToCart, clearCart } from '../../shoppingCartApi';
 import * as data from "../../__mocks__/data"
 
 describe("CartItems", () => {
   beforeEach(() => {
+    clearCart();
+  })
+
+  afterEach(() => {
     clearCart();
   })
 
@@ -42,5 +46,10 @@ describe("CartItems", () => {
     const item = items[itemIndex] as HTMLElement;
     const itemSize = within(within(item).getByRole("list")).getByTestId("size");
     expect(itemSize.textContent).toBe("N/A");
+  })
+
+  it("renders correctly(no items in the cart)", () => {
+    render(<CartItems />);
+    expect(screen.getByText("There are no items in your cart yet..."));
   })
 })
