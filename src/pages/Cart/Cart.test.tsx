@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, act, waitFor } from '@testing-library/react';
 import { expect, describe, it, beforeEach, afterEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import * as data from "../../__mocks__/data";
@@ -58,12 +58,12 @@ describe("Cart", () => {
             const { user } = renderCart(data.contents);
             const buyBtn = screen.getByRole("button", {name: "Buy"});
             await user.click(buyBtn);
-            const dialog = screen.getByRole("dialog");
-            expect(dialog).toBeInTheDocument();
+            expect(screen.getByTestId("dialog-true")).toBeInTheDocument();
             const closeDialogBtn = screen.getByRole("button", {name: "Close"});
             expect(closeDialogBtn).toBeInTheDocument();
-            // await user.click(closeDialogBtn);
-            // expect(dialog).not.toBeInTheDocument();
+            await user.click(closeDialogBtn);
+            expect(screen.getByTestId("dialog-false")).toBeInTheDocument();
+            expect(screen.getByText("There are no items in your cart yet...")).toBeInTheDocument();
         })
     })
 })

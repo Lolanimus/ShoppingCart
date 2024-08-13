@@ -1,13 +1,26 @@
 import { render, within, screen } from '@testing-library/react';
-import { expect, describe, it, beforeEach, afterEach } from 'vitest';
+import { expect, describe, it, beforeEach, afterEach, vi } from 'vitest';
 import CartItems from './CartItems';
 import { addToCart, clearCart } from '../../shoppingCartApi';
 import * as data from "../../__mocks__/data"
 import userEvent from '@testing-library/user-event';
+import { CartItemsProps } from './CartItems';
+
+const cartItemsProps: CartItemsProps = {
+  totalState: {
+    setTotal: vi.fn()
+  },
+
+  buyState: {
+    buyDisabled: false,
+    setBuyDisabled: vi.fn()
+  }
+}
+
 function renderOneCartItem(itemIndex: number) {
   const user = userEvent.setup();
   addToCart(data.contents[itemIndex]);
-  render(<CartItems />);
+  render(<CartItems totalState={cartItemsProps.totalState} buyState={cartItemsProps.buyState}/>);
   return user;
 }
 
@@ -16,7 +29,7 @@ function renderThreeCartItems(itemIndex: number) {
   data.contents.forEach((obj) => {
     addToCart(obj, "m");
   })
-  render(<CartItems />);
+  render(<CartItems totalState={cartItemsProps.totalState} buyState={cartItemsProps.buyState}/>);
   const items = document.querySelectorAll(`ul > li`)!;
   const item = items[itemIndex] as HTMLElement;
   return {
@@ -60,7 +73,7 @@ describe("CartItems", () => {
   })
 
   it("renders correctly(no items in the cart)", () => {
-    render(<CartItems />);
+    render(<CartItems totalState={cartItemsProps.totalState} buyState={cartItemsProps.buyState}/>);
     expect(screen.getByText("There are no items in your cart yet..."));
   })
 

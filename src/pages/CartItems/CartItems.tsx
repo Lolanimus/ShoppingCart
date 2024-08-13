@@ -1,9 +1,32 @@
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import store from "../../store";
 import QuantityChanger from "../../components/QuantityChanger/QuantityChanger";
+import { getTotalPrice } from "../../shoppingCartApi";
 
-const CartItems = () => {
+type CartItemsProps = {
+    totalState: { 
+        setTotal: React.Dispatch<React.SetStateAction<number>> 
+    }, 
+    
+    buyState: {
+        buyDisabled: boolean, 
+        setBuyDisabled: React.Dispatch<React.SetStateAction<boolean>>
+    }
+};
+
+const CartItems = (props: CartItemsProps) => {
+    const { setTotal } = props.totalState;
+    const { buyDisabled, setBuyDisabled } = props.buyState;
     const storeHook = useSyncExternalStore(store.subscribe, store.getSnapshot);
+    useEffect(() => {
+        setTotal(getTotalPrice());
+    }, [storeHook]);
+
+    useEffect(() => {
+        storeHook.length > 0 ? setBuyDisabled(false) : setBuyDisabled(true);
+    }, [storeHook.length, buyDisabled])
+
+    
     const result = storeHook.length > 0 ? (
         <ul data-testid="itemsList">
             {storeHook.map(item => (
@@ -29,7 +52,7 @@ const CartItems = () => {
                                 <QuantityChanger storeHook={item} />
                             </li>
                             <li>
-                                <span data-testid="price">{item.price * item.quantity}</span>
+                                <span data-testid="price" >{item.price * item.quantity}</span>
                             </li>
                             <button onClick={() => store.deleteFromCart(item.id)}>Delete</button>
                         </ol>
@@ -45,3 +68,4 @@ const CartItems = () => {
 }
 
 export default CartItems;
+export type { CartItemsProps };

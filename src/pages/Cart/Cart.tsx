@@ -1,23 +1,24 @@
+import { clearCart } from "../../shoppingCartApi";
 import CartItems from "../CartItems/CartItems";
-import store from "../../store";
-import { getTotalPrice } from "../../shoppingCartApi";
 import { useState } from "react";
 
 function BuySuccess(props: {toggleDialog: () => void, open: boolean}) {
     const { toggleDialog, open } = props;
     return (
-        <dialog open={open}>
+        <dialog open={open} data-testid={`dialog-${open}`}>
             <p>The purchase was successful</p>
-            <form method="dialog">
-                <button onClick={toggleDialog}>Close</button>
-            </form>
+            <button onClick={() => {
+                toggleDialog();
+                clearCart();
+            }}>Close</button>
         </dialog>
     )
 }
 
 const Cart = () => {
     const [open, setOpen] = useState(false)
-    
+    const [total, setTotal] = useState(0);
+    const [buyDisabled, setBuyDisabled] = useState(true);
     const toggleDialog = () => {
         setOpen(!open);
     };
@@ -26,21 +27,21 @@ const Cart = () => {
         <div>
             <h1>Cart</h1>
             <form onSubmit={e => e.preventDefault()}>
-                <CartItems />
+                <CartItems totalState={{setTotal}} buyState={{buyDisabled, setBuyDisabled}}/>
                 <div>
                     <div>
                         <span>Total</span>
                     </div>
                     <div>
                         {
-                            store.getSnapshot().length > 0 ? (
-                                <span data-testid="total">{getTotalPrice()}</span>
+                            total > 0 ? (
+                                <span data-testid="total">{total}</span>
                             ) : (
                                 <span data-testid="total">N/A</span>
                             )
                         }
                     </div>
-                    <button disabled={store.getSnapshot().length === 0} onClick={toggleDialog}>Buy</button>
+                    <button disabled={buyDisabled} onClick={toggleDialog}>Buy</button>
                 </div>
             </form>
             <BuySuccess open={open} toggleDialog={toggleDialog}/>
