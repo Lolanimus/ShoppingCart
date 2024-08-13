@@ -12,7 +12,9 @@ function renderCart<T extends CatalogObj>(items: T | T[]) {
     itemsArray.forEach((obj) => {
         addToCart(obj);
     })
+
     render(<Cart />);
+    
     return {
         user
     }
@@ -37,17 +39,31 @@ describe("Cart", () => {
             expect(cartItems).toBeInTheDocument();
             expect(totalLabel).toBeInTheDocument();
             const total = screen.getByTestId("total");
-            const button = screen.getByRole("button", {name: "Buy"});
+            const buyBtn = screen.getByRole("button", {name: "Buy"});
             expect(total.textContent).toBe("" + getTotalPrice());
-            expect(button).toBeEnabled();
+            expect(buyBtn).toBeEnabled();
         })
 
         it("without total price", () => {
             render(<Cart />);
             const total = screen.getByTestId("total");
-            const button = screen.getByRole("button", {name: "Buy"});
+            const buyBtn = screen.getByRole("button", {name: "Buy"});
             expect(total.textContent).toBe("N/A");
-            expect(button).toBeDisabled();
+            expect(buyBtn).toBeDisabled();
+        })
+    })
+
+    describe("functionality", () => {
+        it("buy button works", async () => {
+            const { user } = renderCart(data.contents);
+            const buyBtn = screen.getByRole("button", {name: "Buy"});
+            await user.click(buyBtn);
+            const dialog = screen.getByRole("dialog");
+            expect(dialog).toBeInTheDocument();
+            const closeDialogBtn = screen.getByRole("button", {name: "Close"});
+            expect(closeDialogBtn).toBeInTheDocument();
+            // await user.click(closeDialogBtn);
+            // expect(dialog).not.toBeInTheDocument();
         })
     })
 })
