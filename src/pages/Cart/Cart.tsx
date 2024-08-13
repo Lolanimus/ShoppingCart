@@ -21,7 +21,7 @@ const Cart = () => {
                             )
                         }
                     </div>
-                    <button>Buy</button>
+                    <button disabled={store.getSnapshot().length === 0}>Buy</button>
                 </div>
             </form>
         </div>

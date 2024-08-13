@@ -41,5 +41,13 @@ describe("Cart", () => {
             expect(total.textContent).toBe("" + getTotalPrice());
             expect(button).toBeEnabled();
         })
+
+        it("without total price", () => {
+            render(<Cart />);
+            const total = screen.getByTestId("total");
+            const button = screen.getByRole("button", {name: "Buy"});
+            expect(total.textContent).toBe("N/A");
+            expect(button).toBeDisabled();
+        })
     })
 })
