@@ -3,6 +3,13 @@ import { expect, describe, it, beforeEach, afterEach } from 'vitest';
 import CartItems from './CartItems';
 import { addToCart, clearCart } from '../../shoppingCartApi';
 import * as data from "../../__mocks__/data"
+import userEvent from '@testing-library/user-event';
+function renderOneCartItem(itemIndex: number) {
+  const user = userEvent.setup();
+  addToCart(data.contents[itemIndex]);
+  render(<CartItems />);
+  return user;
+}
 
 describe("CartItems", () => {
   beforeEach(() => {
@@ -37,19 +44,26 @@ describe("CartItems", () => {
   })
 
   it("renders correctly(with size not specified)", () => {
-    const itemIndex = 2;
-    data.contents.forEach((obj) => {
-      addToCart(obj);
-    })
-    render(<CartItems />);
-    const items = document.querySelectorAll(`ul > li`)!;
-    const item = items[itemIndex] as HTMLElement;
-    const itemSize = within(within(item).getByRole("list")).getByTestId("size");
+    const itemIndex = 0;
+    renderOneCartItem(itemIndex);
+    const itemSize = screen.getByTestId("size");
     expect(itemSize.textContent).toBe("N/A");
   })
 
   it("renders correctly(no items in the cart)", () => {
     render(<CartItems />);
     expect(screen.getByText("There are no items in your cart yet..."));
+  })
+
+  it("price changes accordingly with quantity", async () => {
+    const itemIndex = 0;
+    const user = renderOneCartItem(itemIndex);
+    const quantityChanger = screen.getByTestId("quantityDiv");
+    const increseQuantity = within(quantityChanger).getByRole("button", {name: "+"});
+    const quantity = within(quantityChanger).getByTestId("quantity");
+    await user.click(increseQuantity);
+    expect(quantity.textContent).toBe("2");
+    const price = screen.getByTestId("price");
+    expect(price.textContent).toBe("" + (parseInt(quantity.textContent!) * data.contents[itemIndex].price));
   })
 })

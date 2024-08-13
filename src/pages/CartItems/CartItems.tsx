@@ -29,7 +29,7 @@ const CartItems = () => {
                                 <QuantityChanger storeHook={item} />
                             </li>
                             <li>
-                                <span data-testid="price">{item.price}</span>
+                                <span data-testid="price">{item.price * item.quantity}</span>
                             </li>
                             <button>Delete</button>
                         </ol>
