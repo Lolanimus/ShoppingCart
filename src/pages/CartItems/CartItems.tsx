@@ -31,7 +31,7 @@ const CartItems = () => {
                             <li>
                                 <span data-testid="price">{item.price * item.quantity}</span>
                             </li>
-                            <button>Delete</button>
+                            <button onClick={() => store.deleteFromCart(item.id)}>Delete</button>
                         </ol>
                     </aside>
                 </li>

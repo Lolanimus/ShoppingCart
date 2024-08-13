@@ -11,6 +11,20 @@ function renderOneCartItem(itemIndex: number) {
   return user;
 }
 
+function renderThreeCartItems(itemIndex: number) {
+  const user = userEvent.setup();
+  data.contents.forEach((obj) => {
+    addToCart(obj, "m");
+  })
+  render(<CartItems />);
+  const items = document.querySelectorAll(`ul > li`)!;
+  const item = items[itemIndex] as HTMLElement;
+  return {
+    user,
+    item
+  }
+}
+
 describe("CartItems", () => {
   beforeEach(() => {
     clearCart();
@@ -22,12 +36,7 @@ describe("CartItems", () => {
 
   it("renders correctly(with size specified)", () => {  
     const itemIndex = 2;
-    data.contents.forEach((obj) => {
-      addToCart(obj, "m");
-    })
-    render(<CartItems />);
-    const items = document.querySelectorAll(`ul > li`)!;
-    const item = items[itemIndex] as HTMLElement;
+    const { item } = renderThreeCartItems(itemIndex);
     const img = within(item).getByRole("img");
     expect(img.getAttribute('src')).toBe(data.contents[itemIndex].image);
     const itemInfo = within(item).getByRole("list");
@@ -65,5 +74,22 @@ describe("CartItems", () => {
     expect(quantity.textContent).toBe("2");
     const price = screen.getByTestId("price");
     expect(price.textContent).toBe("" + (parseInt(quantity.textContent!) * data.contents[itemIndex].price));
+  })
+
+  it("delete button works(one item)", async () => {
+    const itemIndex = 0;
+    const user = renderOneCartItem(itemIndex);
+    const deleteBtn = screen.getByRole("button", {name: "Delete"});
+    await user.click(deleteBtn);
+    expect(screen.getByText("There are no items in your cart yet...")).toBeInTheDocument();
+  })
+
+  it("delete button works(several items)", async () => {
+    const itemIndex = 0;
+    const { user, item } = renderThreeCartItems(itemIndex);
+    const deleteBtn = within(item).getByRole("button", {name: "Delete"});
+    await user.click(deleteBtn);
+    const updatedItems = document.querySelectorAll(`ul > li`)!;
+    expect(updatedItems.length).toBe(2);
   })
 })
