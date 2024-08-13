@@ -1,10 +1,14 @@
 import { render, within } from '@testing-library/react';
-import { expect, describe, it } from 'vitest';
+import { expect, describe, it, beforeEach } from 'vitest';
 import CartItems from './CartItems';
-import { addToCart } from '../../shoppingCartApi';
+import { addToCart, clearCart } from '../../shoppingCartApi';
 import * as data from "../../__mocks__/data"
 
 describe("CartItems", () => {
+  beforeEach(() => {
+    clearCart();
+  })
+
   it("renders correctly(with size specified)", () => {  
     const itemIndex = 2;
     data.contents.forEach((obj) => {
@@ -26,5 +30,17 @@ describe("CartItems", () => {
     expect(itemPrice.textContent).toBe("" + data.contents[itemIndex].price);
     const itemDeleteButton = within(itemInfo).getByRole("button", {name: "Delete"});
     expect(itemDeleteButton).toBeInTheDocument();
+  })
+
+  it("renders correctly(with size not specified)", () => {
+    const itemIndex = 2;
+    data.contents.forEach((obj) => {
+      addToCart(obj);
+    })
+    render(<CartItems />);
+    const items = document.querySelectorAll(`ul > li`)!;
+    const item = items[itemIndex] as HTMLElement;
+    const itemSize = within(within(item).getByRole("list")).getByTestId("size");
+    expect(itemSize.textContent).toBe("N/A");
   })
 })
