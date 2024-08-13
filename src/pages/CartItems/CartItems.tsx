@@ -5,7 +5,7 @@ import QuantityChanger from "../../components/QuantityChanger/QuantityChanger";
 const CartItems = () => {
     const storeHook = useSyncExternalStore(store.subscribe, store.getSnapshot);
     const result = storeHook.length > 0 ? (
-        <ul>
+        <ul data-testid="itemsList">
             {storeHook.map(item => (
                 <li key={item.id}>
                     <section id="itemImg">
