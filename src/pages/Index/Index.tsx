@@ -1,4 +1,5 @@
 import GenderNav from "../../components/GenderNav/GenderNav";
+import logo from "../../assets/Logo.svg";
 
 const Index = () => {
     return (
@@ -13,7 +14,7 @@ const Index = () => {
                     </div>
                 </div>
                 <div>
-                    <img src="../../assets/Logo.svg" alt="Lolan Logo" />
+                    <img src={logo} alt="Lolan Logo" />
                 </div>
             </div>
             <GenderNav />
