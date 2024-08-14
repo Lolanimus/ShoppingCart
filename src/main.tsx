@@ -5,6 +5,7 @@ import './index.css'
 import { addToCart } from './shoppingCartApi'
 import Cart from './pages/Cart/Cart'
 import Root from './pages/Root/Root'
+import Index from './pages/Index/Index'
 
 const router = createBrowserRouter([
   {

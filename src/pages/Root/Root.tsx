@@ -12,7 +12,12 @@ const Root = () => {
                     <img src="../../assets/Logo.svg" alt="Lolan Logo" />
                 </div>
                 <Link to="cart">
-                    <Icon aria-label="Cart Image" path={mdiCartOutline} />
+                    <Icon 
+                        aria-label="Cart Image" 
+                        path={mdiCartOutline} 
+                        color={"black"}
+                        size={1.5}
+                    />
                 </Link>
             </header>
             <main>
