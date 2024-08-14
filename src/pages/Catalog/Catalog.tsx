@@ -3,6 +3,7 @@ import { ReturnCatalog } from "../../main";
 
 const Item = (props: { item: CatalogObj }) => {
     const { item } = props;
+    const gender = item.category.substring(0, item.category.indexOf("'"));
     return (
         <div>
             <div>{item.title}</div>
@@ -11,7 +12,7 @@ const Item = (props: { item: CatalogObj }) => {
             </div>
             <div>
                 <div>{`$${item.price}`}</div>
-                <Link to="catalog/:sex/:itemId">
+                <Link to={`catalog/${gender}/${item.id}`}>
                     <span>See more</span>
                 </Link>
             </div>

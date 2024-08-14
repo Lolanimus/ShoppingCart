@@ -1,17 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Params, RouterProvider } from 'react-router-dom'
 import './index.css'
 import { addToCart, fetchData, getCatalog } from './shoppingCartApi'
 import Cart from './pages/Cart/Cart'
 import Root from './pages/Root/Root'
 import Index from './pages/Index/Index'
 import Catalog from './pages/Catalog/Catalog'
+import CatalogItem from './pages/CatalogItem/CatalogItem'
 
 const catalog = await fetchData("https://fakestoreapi.com/products/1");
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const catalogLoader = (params: {[key: string]: string | undefined}) => {
+const catalogLoader = (params: Params<string>) => {
   const gender = params.sex!;
   const returnCatalog = getCatalog(
     gender, 
@@ -21,6 +22,15 @@ const catalogLoader = (params: {[key: string]: string | undefined}) => {
   return {
     returnCatalog,
     gender
+  }
+}
+
+const catalogItemLoader = (params: Params<string>) => {
+  const { gender, itemId } = params;
+
+  return {
+    gender,
+    itemId
   }
 }
 
@@ -37,12 +47,12 @@ const router = createBrowserRouter([
         element: <Catalog />,
         loader: ({params}) => catalogLoader(params),
       },
-      // {
-      //   path: 'catalog/:sex/:itemId',
-      //   element: <Item />,
-      //   loader: getItem,
-      //   action: addToCart
-      // },
+      {
+        path: 'catalog/:sex/:itemId',
+        element: <CatalogItem />,
+        loader: ({params}) => catalogItemLoader(params),
+        // action: addToCart
+      },
       {
         path: '/cart',
         element: <Cart />,
