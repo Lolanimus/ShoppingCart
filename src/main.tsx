@@ -33,7 +33,7 @@ const router = createBrowserRouter([
     children: [
       {index: true, element: <Index />},
       {
-        path: 'catalog/:sex',
+        path: '/catalog/:sex',
         element: <Catalog />,
         loader: ({params}) => catalogLoader(params),
       },
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
       //   action: addToCart
       // },
       {
-        path: 'cart',
+        path: '/cart',
         element: <Cart />,
       },
     ],
@@ -57,4 +57,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   </React.StrictMode>,
 )
 
+export { catalogLoader };
 export type { ReturnCatalog };
