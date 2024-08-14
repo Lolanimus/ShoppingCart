@@ -34,6 +34,14 @@ const catalogItemLoader = (params: Params<string>) => {
   return item;
 }
 
+const catalogItemAction = async (params: Params<string>, request: Request) => {
+  const item = catalogItemLoader(params);
+  const form = await request.formData();
+  const size = form.get("size");
+  addToCart(item, size?.toString());
+  return null;
+}
+
 type ReturnCatalog = ReturnType<typeof catalogLoader>;
 
 const router = createBrowserRouter([
@@ -51,7 +59,7 @@ const router = createBrowserRouter([
         path: 'catalog/:sex/:itemId',
         element: <CatalogItem />,
         loader: ({params}) => catalogItemLoader(params),
-        // action: addToCart
+        action: ({params, request}) => catalogItemAction(params, request)
       },
       {
         path: '/cart',

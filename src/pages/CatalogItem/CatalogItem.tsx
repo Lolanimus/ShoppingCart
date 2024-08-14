@@ -16,7 +16,7 @@ const CatalogItem = () => {
                     <p>Description...</p>
                 </section>
                 <aside>
-                    <Form>
+                    <Form method="POST">
                         <div>
                             <p>Size: </p>
                             <label htmlFor="s">S</label>
