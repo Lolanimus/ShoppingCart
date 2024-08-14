@@ -9,9 +9,9 @@ const Root = () => {
         <>
             <header>
                 <GenderNav />
-                <div>
+                <Link to="">
                     <img src={logo} alt="Lolan Logo" />
-                </div>
+                </Link>
                 <Link to="cart">
                     <Icon 
                         aria-label="Cart Image" 
