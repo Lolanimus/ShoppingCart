@@ -17,7 +17,7 @@ describe("CatalogItem", () => {
             ), { initialEntries: ['/catalog/men/1']}
         )
         render(<RouterProvider router={router} />);
-        await waitFor(() => expect(screen.getByRole("banner", {name: item.title})).toBeInTheDocument());
+        await waitFor(() => expect(screen.getByRole("heading", {name: item.title})).toBeInTheDocument());
         expect(screen.getByRole("img", {name: item.title})).toBeInTheDocument();
         const main = screen.getByRole("main");
         expect(main).toBeInTheDocument();
@@ -25,7 +25,11 @@ describe("CatalogItem", () => {
         expect(within(main).getByRole("region")).toBeInTheDocument();
         const formSection = within(main).getByRole("complementary");
         expect(formSection).toBeInTheDocument();
-        expect(within(formSection).getAllByLabelText("").length).toBe(['S', 'M', 'L', 'XL']);
+        expect(within(formSection).getByLabelText("S")).toBeInTheDocument();
+        expect(within(formSection).getByRole("radio", {checked: true})).toBeInTheDocument();
+        expect(within(formSection).getByLabelText("L")).toBeInTheDocument();
+        expect(within(formSection).getByLabelText("M")).toBeInTheDocument();
+        expect(within(formSection).getByLabelText("XL")).toBeInTheDocument();
         expect(within(formSection).getByRole("button", {name: "Add to Cart"}));
     })
 })
