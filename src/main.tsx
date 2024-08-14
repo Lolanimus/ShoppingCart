@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
 import { addToCart } from './shoppingCartApi'
+import Cart from './pages/Cart/Cart'
+import Root from './pages/Root/Root'
 
 const router = createBrowserRouter([
   {
@@ -10,29 +12,20 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       {index: true, element: <Index />},
-      {
-        path: 'catalog/:sex',
-        element: <Catalog />,
-        loader: getCatalog
-      },
-      {
-        path: 'catalog/:sex/:itemId',
-        element: <Item />,
-        loader: getItem,
-        action: addToCart
-      },
+      // {
+      //   path: 'catalog/:sex',
+      //   element: <Catalog />,
+      //   loader: getCatalog
+      // },
+      // {
+      //   path: 'catalog/:sex/:itemId',
+      //   element: <Item />,
+      //   loader: getItem,
+      //   action: addToCart
+      // },
       {
         path: 'cart',
-        element: loadTotal,
-        action: buy,
-        children: [
-          {
-            path: 'items',
-            element: <CartItem />,
-            loader: getCartItems,
-            action: cartAction,
-          },
-        ],
+        element: <Cart />,
       },
     ],
   },
