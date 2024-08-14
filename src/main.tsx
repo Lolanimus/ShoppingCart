@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, Params, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Params, redirect, RouterProvider } from 'react-router-dom'
 import './index.css'
 import { addToCart, fetchData, getCatalog } from './shoppingCartApi'
 import Cart from './pages/Cart/Cart'
@@ -26,12 +26,12 @@ const catalogLoader = (params: Params<string>) => {
 }
 
 const catalogItemLoader = (params: Params<string>) => {
-  const { gender, itemId } = params;
-
-  return {
-    gender,
-    itemId
-  }
+  const itemId = params.itemId!;
+  const gender = params.sex!;
+  const returnCatalog = getCatalog(gender, catalog);
+  returnCatalog.filter(obj => obj.id === parseInt(itemId));
+  const item = returnCatalog[0];
+  return item;
 }
 
 type ReturnCatalog = ReturnType<typeof catalogLoader>;

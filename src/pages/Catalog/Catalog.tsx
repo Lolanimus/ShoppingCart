@@ -1,21 +1,18 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
 import { ReturnCatalog } from "../../main";
 
 const Item = (props: { item: CatalogObj }) => {
     const { item } = props;
-    const gender = item.category.substring(0, item.category.indexOf("'"));
     return (
         <div>
             <div>{item.title}</div>
             <div>
                 <img src={item.image} alt={item.title} />
             </div>
-            <div>
+            <Form action={item.id.toString()} method="GET">
                 <div>{`$${item.price}`}</div>
-                <Link to={`catalog/${gender}/${item.id}`}>
-                    <span>See more</span>
-                </Link>
-            </div>
+                <button type="submit">See more</button>
+            </Form>
         </div>
     );
 }
