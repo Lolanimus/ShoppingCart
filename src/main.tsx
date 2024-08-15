@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, Params, redirect, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Params, RouterProvider } from 'react-router-dom'
 import './index.css'
 import { addToCart, fetchData, getCatalog } from './shoppingCartApi'
 import Cart from './pages/Cart/Cart'

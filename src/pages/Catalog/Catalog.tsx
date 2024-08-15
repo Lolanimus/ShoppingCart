@@ -20,7 +20,6 @@ const Item = (props: { item: CatalogObj }) => {
 const Catalog = () => {
     const { returnCatalog, gender } = useLoaderData() as ReturnCatalog;
     const genderH1: string = gender.charAt(0).toUpperCase() + gender.substring(1, gender.length);
-    console.log(gender);
     return (
         <>
             <header>
