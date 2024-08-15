@@ -1,5 +1,5 @@
 import { Form, useLoaderData } from "react-router-dom";
-import { ReturnCatalog } from "../../main";
+import { ReturnCatalog } from "../../routerMethods";
 
 const Item = (props: { item: CatalogObj }) => {
     const { item } = props;

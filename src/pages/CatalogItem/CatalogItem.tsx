@@ -1,7 +1,7 @@
-import { Form, useLoaderData } from "react-router-dom";
+import { Form, useLoaderData, useSubmit } from "react-router-dom";
 import styles from "./CatalogItem.module.scss";
 
-function successPopUp() {
+async function successPopUp() {
     const popup = document.getElementById(styles.popUp)!;
     const button = document.getElementById("addToCartBtn")! as HTMLButtonElement;
     popup.classList.add(styles.popUpOn);
@@ -14,7 +14,8 @@ function successPopUp() {
 
 const CatalogItem = () => {
     const item = useLoaderData() as CatalogObj;
-    
+    const submit = useSubmit();
+
     return (
         <div className={styles.catalogItem}>
             <header>
@@ -28,7 +29,10 @@ const CatalogItem = () => {
                     <p>Description...</p>
                 </section>
                 <aside>
-                    <Form method="POST">
+                    <Form method="POST" onSubmit={(event) => {
+                        successPopUp();
+                        submit(event.currentTarget);
+                    }}>
                         <div>
                             <p>Size: </p>
                             <label htmlFor="s">S</label>
@@ -40,7 +44,7 @@ const CatalogItem = () => {
                             <label htmlFor="xl">XL</label>
                             <input type="radio" id="xl" name="size" value="xl"/>
                         </div>
-                        <button type="submit" onClick={() => successPopUp()} id="addToCartBtn">
+                        <button type="submit" id="addToCartBtn">
                             Add to Cart
                         </button>
                         <div id={styles.popUp}>Success</div>    
