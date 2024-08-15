@@ -1,0 +1,36 @@
+.catalogItem {
+    #popUp {
+        display: none;
+        position: absolute;
+        top: 50%;
+        user-select: none;
+        cursor: pointer;
+        width: 160px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 8px 0;
+        z-index: 1;
+    }
+
+    .popUpOn {
+        display: inline-block !important;
+        animation: fadeIn 2s;
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.8;
+        }
+        90% {
+            opacity: 0.8;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+}

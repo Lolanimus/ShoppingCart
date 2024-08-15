@@ -1,10 +1,22 @@
 import { Form, useLoaderData } from "react-router-dom";
+import styles from "./CatalogItem.module.scss";
+
+function successPopUp() {
+    const popup = document.getElementById(styles.popUp)!;
+    const button = document.getElementById("addToCartBtn")! as HTMLButtonElement;
+    popup.classList.add(styles.popUpOn);
+    button.disabled = true;
+    popup.addEventListener("animationend", () => {
+        popup.classList.remove(styles.popUpOn);
+        button.disabled = false;
+    });
+}
 
 const CatalogItem = () => {
     const item = useLoaderData() as CatalogObj;
     
     return (
-        <>
+        <div className={styles.catalogItem}>
             <header>
                 <h1>{item.title}</h1>
             </header>
@@ -28,11 +40,14 @@ const CatalogItem = () => {
                             <label htmlFor="xl">XL</label>
                             <input type="radio" id="xl" name="size" value="xl"/>
                         </div>
-                        <button type="submit">Add to Cart</button>
+                        <button type="submit" onClick={() => successPopUp()} id="addToCartBtn">
+                            Add to Cart
+                        </button>
+                        <div id={styles.popUp}>Success</div>    
                     </Form>
                 </aside>
             </main>
-        </>
+        </div>
     )
 }
 
