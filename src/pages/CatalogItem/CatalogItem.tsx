@@ -1,5 +1,42 @@
-import { Form, useLoaderData, useSubmit } from "react-router-dom";
+import { Form, Params, useLoaderData, useSubmit } from "react-router-dom";
 import styles from "./CatalogItem.module.scss";
+import { getCart } from "../../cart";
+import { addToCart, fetchData, getCatalog, incrementQuantityCart } from "../../shoppingCartApi";
+
+const isInCart = (itemId: number, size?: string) => {
+    let bool = false;
+
+    getCart().forEach(obj => {
+        if(obj.id === itemId) {
+        if(obj.size !== undefined)
+            obj.size !== size ? bool = false : bool = true
+        else
+            bool = true;
+        } 
+    });
+        
+    return bool;
+}
+  
+const catalogItemLoader = async (params: Params<string>) => {
+    const catalog = await fetchData("https://fakestoreapi.com/products/1");
+    const itemId = params.itemId!;
+    const gender = params.sex!;
+    const returnCatalog = getCatalog(gender, catalog);
+    returnCatalog.filter(obj => obj.id === parseInt(itemId));
+    const item = returnCatalog[0];
+    return item;
+}
+
+const catalogItemAction = async (params: Params<string>, request: Request) => {
+    const itemId = parseInt(params.itemId!);
+    const item = await catalogItemLoader(params);
+    const form = await request.formData();
+    const size = form.get("size")?.toString();
+    if(isInCart(itemId, size)) incrementQuantityCart(itemId, true);
+    else addToCart(item, size);
+    return null;
+}
 
 async function successPopUp() {
     const popup = document.getElementById(styles.popUp)!;
@@ -56,3 +93,4 @@ const CatalogItem = () => {
 }
 
 export default CatalogItem;
+export { catalogItemLoader, catalogItemAction };

@@ -1,13 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { catalogLoader, catalogItemLoader, catalogItemAction } from './routerMethods'
 import './index.css'
 import Cart from './pages/Cart/Cart'
 import Root from './pages/Root/Root'
 import Index from './pages/Index/Index'
-import Catalog from './pages/Catalog/Catalog'
-import CatalogItem from './pages/CatalogItem/CatalogItem'
+import Catalog, { catalogLoader } from './pages/Catalog/Catalog'
+import CatalogItem, { catalogItemLoader, catalogItemAction } from './pages/CatalogItem/CatalogItem'
 
 const router = createBrowserRouter([
   {

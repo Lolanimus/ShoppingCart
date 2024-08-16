@@ -1,5 +1,21 @@
-import { Form, useLoaderData } from "react-router-dom";
-import { ReturnCatalog } from "../../routerMethods";
+import { Form, Params, useLoaderData } from "react-router-dom";
+import { fetchData, getCatalog } from "../../shoppingCartApi";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const catalogLoader = async (params: Params<string>) => {
+    console.log(params);
+    const catalog = await fetchData("https://fakestoreapi.com/products/1");
+    const gender = params.sex!;
+    const returnCatalog = getCatalog(
+        gender, 
+        catalog
+    )
+
+    return {
+        returnCatalog,
+        gender
+    }
+}
 
 const Item = (props: { item: CatalogObj }) => {
     const { item } = props;
@@ -16,6 +32,12 @@ const Item = (props: { item: CatalogObj }) => {
         </div>
     );
 }
+
+
+type ReturnCatalog = {
+    returnCatalog: CatalogArr,
+    gender: string
+};
 
 const Catalog = () => {
     const { returnCatalog, gender } = useLoaderData() as ReturnCatalog;
@@ -39,4 +61,4 @@ const Catalog = () => {
 }
 
 export default Catalog;
-export { Item };
+export { Item, catalogLoader };

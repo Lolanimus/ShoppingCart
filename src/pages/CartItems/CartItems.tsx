@@ -31,7 +31,7 @@ const CartItems = (props: CartItemsProps) => {
     const result = storeHook.length > 0 ? (
         <ul data-testid="itemsList">
             {storeHook.map(item => (
-                <li key={item.id}>
+                <li key={`${item.id}${item.size}`}>
                     <section id="itemImg">
                         <img src={item.image} alt={item.title} />
                     </section>

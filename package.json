@@ -33,6 +33,7 @@
     "eslint-plugin-react-refresh": "^0.4.7",
     "jsdom": "^24.1.1",
     "lodash": "^4.17.21",
+    "msw": "^2.3.5",
     "react-router-dom": "^6.25.1",
     "sass": "^1.77.8",
     "ts-jest": "^29.2.3",
