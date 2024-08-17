@@ -84,7 +84,7 @@ const deleteFromCart = (productId: number, size?: string) => {
 const incrementQuantityCart = (productId: number, isIncrement: boolean, size?: string) => {
     const tempCart = getCart();
     tempCart.forEach(product => {
-        product.id === productId && product.size === size ? (isIncrement ? product.quantity += 1 : (product.quantity > 1 ? product.quantity -= 1 : deleteFromCart(productId))) : null;
+        product.id === productId && product.size === size ? (isIncrement ? product.quantity += 1 : (product.quantity > 1 ? product.quantity -= 1 : deleteFromCart(productId, size))) : null;
     })
     setCart([...tempCart]);
 }

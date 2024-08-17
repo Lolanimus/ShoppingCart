@@ -37,8 +37,8 @@ describe("addToCart", () => {
         addToCart(catalogMen[0], 's');
         addToCart(catalogWomen[0]);
         addToCart(catalogWomen[1], 'm');
-        incrementQuantityCart(data.contents[0].id, true);
-        incrementQuantityCart(data.contents[2].id, false);
+        incrementQuantityCart(data.contents[0].id, true, 's');
+        incrementQuantityCart(data.contents[2].id, false, 'm');
         expect(getCart()).toStrictEqual([{...data.contents[0], quantity: 2, size: 's'}, {...data.contents[1], quantity: 1, size: undefined}]);
     })
 
@@ -46,7 +46,7 @@ describe("addToCart", () => {
         addToCart(catalogMen[0], 's');
         addToCart(catalogWomen[0]);
         addToCart(catalogWomen[1], 'm');
-        deleteFromCart(data.contents[2].id);
+        deleteFromCart(data.contents[2].id, 'm');
         expect(getCart()).toStrictEqual([{...data.contents[0], quantity: 1, size: 's'}, {...data.contents[1], quantity: 1, size: undefined}]);
     })
 
@@ -54,8 +54,8 @@ describe("addToCart", () => {
         addToCart(catalogMen[0], 's');
         addToCart(catalogWomen[0]);
         addToCart(catalogWomen[1], 'm');
-        incrementQuantityCart(data.contents[0].id, true);
-        incrementQuantityCart(data.contents[0].id, true);
+        incrementQuantityCart(data.contents[0].id, true, 's');
+        incrementQuantityCart(data.contents[0].id, true, 's');
         expect(getCart()[0].quantity).toBe(3);
         expect(getTotalPrice()).toBe(1081.84);
     })
