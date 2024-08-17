@@ -2,6 +2,11 @@ import { Form, Params, useLoaderData, useSubmit } from "react-router-dom";
 import styles from "./CatalogItem.module.scss";
 import { addToCart, fetchData, getCatalog } from "../../shoppingCartApi";
   
+
+function isGender(category: string) {
+    return category === "men's clothing" || category === "women's clothing" ? true : false;
+}
+
 const catalogItemLoader = async (params: Params<string>, url: string) => {
     const catalog = await fetchData(url);
     const itemId = params.itemId!;
@@ -15,6 +20,7 @@ const catalogItemAction = async (params: Params<string>, request: Request, url: 
     const item = await catalogItemLoader(params, url);
     const form = await request.formData();
     const size = form.get("size")?.toString();
+    console.log(size);
     addToCart(item, size);
     return null;
 }
@@ -52,15 +58,26 @@ const CatalogItem = () => {
                         submit(event.currentTarget);
                     }}>
                         <div>
-                            <p>Size: </p>
-                            <label htmlFor="s">S</label>
-                            <input type="radio" id="s" name="size" value="s" defaultChecked={true}/>
-                            <label htmlFor="m">M</label>
-                            <input type="radio" id="m" name="size" value="m"/>
-                            <label htmlFor="l">L</label>
-                            <input type="radio" id="l" name="size" value="l"/>
-                            <label htmlFor="xl">XL</label>
-                            <input type="radio" id="xl" name="size" value="xl"/>
+                            {isGender(item.category) ? (
+                                <>
+                                    <p>Size: </p>
+                                    <label htmlFor="s">S</label>
+                                    <input type="radio" id="s" name="size" value="s" defaultChecked={true}/>
+                                    <label htmlFor="m">M</label>
+                                    <input type="radio" id="m" name="size" value="m"/>
+                                    <label htmlFor="l">L</label>
+                                    <input type="radio" id="l" name="size" value="l"/>
+                                    <label htmlFor="xl">XL</label>
+                                    <input type="radio" id="xl" name="size" value="xl"/>
+                                </>
+                            ) : (
+                                <>
+                                    <p>Size: </p>
+                                    <label htmlFor="noSize">One size</label>
+                                    <input type="radio" id="noSize" name="size" value={undefined} checked={true} readOnly={true} />
+                                </>
+                            )}
+
                         </div>
                         <button type="submit" id="addToCartBtn">
                             Add to Cart
