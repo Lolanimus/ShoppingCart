@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "pw": "playwright"
   },
   "dependencies": {
     "@mdi/js": "^7.4.47",
@@ -19,10 +20,12 @@
   "devDependencies": {
     "@babel/preset-typescript": "^7.24.7",
     "@jest/globals": "^29.7.0",
+    "@playwright/test": "^1.46.1",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
     "@types/lodash": "^4.17.7",
+    "@types/node": "^22.4.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.15.0",
@@ -34,8 +37,10 @@
     "jsdom": "^24.1.1",
     "lodash": "^4.17.21",
     "msw": "^2.3.5",
+    "playwright": "^1.46.1",
     "react-router-dom": "^6.25.1",
     "sass": "^1.77.8",
+    "serve": "^14.2.3",
     "ts-jest": "^29.2.3",
     "typescript": "^5.2.2",
     "typescript-plugin-css-modules": "^5.1.0",
