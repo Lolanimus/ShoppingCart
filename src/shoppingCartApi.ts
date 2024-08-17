@@ -58,18 +58,19 @@ const isInCart = (itemId: number, size?: string) => {
 }
 
 const addToCart = (item: CatalogObj, size?: string) => {
+    const inCart = isInCart(item.id, size);
+    if(inCart) {
+        incrementQuantityCart(item.id, true, size);
+        return null;
+    }
     const cartItem = {
         ...item,
         quantity: 1,
         size,
     };
     const tempCart = getCart();
-    const inCart = isInCart(item.id, size);
-    if(inCart) incrementQuantityCart(item.id, true);
-    else {
-        tempCart.push(cartItem);
-        setCart([...tempCart]);
-    }
+    tempCart.push(cartItem);
+    setCart([...tempCart]);
 }
 
 const deleteFromCart = (productId: number, size?: string) => {
