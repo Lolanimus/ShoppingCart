@@ -27,7 +27,8 @@ function cartItemsLoader() {
 const CartItems = () => {
     const cart = useLoaderData() as CartArr;
     const fetcher = useFetcher();
-    const result = cart.length > 0 ? (
+
+    const result = (
         <ul data-testid="itemsList" >
             {cart.map(item => (
                 <li  key={`${item.id}-${item.size}`}>
@@ -46,7 +47,7 @@ const CartItems = () => {
                                     </div>
                                     <div>
                                         { 
-                                            item.size !== undefined ? (
+                                            item.size !== "" ? (
                                                 <span data-testid="size">{item.size}</span>
                                             ) : (
                                                 <span data-testid="size">N/A</span>
@@ -72,11 +73,15 @@ const CartItems = () => {
                 </li>
             ))}
         </ul>
-    ) : (
-        <span>There are no items in your cart yet...</span>
     )
 
-    return result;
+    return (
+        cart.length > 0 ? (
+            result
+        ) : (
+            <span>There are no items in your cart yet...</span>
+        )
+    );
 }
 
 export default CartItems;
