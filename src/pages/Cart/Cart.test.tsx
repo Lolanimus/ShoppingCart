@@ -1,28 +1,44 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { expect, describe, it, beforeEach, afterEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import * as data from "../../__mocks__/data";
 import Cart from '../Cart/Cart';
-import { addToCart } from '../../shoppingCartApi';
-import { getTotalPrice, clearCart } from '../../shoppingCartApi';
+import { getTotalPrice, clearCart, addToCart } from '../../shoppingCartApi';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import CartItems from '../CartItems/CartItems';
+import { cartItemsLoader, cartLoader } from '../../routerMethods';
 
-function renderCart<T extends CatalogObj>(items: T | T[]) {
+
+function renderCart() {
     const user = userEvent.setup();
-    const itemsArray: T[] = Array.isArray(items) ? items : [items];
-    itemsArray.forEach((obj) => {
-        addToCart(obj);
-    })
+    const router = createMemoryRouter([
+        {
+            path: "/cart",
+            element: <Cart />,
+            loader: cartLoader,
+            children: [
+                {
+                    path: '/cart',
+                    element: <CartItems />,
+                    loader: cartItemsLoader
+                }
+            ]
+        }
+    ], { initialEntries: ["/cart"] });
 
-    render(<Cart />);
+    const { container } = render(<RouterProvider router={router}/>);
     
     return {
+        container,
         user
     }
 }
 
+
 describe("Cart", () => {
     beforeEach(() => {
         clearCart();
+        addToCart(data.contents[0]);
     })
     
     afterEach(() => {
@@ -30,32 +46,34 @@ describe("Cart", () => {
     })
 
     describe("renders correctly", () => {
-        it("with total price", () => {
-            renderCart(data.contents);
-            const cartLegend = screen.getByRole("heading", {level: 1});
+        it("with total price", async () => {
+            renderCart();
+            await waitFor(() => expect(screen.getByRole("heading", {level: 1})).toBeInTheDocument(), {interval: 10000});
             const cartItems = screen.getByTestId("itemsList"); 
             const totalLabel = screen.getByText("Total");
-            expect(cartLegend).toBeInTheDocument();
             expect(cartItems).toBeInTheDocument();
             expect(totalLabel).toBeInTheDocument();
             const total = screen.getByTestId("total");
             const buyBtn = screen.getByRole("button", {name: "Buy"});
             expect(total.textContent).toBe("$" + getTotalPrice());
             expect(buyBtn).toBeEnabled();
+            
         })
 
-        it("without total price", () => {
-            render(<Cart />);
-            const total = screen.getByTestId("total");
+        it("without total price", async () => {
+            clearCart();
+            renderCart();
+            await waitFor(() => screen.getByTestId("total"));
             const buyBtn = screen.getByRole("button", {name: "Buy"});
-            expect(total.textContent).toBe("N/A");
+            expect(screen.getByTestId("total").textContent).toBe("N/A");
             expect(buyBtn).toBeDisabled();
         })
     })
 
     describe("functionality", () => {
         it("buy button works", async () => {
-            const { user } = renderCart(data.contents);
+            const { user } = renderCart();
+            await waitFor(() => screen.getByRole("button", {name: "Buy"}));
             const buyBtn = screen.getByRole("button", {name: "Buy"});
             await user.click(buyBtn);
             expect(screen.getByTestId("dialog-true")).toBeInTheDocument();
