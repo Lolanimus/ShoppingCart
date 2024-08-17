@@ -37,6 +37,26 @@ const getTotalPrice = () => {
     return parseFloat(totalPrice.toFixed(2));
 }
 
+const isInCart = (itemId: number, size?: string) => {
+    let bool = false;
+
+    getCart().forEach(obj => {
+        if(obj.id === itemId) {
+            if(obj.size === undefined)
+                bool = true
+            else {
+                if(obj.size === size) {
+                    bool = true
+                } else {
+                    bool = false
+                }
+            }
+        } 
+    });
+        
+    return bool;
+}
+
 const addToCart = (item: CatalogObj, size?: string) => {
     const cartItem = {
         ...item,
@@ -44,22 +64,26 @@ const addToCart = (item: CatalogObj, size?: string) => {
         size,
     };
     const tempCart = getCart();
-    tempCart.push(cartItem);
-    setCart([...tempCart]);
+    const inCart = isInCart(item.id, size);
+    if(inCart) incrementQuantityCart(item.id, true);
+    else {
+        tempCart.push(cartItem);
+        setCart([...tempCart]);
+    }
 }
 
-const deleteFromCart = (productId: number) => {
+const deleteFromCart = (productId: number, size?: string) => {
     const tempCart = getCart();
     tempCart.forEach((product, i) => {
-        product.id === productId && tempCart.splice(i, 1);
+        (product.id === productId && product.size === size) && tempCart.splice(i, 1);
     })
     setCart([...tempCart]);
 }
 
-const incrementQuantityCart = (productId: number, isIncrement: boolean) => {
+const incrementQuantityCart = (productId: number, isIncrement: boolean, size?: string) => {
     const tempCart = getCart();
     tempCart.forEach(product => {
-        product.id === productId ? (isIncrement ? product.quantity += 1 : (product.quantity > 1 ? product.quantity -= 1 : deleteFromCart(productId))) : null;
+        product.id === productId && product.size === size ? (isIncrement ? product.quantity += 1 : (product.quantity > 1 ? product.quantity -= 1 : deleteFromCart(productId))) : null;
     })
     setCart([...tempCart]);
 }

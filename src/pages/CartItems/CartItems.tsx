@@ -1,32 +1,42 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Form, useLoaderData } from "react-router-dom";
+import { useLoaderData, useFetcher } from "react-router-dom";
 import QuantityChanger from "../../components/QuantityChanger/QuantityChanger";
-import { CartLoader } from "../Cart/Cart";
 import { deleteFromCart, incrementQuantityCart } from "../../shoppingCartApi";
+import { getCart } from "../../cart";
 
-async function cartItemsAction(request: Request) {
+type ItemInfo = {
+    itemId: number,
+    size?: string
+}
+
+async function cartItemsActions(request: Request) {
     const formData = await request.formData();
-    const increaseQuantity = parseInt(formData.get("increase") as string);
-    const decreaseQuantity = parseInt(formData.get("decrease") as string);
-    const deleteItem = parseInt(formData.get("delete") as string);
-    if(deleteItem) deleteFromCart(deleteItem);
-    if(increaseQuantity) incrementQuantityCart(increaseQuantity, true);
-    else if(decreaseQuantity) incrementQuantityCart(decreaseQuantity, false);
-    return null;
+    const increaseQuantity: ItemInfo = JSON.parse(formData.get("increase") as string);
+    const decreaseQuantity: ItemInfo = JSON.parse(formData.get("decrease") as string);
+    const deleteItem: ItemInfo = JSON.parse(formData.get("delete") as string);
+    if(deleteItem) deleteFromCart(deleteItem.itemId, deleteItem.size);
+    if(increaseQuantity) incrementQuantityCart(increaseQuantity.itemId, true, increaseQuantity.size);
+    else if(decreaseQuantity) incrementQuantityCart(decreaseQuantity.itemId, false, decreaseQuantity.size);
+    return null
+}
+
+function cartItemsLoader() {
+    return getCart();
 }
 
 const CartItems = () => {
-    const { cart } = useLoaderData() as CartLoader;
+    const cart = useLoaderData() as CartArr;
+    const fetcher = useFetcher();
     const result = cart.length > 0 ? (
-        <ul data-testid="itemsList">
+        <ul data-testid="itemsList" >
             {cart.map(item => (
-                <li key={`${item.id}${item.size}`}>
+                <li  key={`${item.id}-${item.size}`}>
                     <section id="itemImg">
                         <img src={item.image} alt={item.title} />
                     </section>
                     <aside id="itemSettings">
                         <ol>
-                            <Form method="POST">
+                            <fetcher.Form method="POST">
                                 <li>
                                     <span data-testid="title">{item.title}</span>
                                 </li>
@@ -45,7 +55,7 @@ const CartItems = () => {
                                     </div>
                                 </li> 
                                 <li>
-                                    <QuantityChanger itemId={item.id} cart={cart}/>
+                                    <QuantityChanger item={item} itemInfo={{itemId: item.id, size: item.size}}/>
                                 </li>
                                 <li>
                                     <div>
@@ -55,8 +65,8 @@ const CartItems = () => {
                                         <span>{`$${(item.price * item.quantity).toFixed(2)}`}</span>
                                     </div>
                                 </li>
-                                <button type="submit" name="delete" value={item.id}>Delete</button>
-                            </Form>
+                                <button type="submit" name="delete" value={JSON.stringify({itemId: item.id, size: item.size})}>Delete</button>
+                            </fetcher.Form>
                         </ol>
                     </aside>
                 </li>
@@ -70,4 +80,5 @@ const CartItems = () => {
 }
 
 export default CartItems;
-export { cartItemsAction };
+export { cartItemsLoader, cartItemsActions };
+export type { ItemInfo };

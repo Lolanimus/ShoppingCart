@@ -7,7 +7,7 @@ import Root from './pages/Root/Root'
 import Index from './pages/Index/Index'
 import Catalog, { catalogLoader } from './pages/Catalog/Catalog'
 import CatalogItem, { catalogItemLoader, catalogItemAction } from './pages/CatalogItem/CatalogItem'
-import CartItems, { cartItemsAction } from './pages/CartItems/CartItems'
+import CartItems, { cartItemsActions, cartItemsLoader } from './pages/CartItems/CartItems'
 
 const router = createBrowserRouter([
   {
@@ -30,12 +30,12 @@ const router = createBrowserRouter([
         path: '/cart',
         element: <Cart />,
         loader: cartLoader,
-        action: ({request}) => cartItemsAction(request),
         children: [
           {
-            path: '',
+            path: '/cart',
             element: <CartItems />,
-            loader: cartLoader,
+            loader: cartItemsLoader,
+            action: ({request}) => cartItemsActions(request),
           }
         ]
       },

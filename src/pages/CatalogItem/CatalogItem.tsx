@@ -1,22 +1,6 @@
 import { Form, Params, useLoaderData, useSubmit } from "react-router-dom";
 import styles from "./CatalogItem.module.scss";
-import { getCart } from "../../cart";
-import { addToCart, fetchData, getCatalog, incrementQuantityCart } from "../../shoppingCartApi";
-
-const isInCart = (itemId: number, size?: string) => {
-    let bool = false;
-
-    getCart().forEach(obj => {
-        if(obj.id === itemId) {
-        if(obj.size !== undefined)
-            obj.size !== size ? bool = false : bool = true
-        else
-            bool = true;
-        } 
-    });
-        
-    return bool;
-}
+import { addToCart, fetchData, getCatalog } from "../../shoppingCartApi";
   
 const catalogItemLoader = async (params: Params<string>) => {
     const catalog = await fetchData("https://fakestoreapi.com/products/1");
@@ -28,15 +12,10 @@ const catalogItemLoader = async (params: Params<string>) => {
 }
 
 const catalogItemAction = async (params: Params<string>, request: Request) => {
-    const itemId = parseInt(params.itemId!);
     const item = await catalogItemLoader(params);
     const form = await request.formData();
     const size = form.get("size")?.toString();
-    console.log(itemId);
-    console.log(size);
-    console.log(isInCart(itemId, size));
-    if(isInCart(itemId, size)) incrementQuantityCart(itemId, true);
-    else addToCart(item, size);
+    addToCart(item, size);
     return null;
 }
 

@@ -12,6 +12,7 @@ const cartLoader = () => {
     }
 }
 
+
 type CartLoader = ReturnType<typeof cartLoader>;
 
 function BuySuccess(props: {toggleDialog: () => void, open: boolean}) {
@@ -38,7 +39,7 @@ const Cart = () => {
         <div>
             <h1>Cart</h1>
             <div>
-                <Outlet/>
+                <Outlet />
                 <div>
                     <div>
                         <span>Total</span>

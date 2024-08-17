@@ -1,11 +1,12 @@
-const QuantityChanger = (props: { cart: CartArr, itemId: number }) => {
-    const item = props.cart.find((obj) => obj.id === props.itemId)!;
-    console.log(item.quantity);
+import { ItemInfo } from "../../pages/CartItems/CartItems";
+
+const QuantityChanger = (props: { item: CartObj, itemInfo: ItemInfo}) => {
+    const { item, itemInfo } = props;
     return (
         <div>
-            <button type="submit" name="decrease" value={props.itemId}>-</button>
+            <button type="submit" name="decrease" value={JSON.stringify({itemId: itemInfo.itemId, size: itemInfo.size})}>-</button>
             <span data-testid="quantity">{item.quantity}</span>
-            <button type="submit" name="increase" value={props.itemId}>+</button>
+            <button type="submit" name="increase" value={JSON.stringify({itemId: itemInfo.itemId, size: itemInfo.size})}>+</button>
         </div>
     )
 }
