@@ -25,7 +25,6 @@ function cartItemsLoader() {
     return getCart();
 }
 
-
 const catalogItemLoader = async (params: Params<string>, url: string) => {
     const catalog = await fetchData(url);
     const itemId = params.itemId!;
@@ -39,7 +38,6 @@ const catalogItemAction = async (params: Params<string>, request: Request, url: 
     const item = await catalogItemLoader(params, url);
     const form = await request.formData();
     const size = form.get("size")?.toString();
-    console.log(size);
     addToCart(item, size);
     return null;
 }
