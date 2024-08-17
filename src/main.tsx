@@ -9,6 +9,8 @@ import Catalog, { catalogLoader } from './pages/Catalog/Catalog'
 import CatalogItem, { catalogItemLoader, catalogItemAction } from './pages/CatalogItem/CatalogItem'
 import CartItems, { cartItemsActions, cartItemsLoader } from './pages/CartItems/CartItems'
 
+const url = "https://fakestoreapi.com/products";
+
 const router = createBrowserRouter([
   {
     path: '',
@@ -18,13 +20,13 @@ const router = createBrowserRouter([
       {
         path: '/catalog/:sex',
         element: <Catalog />,
-        loader: ({params}) => catalogLoader(params),
+        loader: ({params}) => catalogLoader(params, url)
       },
       {
         path: 'catalog/:sex/:itemId',
         element: <CatalogItem />,
-        loader: ({params}) => catalogItemLoader(params),
-        action: ({params, request}) => catalogItemAction(params, request)
+        loader: ({params}) => catalogItemLoader(params, url),
+        action: ({params, request}) => catalogItemAction(params, request, url)
       },
       {
         path: '/cart',

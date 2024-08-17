@@ -2,8 +2,8 @@ import { Form, Params, useLoaderData, useSubmit } from "react-router-dom";
 import styles from "./CatalogItem.module.scss";
 import { addToCart, fetchData, getCatalog } from "../../shoppingCartApi";
   
-const catalogItemLoader = async (params: Params<string>) => {
-    const catalog = await fetchData("https://fakestoreapi.com/products/1");
+const catalogItemLoader = async (params: Params<string>, url: string) => {
+    const catalog = await fetchData(url);
     const itemId = params.itemId!;
     const gender = params.sex!;
     const returnCatalog = getCatalog(gender, catalog);
@@ -11,8 +11,8 @@ const catalogItemLoader = async (params: Params<string>) => {
     return item;
 }
 
-const catalogItemAction = async (params: Params<string>, request: Request) => {
-    const item = await catalogItemLoader(params);
+const catalogItemAction = async (params: Params<string>, request: Request, url: string) => {
+    const item = await catalogItemLoader(params, url);
     const form = await request.formData();
     const size = form.get("size")?.toString();
     addToCart(item, size);

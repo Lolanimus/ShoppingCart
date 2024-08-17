@@ -2,8 +2,8 @@ import { Form, Params, useLoaderData } from "react-router-dom";
 import { fetchData, getCatalog } from "../../shoppingCartApi";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const catalogLoader = async (params: Params<string>) => {
-    const catalog = await fetchData("https://fakestoreapi.com/products/1");
+const catalogLoader = async (params: Params<string>, url: string) => {
+    const catalog = await fetchData(url);
     const gender = params.sex!;
     const returnCatalog = getCatalog(
         gender, 
