@@ -1,4 +1,4 @@
-import { useLoaderData, Outlet } from "react-router-dom";
+import { useLoaderData, Outlet, Form } from "react-router-dom";
 import { getCart } from "../../cart";
 import { clearCart, getTotalPrice } from "../../shoppingCartApi";
 import { useState } from "react";
@@ -6,7 +6,6 @@ import { useState } from "react";
 const cartLoader = () => {
     const cart = getCart();
     return {
-        cart,
         total: getTotalPrice(),
         buyDisabled: cart.length > 0 ? false : true,
     }
@@ -53,7 +52,9 @@ const Cart = () => {
                             )
                         }
                     </div>
-                    <button disabled={buyDisabled} onClick={toggleDialog}>Buy</button>
+                    <Form method="get" onClick={() => clearCart()}>
+                        <button disabled={buyDisabled} onClick={toggleDialog}>Buy</button>
+                    </Form>
                 </div>
             </div>
             <BuySuccess open={open} toggleDialog={toggleDialog}/>
