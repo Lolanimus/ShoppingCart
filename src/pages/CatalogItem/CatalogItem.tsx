@@ -1,4 +1,4 @@
-import { Form, Params, useLoaderData, useSubmit } from "react-router-dom";
+import { Form, Params, useLoaderData } from "react-router-dom";
 import styles from "./CatalogItem.module.scss";
 import { addToCart, fetchData, getCatalog } from "../../shoppingCartApi";
   
@@ -38,7 +38,6 @@ async function successPopUp() {
 
 const CatalogItem = () => {
     const item = useLoaderData() as CatalogObj;
-    const submit = useSubmit();
 
     return (
         <div className={styles.catalogItem}>
@@ -53,9 +52,8 @@ const CatalogItem = () => {
                     <p>Description...</p>
                 </section>
                 <aside>
-                    <Form method="POST" onSubmit={(event) => {
+                    <Form method="POST" onSubmit={() => {
                         successPopUp();
-                        submit(event.currentTarget);
                     }}>
                         <div>
                             {isGender(item.category) ? (
