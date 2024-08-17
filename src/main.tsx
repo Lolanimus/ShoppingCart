@@ -2,11 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
-import Cart from './pages/Cart/Cart'
+import Cart, { cartLoader } from './pages/Cart/Cart'
 import Root from './pages/Root/Root'
 import Index from './pages/Index/Index'
 import Catalog, { catalogLoader } from './pages/Catalog/Catalog'
 import CatalogItem, { catalogItemLoader, catalogItemAction } from './pages/CatalogItem/CatalogItem'
+import CartItems, { cartItemsAction } from './pages/CartItems/CartItems'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,15 @@ const router = createBrowserRouter([
       {
         path: '/cart',
         element: <Cart />,
+        loader: cartLoader,
+        action: ({request}) => cartItemsAction(request),
+        children: [
+          {
+            path: '',
+            element: <CartItems />,
+            loader: cartLoader,
+          }
+        ]
       },
     ],
   },

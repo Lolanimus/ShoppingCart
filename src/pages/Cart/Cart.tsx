@@ -1,6 +1,18 @@
-import { clearCart } from "../../shoppingCartApi";
-import CartItems from "../CartItems/CartItems";
+import { useLoaderData, Outlet } from "react-router-dom";
+import { getCart } from "../../cart";
+import { clearCart, getTotalPrice } from "../../shoppingCartApi";
 import { useState } from "react";
+
+const cartLoader = () => {
+    const cart = getCart();
+    return {
+        cart,
+        total: getTotalPrice(),
+        buyDisabled: cart.length > 0 ? false : true,
+    }
+}
+
+type CartLoader = ReturnType<typeof cartLoader>;
 
 function BuySuccess(props: {toggleDialog: () => void, open: boolean}) {
     const { toggleDialog, open } = props;
@@ -16,9 +28,8 @@ function BuySuccess(props: {toggleDialog: () => void, open: boolean}) {
 }
 
 const Cart = () => {
-    const [open, setOpen] = useState(false)
-    const [total, setTotal] = useState(0);
-    const [buyDisabled, setBuyDisabled] = useState(true);
+    const { total, buyDisabled } = useLoaderData() as CartLoader;
+    const [open, setOpen] = useState(false);
     const toggleDialog = () => {
         setOpen(!open);
     };
@@ -26,8 +37,8 @@ const Cart = () => {
     return (
         <div>
             <h1>Cart</h1>
-            <form onSubmit={e => e.preventDefault()}>
-                <CartItems totalState={{setTotal}} buyState={{buyDisabled, setBuyDisabled}}/>
+            <div>
+                <Outlet/>
                 <div>
                     <div>
                         <span>Total</span>
@@ -43,10 +54,12 @@ const Cart = () => {
                     </div>
                     <button disabled={buyDisabled} onClick={toggleDialog}>Buy</button>
                 </div>
-            </form>
+            </div>
             <BuySuccess open={open} toggleDialog={toggleDialog}/>
         </div>
     )
 }
 
 export default Cart;
+export { cartLoader };
+export type { CartLoader };

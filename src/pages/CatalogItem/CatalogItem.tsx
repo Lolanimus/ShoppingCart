@@ -23,8 +23,7 @@ const catalogItemLoader = async (params: Params<string>) => {
     const itemId = params.itemId!;
     const gender = params.sex!;
     const returnCatalog = getCatalog(gender, catalog);
-    returnCatalog.filter(obj => obj.id === parseInt(itemId));
-    const item = returnCatalog[0];
+    const item = returnCatalog.find(obj => obj.id === parseInt(itemId))!;
     return item;
 }
 

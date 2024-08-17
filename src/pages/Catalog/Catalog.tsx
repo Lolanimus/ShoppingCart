@@ -3,7 +3,6 @@ import { fetchData, getCatalog } from "../../shoppingCartApi";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const catalogLoader = async (params: Params<string>) => {
-    console.log(params);
     const catalog = await fetchData("https://fakestoreapi.com/products/1");
     const gender = params.sex!;
     const returnCatalog = getCatalog(
