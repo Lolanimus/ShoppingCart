@@ -32,6 +32,9 @@ const catalogItemAction = async (params: Params<string>, request: Request) => {
     const item = await catalogItemLoader(params);
     const form = await request.formData();
     const size = form.get("size")?.toString();
+    console.log(itemId);
+    console.log(size);
+    console.log(isInCart(itemId, size));
     if(isInCart(itemId, size)) incrementQuantityCart(itemId, true);
     else addToCart(item, size);
     return null;
