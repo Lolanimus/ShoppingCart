@@ -1,28 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useLoaderData, useFetcher } from "react-router-dom";
 import QuantityChanger from "../../components/QuantityChanger/QuantityChanger";
-import { deleteFromCart, incrementQuantityCart } from "../../shoppingCartApi";
-import { getCart } from "../../cart";
-
-type ItemInfo = {
-    itemId: number,
-    size?: string
-}
-
-async function cartItemsActions(request: Request) {
-    const formData = await request.formData();
-    const increaseQuantity: ItemInfo = JSON.parse(formData.get("increase") as string);
-    const decreaseQuantity: ItemInfo = JSON.parse(formData.get("decrease") as string);
-    const deleteItem: ItemInfo = JSON.parse(formData.get("delete") as string);
-    if(deleteItem) deleteFromCart(deleteItem.itemId, deleteItem.size);
-    if(increaseQuantity) incrementQuantityCart(increaseQuantity.itemId, true, increaseQuantity.size);
-    else if(decreaseQuantity) incrementQuantityCart(decreaseQuantity.itemId, false, decreaseQuantity.size);
-    return null
-}
-
-function cartItemsLoader() {
-    return getCart();
-}
 
 const CartItems = () => {
     const cart = useLoaderData() as CartArr;
@@ -85,5 +63,3 @@ const CartItems = () => {
 }
 
 export default CartItems;
-export { cartItemsLoader, cartItemsActions };
-export type { ItemInfo };

@@ -1,18 +1,7 @@
 import { useLoaderData, Outlet, Form } from "react-router-dom";
-import { getCart } from "../../cart";
-import { clearCart, getTotalPrice } from "../../shoppingCartApi";
+import { clearCart } from "../../shoppingCartApi";
 import { useState } from "react";
-
-const cartLoader = () => {
-    const cart = getCart();
-    return {
-        total: getTotalPrice(),
-        buyDisabled: cart.length > 0 ? false : true,
-    }
-}
-
-
-type CartLoader = ReturnType<typeof cartLoader>;
+import { CartLoader } from "../../routerMethods";
 
 function BuySuccess(props: {toggleDialog: () => void, open: boolean}) {
     const { toggleDialog, open } = props;
@@ -63,5 +52,3 @@ const Cart = () => {
 }
 
 export default Cart;
-export { cartLoader };
-export type { CartLoader };

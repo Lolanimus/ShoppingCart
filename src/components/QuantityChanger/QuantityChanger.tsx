@@ -1,4 +1,4 @@
-import { ItemInfo } from "../../pages/CartItems/CartItems";
+import { ItemInfo } from "../../routerMethods";
 
 const QuantityChanger = (props: { item: CartObj, itemInfo: ItemInfo}) => {
     const { item, itemInfo } = props;

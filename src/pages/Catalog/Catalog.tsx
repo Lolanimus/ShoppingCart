@@ -1,20 +1,4 @@
-import { Form, Params, useLoaderData } from "react-router-dom";
-import { fetchData, getCatalog } from "../../shoppingCartApi";
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const catalogLoader = async (params: Params<string>, url: string) => {
-    const catalog = await fetchData(url);
-    const gender = params.sex!;
-    const returnCatalog = getCatalog(
-        gender, 
-        catalog
-    )
-
-    return {
-        returnCatalog,
-        gender
-    }
-}
+import { Form, useLoaderData } from "react-router-dom";
 
 const Item = (props: { item: CatalogObj }) => {
     const { item } = props;
@@ -60,4 +44,4 @@ const Catalog = () => {
 }
 
 export default Catalog;
-export { Item, catalogLoader };
+export { Item };

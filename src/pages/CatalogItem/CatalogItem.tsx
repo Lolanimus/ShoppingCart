@@ -1,28 +1,8 @@
-import { Form, Params, useLoaderData } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
 import styles from "./CatalogItem.module.scss";
-import { addToCart, fetchData, getCatalog } from "../../shoppingCartApi";
-  
 
 function isGender(category: string) {
     return category === "men's clothing" || category === "women's clothing" ? true : false;
-}
-
-const catalogItemLoader = async (params: Params<string>, url: string) => {
-    const catalog = await fetchData(url);
-    const itemId = params.itemId!;
-    const gender = params.sex!;
-    const returnCatalog = getCatalog(gender, catalog);
-    const item = returnCatalog.find(obj => obj.id === parseInt(itemId))!;
-    return item;
-}
-
-const catalogItemAction = async (params: Params<string>, request: Request, url: string) => {
-    const item = await catalogItemLoader(params, url);
-    const form = await request.formData();
-    const size = form.get("size")?.toString();
-    console.log(size);
-    addToCart(item, size);
-    return null;
 }
 
 async function successPopUp() {
@@ -89,4 +69,3 @@ const CatalogItem = () => {
 }
 
 export default CatalogItem;
-export { catalogItemLoader, catalogItemAction };

@@ -2,12 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
-import Cart, { cartLoader } from './pages/Cart/Cart'
+import Cart from './pages/Cart/Cart'
 import Root from './pages/Root/Root'
 import Index from './pages/Index/Index'
-import Catalog, { catalogLoader } from './pages/Catalog/Catalog'
-import CatalogItem, { catalogItemLoader, catalogItemAction } from './pages/CatalogItem/CatalogItem'
-import CartItems, { cartItemsActions, cartItemsLoader } from './pages/CartItems/CartItems'
+import Catalog from './pages/Catalog/Catalog'
+import CatalogItem from './pages/CatalogItem/CatalogItem'
+import CartItems from './pages/CartItems/CartItems'
+import { cartItemsActions, cartItemsLoader, cartLoader, catalogItemAction, catalogItemLoader, catalogLoader } from './routerMethods'
 
 const url = "https://fakestoreapi.com/products";
 
