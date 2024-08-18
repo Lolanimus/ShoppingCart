@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest",
-    "pw": "playwright"
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@mdi/js": "^7.4.47",
