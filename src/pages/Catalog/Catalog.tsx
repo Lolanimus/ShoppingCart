@@ -3,7 +3,7 @@ import { Form, useLoaderData } from "react-router-dom";
 const Item = (props: { item: CatalogObj }) => {
     const { item } = props;
     return (
-        <div>
+        <div id={`item${item.id}`}>
             <div>{item.title}</div>
             <div>
                 <img src={item.image} alt={item.title} />

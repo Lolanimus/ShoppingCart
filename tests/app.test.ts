@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { act } from 'react';
 
 test.describe("Root", () => {
   test('has title', async ({ page, baseURL }) => {
@@ -56,5 +57,16 @@ test.describe("Index", () => {
     const womenCatalog = await page.getByRole("link", { name: "Women", exact: true }).all();
     await womenCatalog[1].click()
     await page.waitForURL(baseURL + "/catalog/women");
+  })
+})
+
+test.describe.only("Catalog", () => {
+  test("goes to men's catalog", async ({ page, baseURL }) => {
+    await page.goto(baseURL + "/catalog/men");
+    const firstForm = page.locator("#item1");
+    await expect(firstForm).toBeAttached();
+    const seeMoreBtn = firstForm.locator("button");
+    await seeMoreBtn.click();
+    await page.waitForURL(baseURL + "/catalog/men/1");
   })
 })

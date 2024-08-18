@@ -23,6 +23,8 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter:  process.env.CI ? 'html' : 'line',
 
+  timeout: 0.5 * 60 * 1000,
+
   /* Configure projects for major browsers */
   projects: [
     {
