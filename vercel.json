@@ -1,5 +1,8 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
-  ]
+    "routes": [
+      { "src": "/", "dest": "/" },
+      { "src": "/catalog/:sex", "dest": "/" },
+      { "src": "/catalog/:sex/:itemId", "dest": "/" },
+      { "src": "/cart", "dest": "/" }
+    ]
 }
