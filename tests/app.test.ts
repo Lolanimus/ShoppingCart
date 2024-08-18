@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe("Rooot", () => {
+test.describe("Root", () => {
   test('has title', async ({ page, baseURL }) => {
     await page.goto(baseURL!);
   
@@ -41,3 +41,20 @@ test.describe("Rooot", () => {
   })
 })
 
+test.describe("Index", () => {
+  test("goes to men's catalog", async ({ page, baseURL }) => {
+    await page.goto(baseURL!);
+
+    const menCatalog = await page.getByRole("link", { name: "Men", exact: true }).all();
+    await menCatalog[1].click()
+    await page.waitForURL(baseURL + "/catalog/men");
+  })
+
+  test("goes to women's catalog", async ({ page, baseURL }) => {
+    await page.goto(baseURL!);
+
+    const womenCatalog = await page.getByRole("link", { name: "Women", exact: true }).all();
+    await womenCatalog[1].click()
+    await page.waitForURL(baseURL + "/catalog/women");
+  })
+})
