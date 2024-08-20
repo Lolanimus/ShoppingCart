@@ -20,7 +20,7 @@ describe("Catalog", () => {
             ), {initialEntries: ['/catalog/men']}   
         );
         render(<RouterProvider router={router}/>);
-        await waitFor(() => expect(screen.getByRole("heading", {name: "Men"})));
+        await waitFor(() => expect(screen.getByRole("heading", {name: "• Men"})));
         expect(screen.getAllByRole("region"));
     })
 })

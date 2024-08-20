@@ -2,13 +2,13 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    header {
+    > header {
         height: 64px;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
-        a {            
+        > a {            
             display: flex;
             justify-self: center;
             align-items: center;
@@ -30,14 +30,15 @@
         border-bottom: 1px solid var(--light-grey);
     }
 
-    main { 
+    > main { 
         flex: 1;
     }
 
-    footer {
+    > footer {
         height: 48px;
         flex-shrink: 0;
         padding: 12px;
+        margin-top: 28px;
         flex-basis: auto;
         text-align: center;
         border-top: 1px solid var(--light-grey);

@@ -1,0 +1,58 @@
+.catalog {
+    > header {
+        > h1 {
+            padding: 16px;
+            border-bottom: 1px solid var(--light-grey);
+        }
+    }
+    main > section {
+        margin: 16px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+        gap: 128px;
+        
+        > div {
+            display: grid;
+            grid-template-rows: 1fr;
+            grid-template-columns: 1fr;
+            gap: 16px;
+
+            #imgDiv {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 16px;
+            }
+            
+            > #imgDiv > img {
+                max-height:100%; 
+                max-width:100%;  
+            }       
+
+            > #itemInfo {
+                display: flex;
+                justify-content:space-between;
+                flex-direction: row;
+                align-items: center;
+                height: 40px;
+
+                > div {
+                    > p {
+                        font-weight: bolder;
+                    }
+
+                    > span {
+                        display: block;
+                        margin-top: 12px;
+                    }
+                }
+
+                button {
+                    width: 86px;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}
