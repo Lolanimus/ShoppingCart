@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
+import '../fonts/Satoshi/css/satoshi.css';
 import Cart from './pages/Cart/Cart'
 import Root from './pages/Root/Root'
 import Index from './pages/Index/Index'

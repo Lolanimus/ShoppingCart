@@ -10,7 +10,7 @@ const Root = () => {
             <header>
                 <GenderNav />
                 <Link to="">
-                    <img src={logo} alt="Lolan Logo" />
+                    <img src={logo} alt="Lolan Logo" width="15%" />
                 </Link>
                 <Link to="cart">
                     <Icon 

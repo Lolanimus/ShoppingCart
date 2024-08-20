@@ -14,7 +14,7 @@ const Index = () => {
                     </div>
                 </div>
                 <div>
-                    <img src={logo} alt="Lolan Logo" />
+                    <img src={logo} alt="Lolan Logo" width="50%"/>
                 </div>
             </div>
             <GenderNav />
