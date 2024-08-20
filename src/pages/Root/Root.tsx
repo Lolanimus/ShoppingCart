@@ -3,14 +3,15 @@ import GenderNav from "../../components/GenderNav/GenderNav";
 import Icon from '@mdi/react';
 import { mdiCartOutline } from '@mdi/js';
 import logo from "../../assets/Logo.svg";
+import styles from "./Root.module.scss";
 
 const Root = () => {
     return(
-        <>
+        <div className={styles.root}>
             <header>
                 <GenderNav />
                 <Link to="">
-                    <img src={logo} alt="Lolan Logo" width="15%" />
+                    <img src={logo} alt="Lolan Logo" />
                 </Link>
                 <Link to="cart">
                     <Icon 
@@ -25,9 +26,9 @@ const Root = () => {
                 <Outlet />
             </main>
             <footer>
-                Artem Melnikov 2024
+                <span>Artem Melnikov 2024</span>
             </footer>
-        </>
+        </div>
     )
 }
 
