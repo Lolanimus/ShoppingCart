@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 function renderRouter() {
     render(
         <MemoryRouter>
-            <GenderNav />
+            <GenderNav isIndex={false}/>
         </MemoryRouter>
     )
 }

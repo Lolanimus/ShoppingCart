@@ -9,7 +9,7 @@ const Root = () => {
     return(
         <div className={styles.root}>
             <header>
-                <GenderNav />
+                <GenderNav isIndex={false}/>
                 <Link to="">
                     <img src={logo} alt="Lolan Logo" />
                 </Link>

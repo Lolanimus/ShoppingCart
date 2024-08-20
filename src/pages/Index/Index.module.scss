@@ -1,0 +1,32 @@
+.index {
+    margin: 32px;
+    #mainDiv {
+        border: 1px solid var(--black);
+        display: flex;
+        
+        :first-child {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        :last-child {
+
+        }
+    }
+
+    nav {
+        border: 1px solid var(--black);
+        display: flex;
+        height: 200px;
+        gap: 0;
+        a {
+            font-size: 32px;
+            display: flex;
+            align-items: center;
+            width: 50%;
+            border: 1px solid var(--black);
+            padding-left: 32px;
+        }
+    }
+}

@@ -1,10 +1,11 @@
 import GenderNav from "../../components/GenderNav/GenderNav";
 import logo from "../../assets/Logo.svg";
+import styles from "./Index.module.scss"
 
 const Index = () => {
     return (
-        <>
-            <div>
+        <div className={styles.index}>
+            <div id={styles.mainDiv}>
                 <div>
                     <div>
                         <h1>Lolan</h1>
@@ -17,8 +18,8 @@ const Index = () => {
                     <img src={logo} alt="Lolan Logo" width="50%"/>
                 </div>
             </div>
-            <GenderNav />
-        </>
+            <GenderNav isIndex={true}/>
+        </div>
     )
 }
 
