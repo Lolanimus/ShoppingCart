@@ -2,7 +2,7 @@ import { Link, Outlet } from "react-router-dom";
 import GenderNav from "../../components/GenderNav/GenderNav";
 import Icon from '@mdi/react';
 import { mdiCartOutline } from '@mdi/js';
-import logo from "../../assets/Logo.svg";
+import logoSmall from "../../assets/Logo_Small.svg";
 import styles from "./Root.module.scss";
 
 const Root = () => {
@@ -11,7 +11,7 @@ const Root = () => {
             <header>
                 <GenderNav isIndex={false}/>
                 <Link to="">
-                    <img src={logo} alt="Lolan Logo" />
+                    <img src={logoSmall} alt="Lolan Logo" />
                 </Link>
                 <Link to="cart">
                     <Icon 
