@@ -1,4 +1,7 @@
 .root {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
     header {
         height: 64px;
         display: flex;
@@ -27,11 +30,16 @@
         border-bottom: 1px solid var(--light-grey);
     }
 
+    main { 
+        flex: 1;
+    }
+
     footer {
-        position: absolute;
-        bottom: 0;
+        height: 48px;
+        flex-shrink: 0;
         padding: 12px;
-        width: 100%;
+        flex-basis: auto;
         text-align: center;
+        border-top: 1px solid var(--light-grey);
     }
 }

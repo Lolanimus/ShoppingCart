@@ -11,7 +11,7 @@ const Index = () => {
                         <h1>Lolan</h1>
                     </div>
                     <div>
-                        <h2>Description...</h2>
+                        <h2>We Sell Clothes</h2>
                     </div>
                 </div>
                 <div>

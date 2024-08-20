@@ -5,18 +5,28 @@ import styles from "./GenderNav.module.scss";
 import stylesIndex from "../../pages/Index/Index.module.scss";
 
 const GenderNav = (props: { isIndex: boolean }) => {
-    return (
+    const result = props.isIndex ? (
         <nav className={styles.genderNav}>
-            <NavLink to="catalog/men" >
+            <NavLink to="catalog/men" className={"link"}>
                 <span>Men</span>
-                { props.isIndex && <Icon path={mdiArrowRight} size={1} className={stylesIndex.index}/> }
+                <Icon path={mdiArrowRight} size={1.5} className={stylesIndex.index}/>
+            </NavLink>
+            <NavLink to="catalog/women" className="link">
+                <span>Women</span>
+                <Icon path={mdiArrowRight} size={1.5} className={stylesIndex.index}/>
+            </NavLink>
+        </nav>
+    ) : (
+        <nav className={styles.genderNav}>
+            <NavLink to="catalog/men">
+                <span>Men</span>
             </NavLink>
             <NavLink to="catalog/women">
                 <span>Women</span>
-                { props.isIndex && <Icon path={mdiArrowRight} size={1} className={stylesIndex.index}/> }
             </NavLink>
         </nav>
     )
+    return result;
 }
 
 export default GenderNav;

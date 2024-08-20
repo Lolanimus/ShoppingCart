@@ -14,6 +14,7 @@
 body {
     padding-left: 24px;
     padding-right: 24px;
+    height: 100vh;
 }
 
 li {
@@ -25,12 +26,20 @@ a {
     color: var(--black);
 }
 
+.link {
+    background-color: var(--black);
+    color: var(--light-grey);
+    border: 1px solid var(--black);
+    border-radius: 4px;
+    padding: 8px;
+}
+
 button {
     all: unset;
     font-weight: bold;
     background-color: var(--black);
     color: var(--light-grey);
     border: 1px solid var(--black);
-    border-radius: 3px;
+    border-radius: 4px;
     padding: 8px;
 }
