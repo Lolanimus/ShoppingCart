@@ -5,13 +5,26 @@
         justify-content: space-between;
         align-items: center;
 
-        a {
+        a {            
+            display: flex;
+            justify-self: center;
+            align-items: center;
             height: inherit;
+            position: relative;
         }
         
         img {
             height: inherit;
+            position: absolute;
+            right: 50%;
+            transform: translateX(48px);
         }
+
+        padding-top: 16px;
+        padding-bottom: 16px;
+        padding-left: 4px;
+        padding-right: 4px;
+        border-bottom: 1px solid var(--light-grey);
     }
 
     footer {

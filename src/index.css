@@ -6,9 +6,23 @@
 
 :root {
     --black: #010101;
-    --light-grey: #f2f0ea;
+    --light-grey: #dfddd5;
     --yellow: #edcf5d;
     --dark-grey: #a4a4a4;
+}
+
+body {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--black);
 }
 
 button {
