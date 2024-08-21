@@ -12,7 +12,6 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         
-
         #radioBtn {
             list-style-type: none;
             margin: 25px 0 0 0;
@@ -96,39 +95,40 @@
             }
         }
     }
+}
 
-    #popUp {
-        display: none;
-        position: absolute;
-        top: calc(50% - 18.8px);
-        left: calc(50% - 80px); 
-        cursor: pointer;
-        width: 160px;
-        background-color: #555;
-        color: #fff;
-        text-align: center;
-        border-radius: 2px;
-        padding: 8px 0;
-        z-index: 1;
+#popUp {
+    font-size: medium;
+    display: none;
+    position: absolute;
+    top: calc(50% - 18.8px);
+    left: calc(50% - 80px); 
+    cursor: pointer;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 8px 0;
+    z-index: 1;
+}
+
+.popUpOn {
+    display: inline-block !important;
+    animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
     }
-
-    .popUpOn {
-        display: inline-block !important;
-        animation: fadeIn 2s;
+    10% {
+        opacity: 0.8;
     }
-
-    @keyframes fadeIn {
-        0% {
-            opacity: 0;
-        }
-        10% {
-            opacity: 0.8;
-        }
-        90% {
-            opacity: 0.8;
-        }
-        100% {
-            opacity: 0;
-        }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0;
     }
 }

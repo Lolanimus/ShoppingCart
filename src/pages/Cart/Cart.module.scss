@@ -1,0 +1,52 @@
+.cart {
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-top: 32px;
+
+    img {
+        max-height:100%; 
+        max-width:100%; 
+    }
+
+    > h1 {
+        margin-bottom: 32px;
+    }
+
+    > div {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        height: inherit;
+
+        > span {
+            font-size: 24px;
+        }
+
+        > div {
+            margin-left: 64px;
+            font-size: 32px;
+        
+            .total {
+                font-weight: bold;
+            }
+
+            > form > button {
+                margin-top: 24px;
+                font-size: 24px;
+                padding: 8px 36px;
+            }
+        }
+
+        > ul {
+            padding: 0;
+
+            :first-child {
+                padding-top: 0;
+            }
+
+            :last-child {
+                border: none
+            }
+        }
+
+    }
+}

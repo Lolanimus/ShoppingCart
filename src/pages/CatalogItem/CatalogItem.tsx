@@ -5,9 +5,8 @@ function isGender(category: string) {
     return category === "men's clothing" || category === "women's clothing" ? true : false;
 }
 
-async function successPopUp() {
+async function successPopUp(button: HTMLButtonElement) {
     const popup = document.getElementById(styles.popUp)!;
-    const button = document.getElementById("addToCartBtn")! as HTMLButtonElement;
     popup.classList.add(styles.popUpOn);
     button.disabled = true;
     popup.addEventListener("animationend", () => {
@@ -34,7 +33,7 @@ const CatalogItem = () => {
                     </section>
                     <aside>
                         <Form method="POST" onSubmit={() => {
-                            successPopUp();
+                            successPopUp(document.getElementById("addToCartBtn") as HTMLButtonElement);
                         }}>
                             <div>
                                 {isGender(item.category) ? (
@@ -81,3 +80,4 @@ const CatalogItem = () => {
 }
 
 export default CatalogItem;
+export { successPopUp }

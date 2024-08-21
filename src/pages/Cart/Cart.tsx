@@ -1,30 +1,20 @@
 import { useLoaderData, Outlet, Form } from "react-router-dom";
 import { clearCart } from "../../shoppingCartApi";
-import { useState } from "react";
 import { CartLoader } from "../../routerMethods";
+import { successPopUp } from "../CatalogItem/CatalogItem";
+import styles from "./Cart.module.scss";
+import stylesCatalogItem from "../CatalogItem/CatalogItem.module.scss";
 
-function BuySuccess(props: {toggleDialog: () => void, open: boolean}) {
-    const { toggleDialog, open } = props;
-    return (
-        <dialog open={open} data-testid={`dialog-${open}`}>
-            <p>The purchase was successful</p>
-            <button onClick={() => {
-                toggleDialog();
-                clearCart();
-            }}>Close</button>
-        </dialog>
-    )
+function buyBtnOnClick() {
+    clearCart();
+    successPopUp(document.getElementById("buyBtn") as HTMLButtonElement);
 }
 
 const Cart = () => {
-    const { total, buyDisabled } = useLoaderData() as CartLoader;
-    const [open, setOpen] = useState(false);
-    const toggleDialog = () => {
-        setOpen(!open);
-    };
+    const { total } = useLoaderData() as CartLoader;
 
     return (
-        <div>
+        <div className={styles.cart}>
             <h1>Cart</h1>
             <div>
                 <Outlet />
@@ -35,18 +25,18 @@ const Cart = () => {
                     <div>
                         {
                             total > 0 ? (
-                                <span data-testid="total">{`$${total}`}</span>
+                                <span data-testid="total" className={styles.total}>{`$${total}`}</span>
                             ) : (
-                                <span data-testid="total">N/A</span>
+                                <span data-testid="total" className={styles.total}>N/A</span>
                             )
                         }
                     </div>
-                    <Form method="get" onClick={() => clearCart()}>
-                        <button disabled={buyDisabled} onClick={toggleDialog}>Buy</button>
+                    <Form method="get" onSubmit={() => buyBtnOnClick()}>
+                        <button id="buyBtn">Buy</button>
+                        <div id={stylesCatalogItem.popUp}>Success</div>    
                     </Form>
                 </div>
             </div>
-            <BuySuccess open={open} toggleDialog={toggleDialog}/>
         </div>
     )
 }

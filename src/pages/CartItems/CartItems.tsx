@@ -1,7 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useLoaderData, useFetcher } from "react-router-dom";
+import Icon from '@mdi/react';
+import { mdiDelete } from '@mdi/js';
 import QuantityChanger from "../../components/QuantityChanger/QuantityChanger";
-
+import styles from "./CartItems.module.scss";
 const CartItems = () => {
     const cart = useLoaderData() as CartArr;
     const fetcher = useFetcher();
@@ -9,42 +11,38 @@ const CartItems = () => {
     const result = (
         <ul data-testid="itemsList" >
             {cart.map(item => (
-                <li  key={`${item.id}-${item.size}`}>
+                <li className={styles.cartItem} key={`${item.id}-${item.size}`}>
                     <section id="itemImg">
                         <img src={item.image} alt={item.title} />
                     </section>
                     <aside id="itemSettings">
                         <ol>
                             <fetcher.Form method="POST">
-                                <li>
+                                <li className={styles.title}>
                                     <span data-testid="title">{item.title}</span>
                                 </li>
-                                <li>
+                                <li className={styles.size}>
                                     <div>
-                                        Size
-                                    </div>
-                                    <div>
+                                        <span>Size: </span>
                                         { 
                                             item.size !== "" ? (
-                                                <span data-testid="size">{item.size}</span>
+                                                <span data-testid="size">{item.size!.length < 3 ? item.size?.toUpperCase() : item.size}</span>
                                             ) : (
                                                 <span data-testid="size">N/A</span>
                                             )
                                         }
                                     </div>
-                                </li> 
-                                <li>
+                                    
                                     <QuantityChanger item={item} itemInfo={{itemId: item.id, size: item.size}}/>
                                 </li>
-                                <li>
-                                    <div>
-                                        Price
-                                    </div>
-                                    <div data-testid="price">
+                                <li className={styles.itemCartSettings}>
+                                    <button className={styles.deleteBtn} type="submit" name="delete" value={JSON.stringify({itemId: item.id, size: item.size})}>
+                                        <Icon path={mdiDelete} size={1} color={"black"}/>
+                                    </button>
+                                    <div data-testid="price" className={styles.price}>
                                         <span>{`$${(item.price * item.quantity).toFixed(2)}`}</span>
                                     </div>
                                 </li>
-                                <button type="submit" name="delete" value={JSON.stringify({itemId: item.id, size: item.size})}>Delete</button>
                             </fetcher.Form>
                         </ol>
                     </aside>

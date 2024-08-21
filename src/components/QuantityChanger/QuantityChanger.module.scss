@@ -1,0 +1,9 @@
+.quantityChanger {
+    font-size: larger;
+    > button { 
+        background-color: white;
+        border: none;
+        color: var(--black);
+        padding: 0 14px;
+    }
+}
