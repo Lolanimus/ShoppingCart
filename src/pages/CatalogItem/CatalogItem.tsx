@@ -25,45 +25,57 @@ const CatalogItem = () => {
                 <h1>{item.title}</h1>
             </header>
             <div>
-                <img src={item.image} alt={item.title} />
-            </div>
-            <main>
-                <section aria-label="region">
-                    <p>Description...</p>
-                </section>
-                <aside>
-                    <Form method="POST" onSubmit={() => {
-                        successPopUp();
-                    }}>
-                        <div>
-                            {isGender(item.category) ? (
-                                <>
-                                    <p>Size: </p>
-                                    <label htmlFor="s">S</label>
-                                    <input type="radio" id="s" name="size" value="s" defaultChecked={true}/>
-                                    <label htmlFor="m">M</label>
-                                    <input type="radio" id="m" name="size" value="m"/>
-                                    <label htmlFor="l">L</label>
-                                    <input type="radio" id="l" name="size" value="l"/>
-                                    <label htmlFor="xl">XL</label>
-                                    <input type="radio" id="xl" name="size" value="xl"/>
-                                </>
-                            ) : (
-                                <>
-                                    <p>Size: </p>
-                                    <label htmlFor="noSize">One size</label>
-                                    <input type="radio" id="noSize" name="size" value={undefined} checked={true} readOnly={true} />
-                                </>
-                            )}
+                <div>
+                    <img src={item.image} alt={item.title} />
+                </div>
+                <main>
+                    <section aria-label="region">
+                        <p>{item.description}</p>
+                    </section>
+                    <aside>
+                        <Form method="POST" onSubmit={() => {
+                            successPopUp();
+                        }}>
+                            <div>
+                                {isGender(item.category) ? (
+                                    <>
+                                        <p>Size: </p>
+                                        <div id={styles.radioBtn}>
+                                            <input type="radio" id="s" name="size" value="s" defaultChecked={true}/>
+                                            <label htmlFor="s">S</label>
+                                        </div>
+                                        <div id={styles.radioBtn}>
+                                            <input type="radio" id="m" name="size" value="m"/>
+                                            <label htmlFor="m">M</label>
+                                        </div>
+                                        <div id={styles.radioBtn}>
+                                            <input type="radio" id="l" name="size" value="l"/>
+                                            <label htmlFor="l">L</label>
+                                        </div>
+                                        <div id={styles.radioBtn}>
+                                            <input type="radio" id="xl" name="size" value="xl"/>
+                                            <label htmlFor="xl">XL</label>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <p>Size: </p>
+                                        <div id={styles.radioBtn}>
+                                            <input type="radio" id="noSize" name="size" value={undefined} checked={true} readOnly={true} />
+                                            <label htmlFor="noSize">One size</label>
+                                        </div>
+                                    </>
+                                )}
 
-                        </div>
-                        <button type="submit" id="addToCartBtn">
-                            Add to Cart
-                        </button>
-                        <div id={styles.popUp}>Success</div>    
-                    </Form>
-                </aside>
-            </main>
+                            </div>
+                            <button type="submit" id="addToCartBtn">
+                                Add to Cart
+                            </button>
+                            <div id={styles.popUp}>Success</div>    
+                        </Form>
+                    </aside>
+                </main>
+            </div>
         </div>
     )
 }

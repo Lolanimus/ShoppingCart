@@ -1,9 +1,107 @@
 .catalogItem {
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 32px;
+    margin-bottom: 32px;
+
+    > header {
+        margin-bottom: 24px;
+    }
+
+    > div {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        
+
+        #radioBtn {
+            list-style-type: none;
+            margin: 25px 0 0 0;
+            padding: 0;
+        }
+
+        #radioBtn label,
+        #radioBtn input {
+            float: left;
+            margin: 0 5px 0 0;
+        }
+
+        #radioBtn input[type="radio"] {
+            opacity: 0.011;
+            z-index: 100;
+        }
+
+        #radioBtn input[type="radio"]:checked + label {
+            color: white;
+            background: var(--black);
+            border-radius: 4px;
+        }
+
+        #radioBtn label {
+            padding: 5px 34px 5px 34px;
+            cursor: pointer;
+            -webkit-appearance: button;
+            /* WebKit */
+            -moz-appearance: button;
+            /* Mozilla */
+            -o-appearance: button;
+            /* Opera */
+            -ms-appearance: button;
+            /* Internet Explorer */
+            appearance: button;
+            /* CSS3 */
+        }
+
+        img {
+            max-height:100%; 
+            max-width:100%; 
+        }
+
+        > div {
+            display: flex;
+            align-items: center;
+        }
+
+        > main {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding-left: 24px;
+
+            > section {
+                margin-bottom: 32px;
+
+                > p {
+                    font-size: larger;
+                    font-weight: 400;
+                }
+            }
+
+            > aside {
+                height: inherit;
+
+                > form {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 32px;
+
+                    label {
+                        font-weight: bold;
+                    }
+                    
+                    p {
+                        font-size: larger;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+
     #popUp {
         display: none;
         position: absolute;
-        top: 50%;
-        user-select: none;
+        top: calc(50% - 18.8px);
+        left: calc(50% - 80px); 
         cursor: pointer;
         width: 160px;
         background-color: #555;
