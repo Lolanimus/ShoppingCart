@@ -3,8 +3,9 @@
     margin: 0;
     box-sizing: border-box;
 }
+
 :root {
-    --black: #010101;
+    --black: #0b0b0b;
     --light-grey: #dfddd5;
     --yellow: #edcf5d;
     --dark-grey: #a4a4a4;
@@ -33,7 +34,12 @@ a {
     padding: 8px;
 }
 
+label {
+    transition: 0.1s;
+}
+
 button {
+    opacity: 1;
     all: unset;
     font-weight: bold;
     background-color: var(--black);
@@ -41,4 +47,14 @@ button {
     border: 1px solid var(--black);
     border-radius: 4px;
     padding: 12px;
+    transition: 0.5s;
+}
+
+button:hover, label:hover {
+    opacity: 0.8;
+}
+
+button:disabled {
+    background-color: var(--dark-grey);
+    border-color: var(--dark-grey);
 }

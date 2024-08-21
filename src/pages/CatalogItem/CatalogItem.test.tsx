@@ -4,7 +4,6 @@ import * as data from "../../__mocks__/data";
 import CatalogItem from './CatalogItem';
 import { createMemoryRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import { writeHeapSnapshot } from 'v8';
 
 describe("CatalogItem", () => {
     const item = data.contents[0];

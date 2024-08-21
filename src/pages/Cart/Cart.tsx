@@ -1,9 +1,9 @@
 import { useLoaderData, Outlet, Form } from "react-router-dom";
 import { clearCart } from "../../shoppingCartApi";
 import { CartLoader } from "../../routerMethods";
-import { successPopUp } from "../CatalogItem/CatalogItem";
+import { successPopUp } from "../../popup/popup";
+import stylesPopup from "../../popup/popup.module.scss";
 import styles from "./Cart.module.scss";
-import stylesCatalogItem from "../CatalogItem/CatalogItem.module.scss";
 
 function buyBtnOnClick() {
     clearCart();
@@ -32,8 +32,8 @@ const Cart = () => {
                         }
                     </div>
                     <Form method="get" onSubmit={() => buyBtnOnClick()}>
-                        <button id="buyBtn">Buy</button>
-                        <div id={stylesCatalogItem.popUp}>Success</div>    
+                        <button id="buyBtn" disabled={total === 0}>Buy</button>
+                        <div id={stylesPopup.popUpModule}>Success</div>    
                     </Form>
                 </div>
             </div>

@@ -1,18 +1,10 @@
 import { Form, useLoaderData } from "react-router-dom";
 import styles from "./CatalogItem.module.scss";
+import stylesPopup from "../../popup/popup.module.scss";
+import { successPopUp } from "../../popup/popup";
 
 function isGender(category: string) {
     return category === "men's clothing" || category === "women's clothing" ? true : false;
-}
-
-async function successPopUp(button: HTMLButtonElement) {
-    const popup = document.getElementById(styles.popUp)!;
-    popup.classList.add(styles.popUpOn);
-    button.disabled = true;
-    popup.addEventListener("animationend", () => {
-        popup.classList.remove(styles.popUpOn);
-        button.disabled = false;
-    });
 }
 
 const CatalogItem = () => {
@@ -70,7 +62,7 @@ const CatalogItem = () => {
                             <button type="submit" id="addToCartBtn">
                                 Add to Cart
                             </button>
-                            <div id={styles.popUp}>Success</div>    
+                            <div id={stylesPopup.popUpModule}>Success</div>    
                         </Form>
                     </aside>
                 </main>
@@ -80,4 +72,3 @@ const CatalogItem = () => {
 }
 
 export default CatalogItem;
-export { successPopUp }

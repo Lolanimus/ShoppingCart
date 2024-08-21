@@ -1,9 +1,12 @@
 .quantityChanger {
     font-size: larger;
     > button { 
-        background-color: white;
         border: none;
-        color: var(--black);
-        padding: 0 14px;
+        padding: 0 12px;
+        margin: 0 8px;
+    }
+
+    > button:last-child {
+        padding: 0 10px;
     }
 }
