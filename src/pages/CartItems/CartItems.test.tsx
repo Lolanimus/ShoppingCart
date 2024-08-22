@@ -66,12 +66,12 @@ describe("CartItems", () => {
     const itemTitle = within(itemInfo).getByTestId("title");
     expect(itemTitle.textContent).toBe(data.contents[itemIndex].title);
     const itemSize = within(itemInfo).getByTestId("size");
-    expect(itemSize.textContent).toBe("m");
+    expect(itemSize.textContent).toBe("M");
     const itemQuantityChanger = within(itemInfo).getByTestId("quantityDiv");
     expect(itemQuantityChanger).toBeInTheDocument();
     const itemPrice = within(itemInfo).getByTestId("price");
     expect(itemPrice.textContent).toBe("$" + data.contents[itemIndex].price);
-    const itemDeleteButton = within(itemInfo).getByRole("button", {name: "Delete"});
+    const itemDeleteButton = within(itemInfo).getByRole("presentation", {name: 'delete'});
     expect(itemDeleteButton).toBeInTheDocument();
   })
 

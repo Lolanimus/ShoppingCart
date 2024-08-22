@@ -37,7 +37,7 @@ const CartItems = () => {
                                 </li>
                                 <li className={styles.itemCartSettings}>
                                     <button className={styles.deleteBtn} type="submit" name="delete" value={JSON.stringify({itemId: item.id, size: item.size})}>
-                                        <Icon path={mdiDelete} size={1} color={"black"}/>
+                                        <Icon path={mdiDelete} size={1} color={"black"} aria-label="delete"/>
                                     </button>
                                     <div data-testid="price" className={styles.price}>
                                         <span>{`$${(item.price * item.quantity).toFixed(2)}`}</span>

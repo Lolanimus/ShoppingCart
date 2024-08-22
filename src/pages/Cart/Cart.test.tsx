@@ -46,9 +46,9 @@ describe("Cart", () => {
     })
 
     describe("renders correctly", () => {
-        it("with total price", async () => {
+        it.only("with total price", async () => {
             renderCart();
-            await waitFor(() => expect(screen.getByRole("heading", {level: 1})).toBeInTheDocument());
+            await waitFor(() => expect(screen.getByRole("heading", {level: 1, name: "Cart"})).toBeInTheDocument());
             const cartItems = screen.getByTestId("itemsList"); 
             const totalLabel = screen.getByText("Total");
             expect(cartItems).toBeInTheDocument();
