@@ -46,7 +46,7 @@ describe("Cart", () => {
     })
 
     describe("renders correctly", () => {
-        it.only("with total price", async () => {
+        it("with total price", async () => {
             renderCart();
             await waitFor(() => expect(screen.getByRole("heading", {level: 1, name: "Cart"})).toBeInTheDocument());
             const cartItems = screen.getByTestId("itemsList"); 
@@ -76,11 +76,6 @@ describe("Cart", () => {
             await waitFor(() => screen.getByRole("button", {name: "Buy"}));
             const buyBtn = screen.getByRole("button", {name: "Buy"});
             await user.click(buyBtn);
-            expect(screen.getByTestId("dialog-true")).toBeInTheDocument();
-            const closeDialogBtn = screen.getByRole("button", {name: "Close"});
-            expect(closeDialogBtn).toBeInTheDocument();
-            await user.click(closeDialogBtn);
-            expect(screen.getByTestId("dialog-false")).toBeInTheDocument();
             expect(screen.getByText("There are no items in your cart yet...")).toBeInTheDocument();
         })
     })

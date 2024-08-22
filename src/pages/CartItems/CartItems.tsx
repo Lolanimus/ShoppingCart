@@ -26,7 +26,7 @@ const CartItems = () => {
                                         <span>Size: </span>
                                         { 
                                             item.size !== "" ? (
-                                                <span data-testid="size">{item.size!.length < 3 ? item.size?.toUpperCase() : item.size}</span>
+                                                <span data-testid="size">{item.size && (item.size!.length < 3 ? item.size?.toUpperCase() : item.size)}</span>
                                             ) : (
                                                 <span data-testid="size">N/A</span>
                                             )
