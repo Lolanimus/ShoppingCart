@@ -5,14 +5,15 @@ import { successPopUp } from "../../popup/popup";
 import stylesPopup from "../../popup/popup.module.scss";
 import styles from "./Cart.module.scss";
 
-function buyBtnOnClick() {
+function buyBtnOnClick(totalVal: number) {
+    const buyBtn = document.getElementById("buyBtn") as HTMLButtonElement;
     clearCart();
-    successPopUp(document.getElementById("buyBtn") as HTMLButtonElement);
+    totalVal === 0 ? buyBtn.disabled = true : buyBtn.disabled = false;
+    successPopUp();
 }
 
 const Cart = () => {
     const { total } = useLoaderData() as CartLoader;
-
     return (
         <div className={styles.cart}>
             <h1>Cart</h1>
@@ -31,8 +32,8 @@ const Cart = () => {
                             )
                         }
                     </div>
-                    <Form method="get" onSubmit={() => buyBtnOnClick()}>
-                        <button id="buyBtn" disabled={total === 0}>Buy</button>
+                    <Form method="get" onSubmit={() => buyBtnOnClick(total)}>
+                        <button id="buyBtn" disabled={total == 0}>Buy</button>
                         <div id={stylesPopup.popUpModule}>Success</div>    
                     </Form>
                 </div>

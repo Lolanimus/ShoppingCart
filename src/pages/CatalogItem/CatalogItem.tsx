@@ -2,6 +2,7 @@ import { Form, useLoaderData } from "react-router-dom";
 import styles from "./CatalogItem.module.scss";
 import stylesPopup from "../../popup/popup.module.scss";
 import { successPopUp } from "../../popup/popup";
+import { useRef } from "react";
 
 function isGender(category: string) {
     return category === "men's clothing" || category === "women's clothing" ? true : false;
@@ -9,7 +10,8 @@ function isGender(category: string) {
 
 const CatalogItem = () => {
     const item = useLoaderData() as CatalogObj;
-
+    const addToCartRef = useRef(null);
+    const popUpRef = useRef(null);
     return (
         <div className={styles.catalogItem}>
             <header>
@@ -25,7 +27,13 @@ const CatalogItem = () => {
                     </section>
                     <aside>
                         <Form method="POST" onSubmit={() => {
-                            successPopUp(document.getElementById("addToCartBtn") as HTMLButtonElement);
+                            const addToCartBtn = addToCartRef.current! as HTMLButtonElement;
+                            const popUp = popUpRef.current! as HTMLElement;
+                            addToCartBtn.disabled = true;
+                            successPopUp();
+                            popUp.addEventListener("animationend", () => {
+                                addToCartBtn.disabled = false;
+                            })
                         }}>
                             <div>
                                 {isGender(item.category) ? (
@@ -59,10 +67,10 @@ const CatalogItem = () => {
                                 )}
 
                             </div>
-                            <button type="submit" id="addToCartBtn">
+                            <button type="submit" id="addToCartBtn" ref={addToCartRef}>
                                 Add to Cart
                             </button>
-                            <div id={stylesPopup.popUpModule}>Success</div>    
+                            <div id={stylesPopup.popUpModule} ref={popUpRef}>Success</div>    
                         </Form>
                     </aside>
                 </main>
