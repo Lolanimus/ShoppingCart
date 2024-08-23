@@ -87,7 +87,7 @@ test.describe("CatalogItem", () => {
     await expect(addToCartBtn).toBeDisabled();
   })
 
-  test.only("item with no size", async ({ page, baseURL }) => {
+  test("item with no size", async ({ page, baseURL }) => {
     await page.goto(baseURL + "/catalog/men/5");
     const oneSize = page.getByLabel("One size");
     expect(oneSize);
