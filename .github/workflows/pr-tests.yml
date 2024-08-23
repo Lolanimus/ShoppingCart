@@ -34,3 +34,4 @@ jobs:
         run: npm run test:e2e app
         env:
           PLAYWRIGHT_TEST_BASE_URL: ${{ needs.test_setup.outputs.preview_url }}
+          --workers: undefined
