@@ -56,3 +56,29 @@
         }
     }
 }
+
+@media (max-width: 800px) {
+    .catalog {
+        main > section {
+            grid-template-columns: 1fr;
+
+            > div {
+                #imgDiv {
+                    padding-bottom: 32px;
+                }
+
+                > #itemInfo {
+                    form {
+                        display: grid;
+
+                        button {
+                            justify-self: flex-end;
+                            min-width: 55%;
+                            max-width: 55%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
