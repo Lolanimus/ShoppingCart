@@ -58,7 +58,6 @@ const CatalogItem = () => {
                                     </>
                                 ) : (
                                     <>
-                                        <p>Size: </p>
                                         <div id={styles.radioBtn}>
                                             <input type="radio" id="noSize" name="size" value={undefined} checked={true} readOnly={true} />
                                             <label htmlFor="noSize">One size</label>

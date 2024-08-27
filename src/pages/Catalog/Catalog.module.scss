@@ -2,7 +2,7 @@
     > header {
         > h1 {
             padding: 16px;
-            border-bottom: 1px solid var(--light-grey);
+            border-bottom: 1px solid var(--light-grey) !important;
         }
     }
     main > section {

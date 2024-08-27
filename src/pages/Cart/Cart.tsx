@@ -14,6 +14,7 @@ function buyBtnOnClick(totalVal: number) {
 
 const Cart = () => {
     const { total } = useLoaderData() as CartLoader;
+
     return (
         <div className={styles.cart}>
             <h1>Cart</h1>

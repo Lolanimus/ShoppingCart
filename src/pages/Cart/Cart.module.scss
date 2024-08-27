@@ -50,3 +50,21 @@
 
     }
 }
+
+@media (max-width: 800px) {
+    .cart {
+        margin: 0;
+        margin-top: 16px;
+        height: 93%;
+
+        > div {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            > div {
+                margin-left: 0;
+            }
+        }
+    }
+}

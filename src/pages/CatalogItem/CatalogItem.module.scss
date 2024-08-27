@@ -22,7 +22,10 @@
         #radioBtn label,
         #radioBtn input {
             float: left;
-            margin: 0 5px 0 0;
+        }
+
+        #radioBtn label {
+            transform: translateX(-10%);
         }
 
         #radioBtn input[type="radio"] {
