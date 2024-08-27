@@ -67,7 +67,7 @@ test.describe("Catalog", () => {
     const firstForm = page.locator("#item1");
     const seeMoreBtn = firstForm.locator("button");
     await seeMoreBtn.click();
-    await expect(page.getByRole("button", {name: "Add to Cart"})).toBeInViewport();
+    await expect(page.getByRole("heading", {name: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops"})).toBeInViewport();
   })
 })
 
