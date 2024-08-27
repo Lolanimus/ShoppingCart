@@ -35,10 +35,10 @@ const CatalogItem = () => {
                                 addToCartBtn.disabled = false;
                             })
                         }}>
+                            <p>Size: </p>
                             <div>
                                 {isGender(item.category) ? (
                                     <>
-                                        <p>Size: </p>
                                         <div id={styles.radioBtn}>
                                             <input type="radio" id="s" name="size" value="s" defaultChecked={true}/>
                                             <label htmlFor="s">S</label>
