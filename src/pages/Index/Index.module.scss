@@ -12,6 +12,11 @@
         padding-bottom: 48px;
         flex: 2;
 
+        img {
+            max-height: 100%; 
+            max-width: 100%;
+        }
+
         :first-child {
             flex: 1;
             display: flex;
@@ -50,4 +55,32 @@
             padding-left: 32px;
         }
     }
+}
+
+@media (max-width: 800px) {
+    .index {
+        #mainDiv {
+            flex-direction: column;
+            padding-bottom: 16px;
+
+            img {
+                transform: translateX(-30px);
+            }
+
+            h2 {
+                transform: translateX(-14px);
+            }
+        }
+    
+        nav {
+            gap: 16px;
+            flex-direction: column;
+
+            a {
+                align-self: stretch;
+                width: auto;
+            }
+        }
+    }
+    
 }

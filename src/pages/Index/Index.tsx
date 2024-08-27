@@ -1,25 +1,41 @@
 import GenderNav from "../../components/GenderNav/GenderNav";
 import logo from "../../assets/Logo.svg";
 import styles from "./Index.module.scss"
+import { useMediaQuery } from "react-responsive";
 
 const Index = () => {
+    const isPhone = useMediaQuery({maxWidth: 800});
     return (
-        <div className={styles.index}>
-            <div id={styles.mainDiv}>
-                <div>
+        isPhone ? ( 
+            <div className={styles.index}>
+                <div id={styles.mainDiv}>
                     <div>
-                        <h1>Lolan</h1>
+                        <img src={logo} alt="Lolan Logo"/>
                     </div>
                     <div>
                         <h2>We Sell Clothes</h2>
                     </div>
                 </div>
-                <div>
-                    <img src={logo} alt="Lolan Logo" width="50%"/>
+                <GenderNav isIndex={true}/>
+            </div> 
+        ) : (
+            <div className={styles.index}>
+                <div id={styles.mainDiv}>
+                    <div>
+                        <div>
+                            <h1>Lolan</h1>
+                        </div>
+                        <div>
+                            <h2>We Sell Clothes</h2>
+                        </div>
+                    </div>
+                    <div>
+                        <img src={logo} alt="Lolan Logo" width="50%"/>
+                    </div>
                 </div>
-            </div>
-            <GenderNav isIndex={true}/>
-        </div>
+                <GenderNav isIndex={true}/>
+            </div> 
+        )
     )
 }
 
