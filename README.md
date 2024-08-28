@@ -15,3 +15,5 @@ Commentaries:
   Indeed, git was used widely when developing this project, as well as GitHub Actions to do End to End tests.
 
   In the future is planned to make a back-end side, which is going to be the last version: v1.0, and therefore this project is going to be released afterwards.
+
+  Fake clothes data is from fakestoreapi.com thanks to MohammadReza Keikavousi
