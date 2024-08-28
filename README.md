@@ -1,30 +1,17 @@
-# React + TypeScript + Vite
+Project's name: 
+  Shopping Cart
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Description: 
+  This project is an e-commerce like website.
 
-Currently, two official plugins are available:
+Technologies used: 
+  TS/SCSS/HTML. Built on Vite. React, with Remix's SSR React Router.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Commentaries:
+  This project follows the TDD philosophy. For Unit and Integration tests Vitest has been used, with additional packages like @testing-library/react-dom, react, user-event, react-dom. For End to End tests Playwright has been used(although, e2e tests are not fully done yet, as for now there is now back-end side). Additionaly, static tests are done with Eslint.
 
-## Expanding the ESLint configuration
+  This project also leverages some additional libraries, for example react-responsive to conditionally render react based on media query.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+  Indeed, git was used widely when developing this project, as well as GitHub Actions to do End to End tests.
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+  In the future is planned to make a back-end side, which is going to be the last version: v1.0, and therefore this project is going to be released afterwards.
