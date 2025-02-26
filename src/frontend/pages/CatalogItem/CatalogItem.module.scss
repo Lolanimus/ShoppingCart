@@ -1,0 +1,145 @@
+.catalogItem {
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 32px;
+    margin-bottom: 32px;
+
+    > header {
+        margin-bottom: 24px;
+    }
+
+    > div {
+        display: grid;
+        gap: 32px;    
+        justify-items: center;
+
+        #radioBtn {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+        }
+
+        #radioBtn label,
+        #radioBtn input {
+            float: left;
+        }
+
+        #radioBtn label {
+            transform: translateX(-10%);
+        }
+
+        #radioBtn input[type="radio"] {
+            opacity: 0.011;
+            z-index: 100;
+        }
+
+        #radioBtn input[type="radio"]:checked + label {
+            color: white;
+            background: var(--black);
+            border-radius: 4px;
+        }
+
+        #radioBtn label {
+            padding: 5px 34px 5px 34px;
+            cursor: pointer;
+            -webkit-appearance: button;
+            /* WebKit */
+            -moz-appearance: button;
+            /* Mozilla */
+            -o-appearance: button;
+            /* Opera */
+            -ms-appearance: button;
+            /* Internet Explorer */
+            appearance: button;
+            /* CSS3 */
+        }
+
+        #radioBtn:last-child label {
+            padding: 5px 31px 5px 31px;
+        }
+
+        img {
+            max-height: 100%; 
+            max-width: 100%; 
+        }
+
+        > div {
+            display: flex;
+            width: 50%;    
+        }
+
+        > main {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding-left: 24px;
+
+            > section {
+                margin-bottom: 32px;
+
+                > p {
+                    font-size: larger;
+                    font-weight: 400;
+                }
+            }
+
+            > aside {
+                height: inherit;
+
+                > form {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 32px;
+
+                    > div {
+                        display: flex;
+                    }
+
+                    label {
+                        font-weight: bold;
+                    }
+                    
+                    p {
+                        font-size: larger;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .catalogItem {
+        margin: 0;
+
+        > header {
+            margin-top: 24px;
+        }
+
+        > div {
+            display: flex;
+            flex-direction: column;
+
+            > div {
+                transform: translateX(50%);
+            }
+            
+            > main {
+                padding: 0;
+
+                > aside > form {
+                    > div {
+                        flex-wrap: wrap;
+                        gap: 8px;
+                    }
+
+                    > div #radioBtn {
+                        flex-grow: 1;
+                        justify-content: center;
+                    }
+                }
+            }
+        }
+    }
+}
