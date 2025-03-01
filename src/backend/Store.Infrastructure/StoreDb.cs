@@ -1,20 +1,20 @@
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 using StackExchange.Redis;
+using System;
 
-// Authenticate using Managed Identity or Azure Credential
-var client = new SecretClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+var redis_url = Environment.GetEnvironmentVariable("SHOPPING_CART_REDIS_URL");
+var redis_port = Environment.GetEnvironmentVariable("SHOPPING_CART_REDIS_PORT");
+var redis_username = Environment.GetEnvironmentVariable("SHOPPING_CART_REDIS_USERNAME");
+var redis_password = Environment.GetEnvironmentVariable("SHOPPING_CART_REDIS_PASSWORD");
 
-// Retrieve the secret from Azure Key Vault
-KeyVaultSecret secret = await client.GetSecretAsync(secretName);
-string redisConnectionString = secret.Value;
-
-var muxer = ConnectionMultiplexer.Connect(
+var redis = ConnectionMultiplexer.Connect(
             new ConfigurationOptions{
-                EndPoints= { {"redis-14623.c251.east-us-mz.azure.redns.redis-cloud.com", 14623} },
-                User="default",
-                Password="*******"
+                EndPoints= { {redis_url, redis_port} },
+                User=redis_username,
+                Password=redis_password
             }
         );
 
-var StoreDb = muxer.GetDatabase();
+var StoreDb = redis.GetDatabase();
+db.StringSet("foo", "bar");
+RedisValue result = db.StringGet("foo");
+Console.WriteLine(result); // >>> bar

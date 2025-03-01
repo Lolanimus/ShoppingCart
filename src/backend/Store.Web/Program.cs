@@ -5,6 +5,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Redis cache
+builder.Services
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
