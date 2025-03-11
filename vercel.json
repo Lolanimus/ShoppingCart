@@ -1,3 +1,7 @@
 {
-    "outputDirectory": "./ShoppingCart-Frontend"
+    "routes": [
+      { "src": "./ShoppingCart-Frontend/", "dest": "./ShoppingCart-Frontend/" },
+      { "src": "./ShoppingCart-Frontend/catalog/(.*)", "dest": "./ShoppingCart-Frontend/" },
+      { "src": "./ShoppingCart-Frontend/cart", "dest": "./ShoppingCart-Frontend/" }
+    ]
 }

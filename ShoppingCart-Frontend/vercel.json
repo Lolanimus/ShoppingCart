@@ -1,7 +1,0 @@
-{
-    "routes": [
-      { "src": "/", "dest": "/" },
-      { "src": "/catalog/(.*)", "dest": "/" },
-      { "src": "/cart", "dest": "/" }
-    ]
-}
