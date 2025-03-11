@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\scripts",
+    "\\ShoppingCart-Backend",
+    "\\ShoppingCart-Backend\\backend",
+    "\\ShoppingCart-Backend\\backend\\Store.Infrastructure",
+    "\\ShoppingCart-Backend\\backend\\Store.Models",
+    "\\ShoppingCart-Backend\\backend\\Store.Models\\DTO",
+    "\\ShoppingCart-Backend\\backend\\Store.Web",
+    "\\ShoppingCart-Frontend"
+  ],
+  "SelectedNode": "\\ShoppingCart-Backend",
+  "PreviewInSolutionExplorer": false
+}

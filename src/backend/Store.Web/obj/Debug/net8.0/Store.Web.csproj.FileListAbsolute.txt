@@ -1,8 +1,0 @@
-/home/artem/Documents/projects/ShoppingCart/src/backend/Store.Web/obj/Debug/net8.0/Store.Web.csproj.AssemblyReference.cache
-/home/artem/Documents/projects/ShoppingCart/src/backend/Store.Web/obj/Debug/net8.0/Store.Web.GeneratedMSBuildEditorConfig.editorconfig
-/home/artem/Documents/projects/ShoppingCart/src/backend/Store.Web/obj/Debug/net8.0/Store.Web.AssemblyInfoInputs.cache
-/home/artem/Documents/projects/ShoppingCart/src/backend/Store.Web/obj/Debug/net8.0/Store.Web.AssemblyInfo.cs
-/home/artem/Documents/projects/ShoppingCart/src/backend/Store.Web/obj/Debug/net8.0/Store.Web.csproj.CoreCompileInputs.cache
-/home/artem/Documents/projects/ShoppingCart/src/backend/Store.Web/obj/Debug/net8.0/Store.Web.MvcApplicationPartsAssemblyInfo.cs
-/home/artem/Documents/projects/ShoppingCart/src/backend/Store.Web/obj/Debug/net8.0/Store.Web.MvcApplicationPartsAssemblyInfo.cache
-/home/artem/Documents/projects/ShoppingCart/src/backend/Store.Web/obj/Debug/net8.0/Store.Web.sourcelink.json
