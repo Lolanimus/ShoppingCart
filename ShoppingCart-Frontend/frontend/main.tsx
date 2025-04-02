@@ -11,7 +11,7 @@ import CatalogItem from './pages/CatalogItem/CatalogItem'
 import CartItems from './pages/CartItems/CartItems'
 import { cartItemsActions, cartItemsLoader, cartLoader, catalogItemAction, catalogItemLoader, catalogLoader } from './routerMethods'
 
-const url = "https://fakestoreapi.com/products";
+const url = "http://localhost:5072/api";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     children: [
       {index: true, element: <Index />},
       {
-        path: '/catalog/:sex',
+        path: '/products/all/:sex',
         element: <Catalog />,
         loader: ({params}) => catalogLoader(params, url)
       },

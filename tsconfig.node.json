@@ -9,5 +9,5 @@
     "strict": true,
     "noEmit": true
   },
-  "include": ["./ShoppingCart-Frontend/vite.config.ts", "./ShoppingCart-Frontend/index.html"]
+  "include": ["./ShoppingCart-Frontend/vite.config.ts"]
 }
