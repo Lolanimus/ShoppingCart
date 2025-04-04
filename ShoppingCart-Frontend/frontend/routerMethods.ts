@@ -26,12 +26,7 @@ function cartItemsLoader() {
 }
 
 const catalogItemLoader = async (params: Params<string>, url: string) => {
-    const catalog = await fetchData(url);
-    const itemId = params.itemId!;
-    const gender = params.gender!;
-    const returnCatalog = getCatalog(gender, catalog);
-    const item = returnCatalog.find(obj => obj.id === parseInt(itemId))!;
-    return item;
+    return (await fetchData(url))[0];
 }
 
 const catalogItemAction = async (params: Params<string>, request: Request, url: string) => {

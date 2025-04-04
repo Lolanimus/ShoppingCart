@@ -26,9 +26,9 @@ const router = createBrowserRouter([
         loader: ({params}) => catalogLoader(params, apiUrl + "/product/all/" + params.gender)
       },
       {
-        path: 'catalog/:sex/:itemId',
+        path: '/product/all/:gender/:itemId',
         element: <CatalogItem />,
-        loader: ({params}) => catalogItemLoader(params, apiUrl),
+        loader: ({params}) => catalogItemLoader(params, apiUrl + "/product/" + params.itemId),
         action: ({params, request}) => catalogItemAction(params, request, apiUrl)
       },
       {

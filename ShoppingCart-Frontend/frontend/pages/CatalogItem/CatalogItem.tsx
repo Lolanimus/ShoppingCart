@@ -4,8 +4,8 @@ import stylesPopup from "../../popup/popup.module.scss";
 import { successPopUp } from "../../popup/popup";
 import { useRef } from "react";
 
-function isGender(category: string) {
-    return category === "men's clothing" || category === "women's clothing" ? true : false;
+function isGender(gender: string) {
+    return gender === "male" || gender === "female" ? true : false;
 }
 
 const CatalogItem = () => {
@@ -15,15 +15,15 @@ const CatalogItem = () => {
     return (
         <div className={styles.catalogItem}>
             <header>
-                <h1>{item.title}</h1>
+                <h1>{item.productName}</h1>
             </header>
             <div>
                 <div>
-                    <img src={item.image} alt={item.title} />
+                    <img src={item.productImageUri} alt={item.productName} />
                 </div>
                 <main>
                     <section aria-label="region">
-                        <p>{item.description}</p>
+                        <p>{item.productDesc}</p>
                     </section>
                     <aside>
                         <Form method="POST" onSubmit={() => {
@@ -37,7 +37,7 @@ const CatalogItem = () => {
                         }}>
                             <p>Size: </p>
                             <div>
-                                {isGender(item.category) ? (
+                                {isGender(item.productGender) ? (
                                     <>
                                         <div id={styles.radioBtn}>
                                             <input type="radio" id="s" name="size" value="s" defaultChecked={true}/>
