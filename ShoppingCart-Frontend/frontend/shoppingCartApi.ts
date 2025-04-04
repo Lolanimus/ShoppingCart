@@ -16,13 +16,36 @@ const fetchData = async (url: string): Promise<CatalogArr> => {
         } else {
             throw { code: data.status, message: data.statusText };
         }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("Error: " + error);
     }
 
     return res;
 }
+
+const postData = async(data: CartObjDto, url: string): Promise<boolean> => {
+    let result: boolean = false;
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })!;
+        if(response.ok && response.status == 200) {
+            result = true;
+        } else {
+            throw { code: response.status, message: response.statusText };
+        }
+    } catch (error: unknown) {
+        console.error("Error: " + error);
+    }
+
+    return result;
+} 
 
 // const getCatalog = (sex: string, catalog: CatalogArr) => {
 //     const returnedCatalog: CatalogArr = [];
@@ -98,4 +121,4 @@ const clearCart = () => {
     setCart([]);
 }
 
-export { getCatalog, getTotalPrice, addToCart, deleteFromCart, incrementQuantityCart, clearCart, fetchData };
+export { postData, getTotalPrice, addToCart, deleteFromCart, incrementQuantityCart, clearCart, fetchData };

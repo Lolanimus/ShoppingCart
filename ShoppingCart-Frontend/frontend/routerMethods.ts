@@ -1,6 +1,6 @@
 import { Params } from "react-router-dom";
 import { getCart } from "./cart";
-import { addToCart, deleteFromCart, fetchData, getTotalPrice, incrementQuantityCart } from "./shoppingCartApi";
+import { postData, deleteFromCart, fetchData, getTotalPrice, incrementQuantityCart } from "./shoppingCartApi";
 
 const cartLoader = () => {
     const cart = getCart();
@@ -25,15 +25,20 @@ function cartItemsLoader() {
     return getCart();
 }
 
-const catalogItemLoader = async (params: Params<string>, url: string) => {
+const catalogItemLoader = async (url: string) => {
     return (await fetchData(url))[0];
 }
 
 const catalogItemAction = async (params: Params<string>, request: Request, url: string) => {
-    const item = await catalogItemLoader(params, url);
+    const item = await catalogItemLoader(url + "/product/" + params.itemId);
     const form = await request.formData();
-    const size = form.get("size")?.toString();
-    addToCart(item, size);
+    const size = form.get("productSize")?.toString();
+    const data: CartObjDto = {
+        // need to add id property
+        productId: item.id,
+        productSize: size
+    }
+    postData(data, url + "/cart/add/");
     return null;
 }
 

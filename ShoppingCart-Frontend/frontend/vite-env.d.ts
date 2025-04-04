@@ -27,6 +27,12 @@ declare type CartObj = {
     productSize: string,
     product: CatalogObj 
 };
+declare type CartObjDto = {
+    id?: string,
+    productId: string,
+    quantity?: int,
+    productSize?: string
+}
 declare type CartCookies = {
     jwtToken?: string,
     cartProducts: CartObj

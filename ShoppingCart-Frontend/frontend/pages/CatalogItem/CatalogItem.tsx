@@ -40,26 +40,26 @@ const CatalogItem = () => {
                                 {isGender(item.productGender) ? (
                                     <>
                                         <div id={styles.radioBtn}>
-                                            <input type="radio" id="s" name="size" value="s" defaultChecked={true}/>
+                                            <input type="radio" id="s" name="productSize" value="s" defaultChecked={true}/>
                                             <label htmlFor="s">S</label>
                                         </div>
                                         <div id={styles.radioBtn}>
-                                            <input type="radio" id="m" name="size" value="m"/>
+                                            <input type="radio" id="m" name="productSize" value="m"/>
                                             <label htmlFor="m">M</label>
                                         </div>
                                         <div id={styles.radioBtn}>
-                                            <input type="radio" id="l" name="size" value="l"/>
+                                            <input type="radio" id="l" name="productSize" value="l"/>
                                             <label htmlFor="l">L</label>
                                         </div>
                                         <div id={styles.radioBtn}>
-                                            <input type="radio" id="xl" name="size" value="xl"/>
+                                            <input type="radio" id="xl" name="productSize" value="xl"/>
                                             <label htmlFor="xl">XL</label>
                                         </div>
                                     </>
                                 ) : (
                                     <>
                                         <div id={styles.radioBtn}>
-                                            <input type="radio" id="noSize" name="size" value={undefined} checked={true} readOnly={true} />
+                                            <input type="radio" id="noSize" name="productSize" value={undefined} checked={true} readOnly={true} />
                                             <label htmlFor="noSize">One size</label>
                                         </div>
                                     </>
