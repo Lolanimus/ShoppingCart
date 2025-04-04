@@ -3,15 +3,16 @@ import styles from "./Catalog.module.scss";
 
 const Item = (props: { item: CatalogObj }) => {
     const { item } = props;
+
     return (
         <div id={`item${item.id}`}>
             <div id={styles.imgDiv}>
-                <img src={item.image} alt={item.title} />
+                <img src={item.productImageUri} alt={item.productName} />
             </div>
             <div id={styles.itemInfo}>
                 <div>
-                    <p>{item.title}</p>
-                    <span>{`$${item.price}`}</span>
+                    <p>{item.productName}</p>
+                    <span>{`$${item.productPrice}`}</span>
                 </div>
                 <Form action={item.id.toString()} method="GET">
                     <button type="submit">See more</button>
@@ -21,15 +22,17 @@ const Item = (props: { item: CatalogObj }) => {
     );
 }
 
-
 type ReturnCatalog = {
     returnCatalog: CatalogArr,
     gender: string
 };
 
 const Catalog = () => {
-    const { returnCatalog, gender } = useLoaderData() as ReturnCatalog;
-    const genderH1: string = gender.charAt(0).toUpperCase() + gender.substring(1, gender.length);
+    const catalog = useLoaderData() as ReturnCatalog | undefined;
+    if (!catalog || !catalog.returnCatalog) {
+        return <p>Loading or No Data Available...</p>; // Prevent errors
+    }
+    const genderH1: string = catalog!.gender.charAt(0).toUpperCase() + catalog!.gender.substring(1, catalog!.gender.length);
     return (
         <div className={styles.catalog}>
             <header>
@@ -37,7 +40,8 @@ const Catalog = () => {
             </header>
             <main>
                 <section aria-label="region">
-                    {returnCatalog.map((item) => {
+                    {
+                    catalog!.returnCatalog.map((item) => {
                         return (
                             <Item item={item} key={item.id}/>
                         )

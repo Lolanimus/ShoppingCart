@@ -11,7 +11,8 @@ import CatalogItem from './pages/CatalogItem/CatalogItem'
 import CartItems from './pages/CartItems/CartItems'
 import { cartItemsActions, cartItemsLoader, cartLoader, catalogItemAction, catalogItemLoader, catalogLoader } from './routerMethods'
 
-const url = "http://localhost:5072/api";
+const apiUrl = "https://localhost:7151/api";
+const googleDriveUrl = "https://drive.usercontent.google.com";
 
 const router = createBrowserRouter([
   {
@@ -20,15 +21,15 @@ const router = createBrowserRouter([
     children: [
       {index: true, element: <Index />},
       {
-        path: '/products/all/:sex',
+        path: '/product/all/:gender',
         element: <Catalog />,
-        loader: ({params}) => catalogLoader(params, url)
+        loader: ({params}) => catalogLoader(params, apiUrl + "/product/all/" + params.gender)
       },
       {
         path: 'catalog/:sex/:itemId',
         element: <CatalogItem />,
-        loader: ({params}) => catalogItemLoader(params, url),
-        action: ({params, request}) => catalogItemAction(params, request, url)
+        loader: ({params}) => catalogItemLoader(params, apiUrl),
+        action: ({params, request}) => catalogItemAction(params, request, apiUrl)
       },
       {
         path: '/cart',

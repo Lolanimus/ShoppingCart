@@ -4,7 +4,12 @@ const fetchData = async (url: string): Promise<CatalogArr> => {
     let res: CatalogArr = [];
     
     try {
-        const data = await fetch(url)!;
+        const data = await fetch(url, {
+            mode: "cors",
+            headers: {
+                "Access-Control-Allow-Origin": "https://localhost:7151"
+            }
+        })!;
         if(data.ok && data.status == 200) {
             const json: CatalogArr | CatalogObj = await data.json()!;
             res = json !instanceof Array ? json : [json];
@@ -19,14 +24,14 @@ const fetchData = async (url: string): Promise<CatalogArr> => {
     return res;
 }
 
-const getCatalog = (sex: string, catalog: CatalogArr) => {
-    const returnedCatalog: CatalogArr = [];
-    const category = sex + "'s clothing";
-    catalog.forEach((obj) => {
-        (obj.category === category || obj.category === "jewelery") ? returnedCatalog.push(obj) : null;
-    });
-    return returnedCatalog;
-};
+// const getCatalog = (sex: string, catalog: CatalogArr) => {
+//     const returnedCatalog: CatalogArr = [];
+//     const category = sex + "'s clothing";
+//     catalog.forEach((obj) => {
+//         (obj.category === category || obj.category === "jewelery") ? returnedCatalog.push(obj) : null;
+//     });
+//     return returnedCatalog;
+// };
 
 const getTotalPrice = () => {
     let totalPrice = 0;

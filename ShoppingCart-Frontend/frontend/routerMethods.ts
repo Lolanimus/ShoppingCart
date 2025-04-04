@@ -1,6 +1,6 @@
 import { Params } from "react-router-dom";
 import { getCart } from "./cart";
-import { addToCart, deleteFromCart, fetchData, getCatalog, getTotalPrice, incrementQuantityCart } from "./shoppingCartApi";
+import { addToCart, deleteFromCart, fetchData, getTotalPrice, incrementQuantityCart } from "./shoppingCartApi";
 
 const cartLoader = () => {
     const cart = getCart();
@@ -28,7 +28,7 @@ function cartItemsLoader() {
 const catalogItemLoader = async (params: Params<string>, url: string) => {
     const catalog = await fetchData(url);
     const itemId = params.itemId!;
-    const gender = params.sex!;
+    const gender = params.gender!;
     const returnCatalog = getCatalog(gender, catalog);
     const item = returnCatalog.find(obj => obj.id === parseInt(itemId))!;
     return item;
@@ -43,12 +43,8 @@ const catalogItemAction = async (params: Params<string>, request: Request, url: 
 }
 
 const catalogLoader = async (params: Params<string>, url: string) => {
-    const catalog = await fetchData(url);
-    const gender = params.sex!;
-    const returnCatalog = getCatalog(
-        gender, 
-        catalog
-    )
+    const returnCatalog = await fetchData(url) as CatalogArr;
+    const gender = params.gender!;
 
     return {
         returnCatalog,

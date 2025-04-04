@@ -22,11 +22,11 @@ const GenderNav = (props: { isIndex: boolean }) => {
 
     const result = props.isIndex ? (
         <nav className={styles.genderNav}>
-            <NavLink to="catalog/men" className={"link"}>
+            <NavLink to="product/all/male" className={"link"}>
                 <span>Men</span>
                 <Icon path={mdiArrowRight} size={1.5} className={stylesIndex.index}/>
             </NavLink>
-            <NavLink to="catalog/women" className="link">
+            <NavLink to="product/all/female" className="link">
                 <span>Women</span>
                 <Icon path={mdiArrowRight} size={1.5} className={stylesIndex.index}/>
             </NavLink>
@@ -42,10 +42,10 @@ const GenderNav = (props: { isIndex: boolean }) => {
                         <Icon path={mdiClose} size={1} />
                     </button>
                     <nav>
-                        <NavLink to="catalog/men" onClick={() => closeNav()}>
+                        <NavLink to="product/all/male" onClick={() => closeNav()}>
                             <span>Men</span>
                         </NavLink>
-                        <NavLink to="catalog/women" onClick={() => closeNav()}>
+                        <NavLink to="product/all/female" onClick={() => closeNav()}>
                             <span>Women</span>
                         </NavLink>
                     </nav>
@@ -53,10 +53,10 @@ const GenderNav = (props: { isIndex: boolean }) => {
             </>
         ) : (
             <nav className={styles.genderNav}>
-                <NavLink to="catalog/men">
+                <NavLink to="product/all/male">
                     <span>Men</span>
                 </NavLink>
-                <NavLink to="catalog/women">
+                <NavLink to="product/all/female">
                     <span>Women</span>
                 </NavLink>
             </nav>
