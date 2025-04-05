@@ -1,14 +1,12 @@
 import { setCart, getCart } from "./cart";
 
-const fetchData = async (url: string): Promise<CatalogArr> => {
+const fetchProductData = async (url: string): Promise<CatalogArr> => {
     let res: CatalogArr = [];
     
     try {
         const data = await fetch(url, {
             mode: "cors",
-            headers: {
-                "Access-Control-Allow-Origin": "https://localhost:7151"
-            }
+            method: "GET"
         })!;
         if(data.ok && data.status == 200) {
             const json: CatalogArr | CatalogObj = await data.json()!;
@@ -23,16 +21,40 @@ const fetchData = async (url: string): Promise<CatalogArr> => {
     return res;
 }
 
-const postData = async(data: CartObjDto, url: string): Promise<boolean> => {
+const fetchCartData = async (url: string): Promise<CartArr> => {
+    let res: CartArr = [];
+    
+    try {
+        const data = await fetch(url, {
+            mode: "cors",
+            method: "GET",
+            credentials: "include"
+        })!;
+        if(data.ok && data.status == 200) {
+            const json: CartArr | CartObj = await data.json()!;
+            res = json !instanceof Array ? json : [json];
+        } else {
+            throw { code: data.status, message: data.statusText };
+        }
+    } catch (error: unknown) {
+        console.error("Error: " + error);
+    }
+
+    return res;
+}
+
+const postCartData = async(data: CartObjDto, url: string): Promise<boolean> => {
     let result: boolean = false;
 
     try {
         const response = await fetch(url, {
+            mode: "cors",
             method: "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
+            credentials: "include",
             body: JSON.stringify(data)
         })!;
         if(response.ok && response.status == 200) {
@@ -56,11 +78,10 @@ const postData = async(data: CartObjDto, url: string): Promise<boolean> => {
 //     return returnedCatalog;
 // };
 
-const getTotalPrice = () => {
+const getTotalPrice = (cart: CartArr) => {
     let totalPrice = 0;
-    const cart = getCart();
     cart.forEach((item) => {
-        totalPrice += item.quantity * item.price;
+        totalPrice += item.quantity * item.product.productPrice;
     })
     return parseFloat(totalPrice.toFixed(2));
 }
@@ -121,4 +142,4 @@ const clearCart = () => {
     setCart([]);
 }
 
-export { postData, getTotalPrice, addToCart, deleteFromCart, incrementQuantityCart, clearCart, fetchData };
+export { fetchCartData, postCartData, getTotalPrice, addToCart, deleteFromCart, incrementQuantityCart, clearCart, fetchProductData };

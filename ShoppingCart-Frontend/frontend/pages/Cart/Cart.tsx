@@ -13,13 +13,13 @@ function buyBtnOnClick(totalVal: number) {
 }
 
 const Cart = () => {
-    const { total } = useLoaderData() as CartLoader;
+    const { cartProducts, total, buyDisabled } = useLoaderData() as CartLoader;
 
     return (
         <div className={styles.cart}>
             <h1>Cart</h1>
             <div>
-                <Outlet />
+                <Outlet context={cartProducts}/>
                 <div>
                     <div>
                         <span>Total</span>

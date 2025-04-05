@@ -1,0 +1,76 @@
+{
+  "hash": "6f2cc708",
+  "configHash": "61d21627",
+  "lockfileHash": "882ac00e",
+  "browserHash": "8b5b55f9",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "4a39f1a8",
+      "needsInterop": true
+    },
+    "react-dom": {
+      "src": "../../node_modules/react-dom/index.js",
+      "file": "react-dom.js",
+      "fileHash": "a4f347d7",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "9d1a2496",
+      "needsInterop": true
+    },
+    "react/jsx-runtime": {
+      "src": "../../node_modules/react/jsx-runtime.js",
+      "file": "react_jsx-runtime.js",
+      "fileHash": "4d30f056",
+      "needsInterop": true
+    },
+    "@mdi/js": {
+      "src": "../../node_modules/@mdi/js/mdi.js",
+      "file": "@mdi_js.js",
+      "fileHash": "afa46194",
+      "needsInterop": false
+    },
+    "@mdi/react": {
+      "src": "../../node_modules/@mdi/react/Icon.js",
+      "file": "@mdi_react.js",
+      "fileHash": "c5e8df95",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "97ab2852",
+      "needsInterop": true
+    },
+    "react-responsive": {
+      "src": "../../node_modules/react-responsive/dist/esm/index.js",
+      "file": "react-responsive.js",
+      "fileHash": "da3b0705",
+      "needsInterop": false
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "8a8b190e",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-QWOZHILC": {
+      "file": "chunk-QWOZHILC.js"
+    },
+    "chunk-5PZXKKRO": {
+      "file": "chunk-5PZXKKRO.js"
+    },
+    "chunk-K2PNMST5": {
+      "file": "chunk-K2PNMST5.js"
+    },
+    "chunk-5WRI5ZAA": {
+      "file": "chunk-5WRI5ZAA.js"
+    }
+  }
+}

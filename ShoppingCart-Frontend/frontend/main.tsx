@@ -33,12 +33,11 @@ const router = createBrowserRouter([
       {
         path: '/cart',
         element: <Cart />,
-        loader: cartLoader,
+        loader: () => cartLoader(apiUrl + "/cart"),
         children: [
           {
             path: '/cart',
             element: <CartItems />,
-            loader: cartItemsLoader,
             action: ({request}) => cartItemsActions(request),
           }
         ]

@@ -1,11 +1,11 @@
 import { Params } from "react-router-dom";
-import { getCart } from "./cart";
-import { postData, deleteFromCart, fetchData, getTotalPrice, incrementQuantityCart } from "./shoppingCartApi";
+import { postCartData, deleteFromCart, fetchCartData, fetchProductData, getTotalPrice, incrementQuantityCart } from "./shoppingCartApi";
 
-const cartLoader = () => {
-    const cart = getCart();
+const cartLoader = async (url: string) => {
+    const cart = await fetchCartData(url)
     return {
-        total: getTotalPrice(),
+        cartProducts: cart,
+        total: getTotalPrice(cart),
         buyDisabled: cart.length > 0 ? false : true,
     }
 }
@@ -21,12 +21,8 @@ async function cartItemsActions(request: Request) {
     return null
 }
 
-function cartItemsLoader() {
-    return getCart();
-}
-
 const catalogItemLoader = async (url: string) => {
-    return (await fetchData(url))[0];
+    return (await fetchProductData(url))[0];
 }
 
 const catalogItemAction = async (params: Params<string>, request: Request, url: string) => {
@@ -38,12 +34,12 @@ const catalogItemAction = async (params: Params<string>, request: Request, url: 
         productId: item.id,
         productSize: size
     }
-    postData(data, url + "/cart/add/");
+    postCartData(data, url + "/cart/add/");
     return null;
 }
 
 const catalogLoader = async (params: Params<string>, url: string) => {
-    const returnCatalog = await fetchData(url) as CatalogArr;
+    const returnCatalog = await fetchProductData(url) as CatalogArr;
     const gender = params.gender!;
 
     return {
@@ -52,12 +48,4 @@ const catalogLoader = async (params: Params<string>, url: string) => {
     }
 }
 
-type CartLoader = ReturnType<typeof cartLoader>;
-
-type ItemInfo = {
-    itemId: number,
-    size?: string
-}
-
-export { cartLoader, cartItemsActions, cartItemsLoader, catalogItemLoader, catalogItemAction, catalogLoader };
-export type { CartLoader, ItemInfo };
+export { cartLoader, cartItemsActions, catalogItemLoader, catalogItemAction, catalogLoader };
