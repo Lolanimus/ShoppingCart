@@ -72,7 +72,7 @@ const CartItems = () => {
                                         <QuantityChanger product={product} />
                                     </li>
                                     <li className={styles.itemCartSettings}>
-                                        <button className={styles.deleteBtn} type="submit" name="delete" value={JSON.stringify({productId: product.id, size: product.productSize})}>
+                                        <button className={styles.deleteBtn} type="submit" name="delete" value={JSON.stringify({productId: product.productId, productSize: product.productSize})}>
                                             <Icon path={mdiDelete} size={1} color={"black"} aria-label="delete"/>
                                         </button>
                                         <div data-testid="price" className={styles.price}>

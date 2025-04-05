@@ -43,7 +43,7 @@ const fetchCartData = async (url: string): Promise<CartArr> => {
     return res;
 }
 
-const postCartData = async(data: CartObjDto, url: string): Promise<boolean> => {
+const postCartData = async(data: CartObjDto | null, url: string): Promise<boolean> => {
     let result: boolean = false;
 
     try {
@@ -56,6 +56,27 @@ const postCartData = async(data: CartObjDto, url: string): Promise<boolean> => {
             },
             credentials: "include",
             body: JSON.stringify(data)
+        })!;
+        if(response.ok && response.status == 200) {
+            result = true;
+        } else {
+            throw { code: response.status, message: response.statusText };
+        }
+    } catch (error: unknown) {
+        console.error("Error: " + error);
+    }
+
+    return result;
+} 
+
+const deleteCartData = async(url: string): Promise<boolean> => {
+    let result: boolean = false;
+
+    try {
+        const response = await fetch(url, {
+            mode: "cors",
+            method: "DELETE",
+            credentials: "include",
         })!;
         if(response.ok && response.status == 200) {
             result = true;
@@ -122,12 +143,8 @@ const addToCart = (item: CatalogObj, size?: string) => {
     setCart([...tempCart]);
 }
 
-const deleteFromCart = (productId: number, size?: string) => {
-    const tempCart = getCart();
-    tempCart.forEach((product, i) => {
-        (product.id === productId && product.size === size) && tempCart.splice(i, 1);
-    })
-    setCart([...tempCart]);
+const deleteFromCart = (cart: CartArr, productId: string, size?: string) => {
+    deleteCartData;
 }
 
 const incrementQuantityCart = (productId: number, isIncrement: boolean, size?: string) => {
@@ -142,4 +159,4 @@ const clearCart = () => {
     setCart([]);
 }
 
-export { fetchCartData, postCartData, getTotalPrice, addToCart, deleteFromCart, incrementQuantityCart, clearCart, fetchProductData };
+export { fetchCartData, postCartData, getTotalPrice, addToCart, deleteFromCart, incrementQuantityCart, clearCart, fetchProductData, deleteCartData };

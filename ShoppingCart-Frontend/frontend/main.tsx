@@ -9,7 +9,7 @@ import Index from './pages/Index/Index'
 import Catalog from './pages/Catalog/Catalog'
 import CatalogItem from './pages/CatalogItem/CatalogItem'
 import CartItems from './pages/CartItems/CartItems'
-import { cartItemsActions, cartItemsLoader, cartLoader, catalogItemAction, catalogItemLoader, catalogLoader } from './routerMethods'
+import { cartItemsActions, cartLoader, catalogItemAction, catalogItemLoader, catalogLoader } from './routerMethods'
 
 const apiUrl = "https://localhost:7151/api";
 
@@ -38,7 +38,7 @@ const router = createBrowserRouter([
           {
             path: '/cart',
             element: <CartItems />,
-            action: ({request}) => cartItemsActions(request),
+            action: ({request}) => cartItemsActions(request, apiUrl),
           }
         ]
       },

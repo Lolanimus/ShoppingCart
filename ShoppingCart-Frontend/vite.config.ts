@@ -16,6 +16,10 @@ export default defineConfig({
     },
     port: 5174,
     host: 'localhost',
+    hmr: {
+      protocol: 'ws',
+      host: 'localhost'
+    }
   },
   test: {
     globals: true,
