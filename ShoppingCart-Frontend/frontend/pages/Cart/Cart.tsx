@@ -1,5 +1,4 @@
 import { useLoaderData, Outlet, Form } from "react-router-dom";
-import { clearCart } from "../../shoppingCartApi";
 import { CartLoader } from "../../routerMethods";
 import { successPopUp } from "../../popup/popup";
 import stylesPopup from "../../popup/popup.module.scss";
@@ -7,13 +6,12 @@ import styles from "./Cart.module.scss";
 
 function buyBtnOnClick(totalVal: number) {
     const buyBtn = document.getElementById("buyBtn") as HTMLButtonElement;
-    clearCart();
     totalVal === 0 ? buyBtn.disabled = true : buyBtn.disabled = false;
     successPopUp();
 }
 
 const Cart = () => {
-    const { cartProducts, total, buyDisabled } = useLoaderData() as CartLoader;
+    const { cartProducts, total } = useLoaderData() as CartLoader;
 
     return (
         <div className={styles.cart}>
@@ -33,8 +31,8 @@ const Cart = () => {
                             )
                         }
                     </div>
-                    <Form method="get" onSubmit={() => buyBtnOnClick(total)}>
-                        <button id="buyBtn" disabled={total == 0}>Buy</button>
+                    <Form method="DELETE" onSubmit={() => buyBtnOnClick(total)} action="/cart">
+                        <button id="buyBtn" disabled={total == 0} name={"deleteAll"} value={"true"}>Buy</button>
                         <div id={stylesPopup.popUpModule}>Success</div>    
                     </Form>
                 </div>

@@ -34,6 +34,7 @@ const router = createBrowserRouter([
         path: '/cart',
         element: <Cart />,
         loader: () => cartLoader(apiUrl + "/cart"),
+        action: ({request}) => cartItemsActions(request, apiUrl),
         children: [
           {
             path: '/cart',

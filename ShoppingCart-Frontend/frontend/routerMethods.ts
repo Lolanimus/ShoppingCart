@@ -1,5 +1,5 @@
 import { Params } from "react-router-dom";
-import { postCartData, deleteCartData, fetchCartData, fetchProductData, getTotalPrice, incrementQuantityCart } from "./shoppingCartApi";
+import { postCartData, deleteCartData, fetchCartData, fetchProductData, getTotalPrice } from "./shoppingCartApi";
 
 const cartLoader = async (url: string) => {
     const cart = await fetchCartData(url)
@@ -15,6 +15,8 @@ async function cartItemsActions(request: Request, url: string) {
     const increaseQuantity = JSON.parse(formData.get("increase") as string);
     const decreaseQuantity = JSON.parse(formData.get("decrease") as string);
     const deleteItem = JSON.parse(formData.get("delete") as string);
+    const deleteAll = JSON.parse(formData.get("deleteAll") as string);
+    if(deleteAll) deleteCartData(url + "/cart");
     if(deleteItem) deleteCartData(url + "/cart/delete/" + deleteItem.productId + "?size=" + deleteItem.productSize);
     if(increaseQuantity) postCartData(null, url + "/cart/qIncrement/" + increaseQuantity.productId + "?size=" + increaseQuantity.productSize);
     else if(decreaseQuantity) deleteCartData(url + "/cart/qDecrement/" + decreaseQuantity.productId + "?size=" + decreaseQuantity.productSize);
