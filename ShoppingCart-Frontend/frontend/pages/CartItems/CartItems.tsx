@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useFetcher, useOutletContext } from "react-router-dom";
+import { useFetcher, useLoaderData } from "react-router-dom";
 import Icon from '@mdi/react';
 import { mdiDelete } from '@mdi/js';
 import QuantityChanger from "../../components/QuantityChanger/QuantityChanger";
@@ -7,16 +7,16 @@ import styles from "./CartItems.module.scss";
 import { useMediaQuery } from "react-responsive";
 
 const CartItems = () => {
-    const cartProducts = useOutletContext() as CartArr;
     const fetcher = useFetcher();
     const isPhone = useMediaQuery({maxWidth: 800});
+    const cartProducts = useLoaderData() as CartArr;
 
     const result = (
         <ul data-testid="itemsList" >
             {cartProducts.map(product => isPhone ? (
-                    <li className={styles.cartItem} key={`${product.id}-${product.productSize}`}>
+                    <li className={styles.cartItem} key={`${product.productId}-${product.productSize}`}>
                         <ol>
-                            <fetcher.Form method="POST">
+                            <fetcher.Form method="POST" >
                                 <li>
                                     <img src={product.product.productImageUri} alt={product.product.productName} />
                                 </li>
@@ -34,7 +34,7 @@ const CartItems = () => {
                                             )
                                         }
                                     </div>
-                                    <QuantityChanger product={product} />
+                                    <QuantityChanger product={product} key={`${product.productId}-${product.productSize}`}/>
                                 </li>
                                 <li className={styles.itemCartSettings}>
                                     <button className={styles.deleteBtn} type="submit" name="delete" value={JSON.stringify({productId: product.productId, productSize: product.productSize})}>
@@ -48,7 +48,7 @@ const CartItems = () => {
                         </ol>
                     </li>
                 ) : (
-                    <li className={styles.cartItem} key={`${product.id}-${product.productSize}`}>
+                    <li className={styles.cartItem} key={`${product.productId}-${product.productSize}`}>
                         <section id="itemImg">
                             <img src={product.product.productImageUri} alt={product.product.productName} />
                         </section>
@@ -69,7 +69,7 @@ const CartItems = () => {
                                                 )
                                             }
                                         </div>
-                                        <QuantityChanger product={product} />
+                                        <QuantityChanger product={product} key={`${product.productId}-${product.productSize}`}/>
                                     </li>
                                     <li className={styles.itemCartSettings}>
                                         <button className={styles.deleteBtn} type="submit" name="delete" value={JSON.stringify({productId: product.productId, productSize: product.productSize})}>

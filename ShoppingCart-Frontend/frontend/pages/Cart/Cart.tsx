@@ -1,5 +1,4 @@
 import { useLoaderData, Outlet, Form } from "react-router-dom";
-import { CartLoader } from "../../routerMethods";
 import { successPopUp } from "../../popup/popup";
 import stylesPopup from "../../popup/popup.module.scss";
 import styles from "./Cart.module.scss";
@@ -11,13 +10,13 @@ function buyBtnOnClick(totalVal: number) {
 }
 
 const Cart = () => {
-    const { cartProducts, total } = useLoaderData() as CartLoader;
+    const total = useLoaderData() as number;
 
     return (
         <div className={styles.cart}>
             <h1>Cart</h1>
             <div>
-                <Outlet context={cartProducts}/>
+                <Outlet />
                 <div>
                     <div>
                         <span>Total</span>
