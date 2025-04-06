@@ -69,7 +69,7 @@ const CartItems = () => {
                                                 )
                                             }
                                         </div>
-                                        <QuantityChanger product={product} key={`${product.productId}-${product.productSize}`}/>
+                                        <QuantityChanger product={product} />
                                     </li>
                                     <li className={styles.itemCartSettings}>
                                         <button className={styles.deleteBtn} type="submit" name="delete" value={JSON.stringify({productId: product.productId, productSize: product.productSize})}>
