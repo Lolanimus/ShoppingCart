@@ -27,7 +27,7 @@ const CartItems = (props: { context: CartArr }) => {
                                     <div>
                                         <span>Size: </span>
                                         { 
-                                            product.productSize !== "" ? (
+                                            product.productSize !== "unknown" ? (
                                                 <span data-testid="size">{product.productSize && (product.productSize!.length < 3 ? product.productSize?.toUpperCase() : product.productSize)}</span>
                                             ) : (
                                                 <span data-testid="size">N/A</span>
@@ -62,7 +62,7 @@ const CartItems = (props: { context: CartArr }) => {
                                         <div>
                                             <span>Size: </span>
                                             { 
-                                                product.productSize !== "" ? (
+                                                product.productSize !== "unknown" ? (
                                                     <span data-testid="size">{product.productSize && (product.productSize!.length < 3 ? product.productSize?.toUpperCase() : product.productSize)}</span>
                                                 ) : (
                                                     <span data-testid="size">N/A</span>

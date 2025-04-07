@@ -2,8 +2,9 @@ import { Link, Outlet } from "react-router-dom";
 import GenderNav from "../../components/GenderNav/GenderNav";
 import Icon from '@mdi/react';
 import { mdiCartOutline } from '@mdi/js';
-import logoSmall from "../../assets/Logo_Small.svg";
 import styles from "./Root.module.scss";
+
+const logoSmall = "https://storage.googleapis.com/shopping-cart-bucket/logo/Logo_Small.svg";
 
 const Root = () => {
     return(

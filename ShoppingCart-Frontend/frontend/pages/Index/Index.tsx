@@ -1,7 +1,8 @@
 import GenderNav from "../../components/GenderNav/GenderNav";
-import logo from "../../assets/Logo.svg";
 import styles from "./Index.module.scss"
 import { useMediaQuery } from "react-responsive";
+
+const logo = "https://storage.googleapis.com/shopping-cart-bucket/logo/Logo.svg";
 
 const Index = () => {
     const isPhone = useMediaQuery({maxWidth: 800});
