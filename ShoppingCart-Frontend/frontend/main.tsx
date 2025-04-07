@@ -8,9 +8,7 @@ import Root from './pages/Root/Root'
 import Index from './pages/Index/Index'
 import Catalog from './pages/Catalog/Catalog'
 import CatalogItem from './pages/CatalogItem/CatalogItem'
-import CartItems from './pages/CartItems/CartItems'
 import { cartItemsActions, cartLoader, catalogItemAction, catalogItemLoader, catalogLoader } from './routerMethods'
-import QuantityChanger from './components/QuantityChanger/QuantityChanger';
 
 const apiUrl = "https://localhost:7151/api";
 
@@ -36,18 +34,6 @@ const router = createBrowserRouter([
         element: <Cart />,
         loader: () => cartLoader(apiUrl + "/cart"),
         action: ({request}) => cartItemsActions(request, apiUrl),
-        children: [
-          {
-            path: '',
-            element: <CartItems />,
-            children: [
-              {
-                path: '',
-                element: <QuantityChanger />
-              }
-            ]
-          }
-        ]
       },
     ],
   },

@@ -1,8 +1,7 @@
-import { useOutletContext } from "react-router-dom";
 import styles from "./QuantityChanger.module.scss";
 
-const QuantityChanger = () => {
-    const product = useOutletContext() as CartObj;
+const QuantityChanger = (props: { context: CartObj }) => {
+    const product = props.context;
 
     return (
         <div className={styles.quantityChanger} data-testid="quantityDiv" >
