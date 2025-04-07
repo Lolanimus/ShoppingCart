@@ -2,6 +2,7 @@ import { useLoaderData, Outlet, Form } from "react-router-dom";
 import { successPopUp } from "../../popup/popup";
 import stylesPopup from "../../popup/popup.module.scss";
 import styles from "./Cart.module.scss";
+import CartItems from "../CartItems/CartItems";
 
 function buyBtnOnClick(totalVal: number) {
     const buyBtn = document.getElementById("buyBtn") as HTMLButtonElement;
@@ -24,7 +25,7 @@ const Cart = () => {
         <div className={styles.cart}>
             <h1>Cart</h1>
             <div>
-                <Outlet context={cart}/>
+                <CartItems context={cart}/>
                 <div>
                     <div>
                         <span>Total</span>

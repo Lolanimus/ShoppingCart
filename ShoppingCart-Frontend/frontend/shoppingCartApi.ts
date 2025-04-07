@@ -32,7 +32,7 @@ const fetchCartData = async (url: string): Promise<CartArr> => {
             const json: CartArr | CartObj = await data.json()!;
             res = json !instanceof Array ? json : [json];
         } else {
-            throw { code: data.status, message: data.statusText };
+            //throw { code: data.status, message: data.statusText };
         }
     } catch (error: unknown) {
         console.error("Error: " + error);
@@ -54,7 +54,7 @@ const postCartData = async (data: CartObjDto | null, url: string): Promise<void>
             body: JSON.stringify(data)
         })!;
         if(!response.ok) {
-            throw { code: response.status, message: response.statusText };
+            //throw { code: response.status, message: response.statusText };
         }
     } catch (error: unknown) {
         console.error("Error: " + error);
@@ -73,7 +73,7 @@ const deleteCartData = async (url: string): Promise<boolean> => {
         if(response.ok && response.status == 200) {
             result = true;
         } else {
-            throw { code: response.status, message: response.statusText };
+            //throw { code: response.status, message: response.statusText };
         }
     } catch (error: unknown) {
         console.error("Error: " + error);

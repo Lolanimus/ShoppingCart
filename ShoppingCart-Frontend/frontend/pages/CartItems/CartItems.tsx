@@ -4,11 +4,12 @@ import Icon from '@mdi/react';
 import { mdiDelete } from '@mdi/js';
 import styles from "./CartItems.module.scss";
 import { useMediaQuery } from "react-responsive";
+import QuantityChanger from "../../components/QuantityChanger/QuantityChanger";
 
-const CartItems = () => {
+const CartItems = (props: { context: CartArr }) => {
     const fetcher = useFetcher();
     const isPhone = useMediaQuery({maxWidth: 800});
-    const cartProducts = useOutletContext() as CartArr;
+    const cartProducts = props.context;
 
     const result = (
         <ul data-testid="itemsList" >
@@ -33,7 +34,7 @@ const CartItems = () => {
                                             )
                                         }
                                     </div>
-                                    <Outlet context={product} key={`${product.productId}-${product.productSize}`}/>
+                                    <QuantityChanger context={product} key={`${product.productId}-${product.productSize}`}/>
                                 </li>
                                 <li className={styles.itemCartSettings}>
                                     <button className={styles.deleteBtn} type="submit" name="delete" value={JSON.stringify({productId: product.productId, productSize: product.productSize})}>
@@ -68,7 +69,7 @@ const CartItems = () => {
                                                 )
                                             }
                                         </div>
-                                        <Outlet context={product} key={`${product.productId}-${product.productSize}`} />
+                                        <QuantityChanger context={product} key={`${product.productId}-${product.productSize}`} />
                                     </li>
                                     <li className={styles.itemCartSettings}>
                                         <button className={styles.deleteBtn} type="submit" name="delete" value={JSON.stringify({productId: product.productId, productSize: product.productSize})}>
