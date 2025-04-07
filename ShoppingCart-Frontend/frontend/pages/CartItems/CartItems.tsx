@@ -1,15 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useFetcher, useLoaderData } from "react-router-dom";
+import { Outlet, useFetcher, useOutletContext } from "react-router-dom";
 import Icon from '@mdi/react';
 import { mdiDelete } from '@mdi/js';
-import QuantityChanger from "../../components/QuantityChanger/QuantityChanger";
 import styles from "./CartItems.module.scss";
 import { useMediaQuery } from "react-responsive";
 
 const CartItems = () => {
     const fetcher = useFetcher();
     const isPhone = useMediaQuery({maxWidth: 800});
-    const cartProducts = useLoaderData() as CartArr;
+    const cartProducts = useOutletContext() as CartArr;
 
     const result = (
         <ul data-testid="itemsList" >
@@ -34,7 +33,7 @@ const CartItems = () => {
                                             )
                                         }
                                     </div>
-                                    <QuantityChanger product={product} key={`${product.productId}-${product.productSize}`}/>
+                                    <Outlet context={product} key={`${product.productId}-${product.productSize}`}/>
                                 </li>
                                 <li className={styles.itemCartSettings}>
                                     <button className={styles.deleteBtn} type="submit" name="delete" value={JSON.stringify({productId: product.productId, productSize: product.productSize})}>
@@ -69,7 +68,7 @@ const CartItems = () => {
                                                 )
                                             }
                                         </div>
-                                        <QuantityChanger product={product} />
+                                        <Outlet context={product} key={`${product.productId}-${product.productSize}`} />
                                     </li>
                                     <li className={styles.itemCartSettings}>
                                         <button className={styles.deleteBtn} type="submit" name="delete" value={JSON.stringify({productId: product.productId, productSize: product.productSize})}>

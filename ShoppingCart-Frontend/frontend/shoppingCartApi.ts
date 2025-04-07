@@ -41,9 +41,7 @@ const fetchCartData = async (url: string): Promise<CartArr> => {
     return res;
 }
 
-const postCartData = async(data: CartObjDto | null, url: string): Promise<boolean> => {
-    let result: boolean = false;
-
+const postCartData = async (data: CartObjDto | null, url: string): Promise<void> => {
     try {
         const response = await fetch(url, {
             mode: "cors",
@@ -55,19 +53,15 @@ const postCartData = async(data: CartObjDto | null, url: string): Promise<boolea
             credentials: "include",
             body: JSON.stringify(data)
         })!;
-        if(response.ok && response.status == 200) {
-            result = true;
-        } else {
+        if(!response.ok) {
             throw { code: response.status, message: response.statusText };
         }
     } catch (error: unknown) {
         console.error("Error: " + error);
     }
-
-    return result;
 } 
 
-const deleteCartData = async(url: string): Promise<boolean> => {
+const deleteCartData = async (url: string): Promise<boolean> => {
     let result: boolean = false;
 
     try {
@@ -88,12 +82,4 @@ const deleteCartData = async(url: string): Promise<boolean> => {
     return result;
 }
 
-const getTotalPrice = (cart: CartArr) => {
-    let totalPrice = 0;
-    cart.forEach((item) => {
-        totalPrice += item.quantity * item.product.productPrice;
-    })
-    return parseFloat(totalPrice.toFixed(2));
-}
-
-export { fetchCartData, postCartData, getTotalPrice, fetchProductData, deleteCartData };
+export { fetchCartData, postCartData, fetchProductData, deleteCartData };

@@ -9,14 +9,22 @@ function buyBtnOnClick(totalVal: number) {
     successPopUp();
 }
 
-const Cart = () => {
-    const total = useLoaderData() as number;
+const getTotalPrice = (cart: CartArr) => {
+    let totalPrice = 0;
+    cart.forEach((item) => {
+        totalPrice += item.quantity * item.product.productPrice;
+    })
+    return parseFloat(totalPrice.toFixed(2));
+}
 
+const Cart = () => {
+    const cart = useLoaderData() as CartArr;
+    const total = getTotalPrice(cart);
     return (
         <div className={styles.cart}>
             <h1>Cart</h1>
             <div>
-                <Outlet />
+                <Outlet context={cart}/>
                 <div>
                     <div>
                         <span>Total</span>

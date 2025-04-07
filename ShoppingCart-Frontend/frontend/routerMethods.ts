@@ -1,16 +1,11 @@
 import { Params, redirect } from "react-router-dom";
-import { postCartData, deleteCartData, fetchCartData, fetchProductData, getTotalPrice } from "./shoppingCartApi";
+import { postCartData, deleteCartData, fetchCartData, fetchProductData } from "./shoppingCartApi";
 
 const cartLoader = async (url: string) => {
     return await fetchCartData(url)
 }
 
-const cartTotalLoader = async (url: string) => {
-    const cart = await fetchCartData(url)
-    return getTotalPrice(cart);
-}
-
-async function cartItemsActions(request: Request, url: string) {
+const cartItemsActions = async (request: Request, url: string) => {
     const formData = await request.formData();
     const increaseQuantity = JSON.parse(formData.get("increase") as string);
     const decreaseQuantity = JSON.parse(formData.get("decrease") as string);
@@ -50,4 +45,4 @@ const catalogLoader = async (params: Params<string>, url: string) => {
     }
 }
 
-export { cartTotalLoader, cartLoader, cartItemsActions, catalogItemLoader, catalogItemAction, catalogLoader };
+export { cartLoader, cartItemsActions, catalogItemLoader, catalogItemAction, catalogLoader };
