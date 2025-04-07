@@ -4,6 +4,7 @@ import stylesPopup from "../../popup/popup.module.scss";
 import styles from "./Cart.module.scss";
 import CartItems from "../CartItems/CartItems";
 
+
 function buyBtnOnClick(totalVal: number) {
     const buyBtn = document.getElementById("buyBtn") as HTMLButtonElement;
     totalVal === 0 ? buyBtn.disabled = true : buyBtn.disabled = false;
