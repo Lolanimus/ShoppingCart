@@ -7,6 +7,12 @@ export default [
     http.get(`${url}/product/1`, () => {
         return HttpResponse.json({productName: 'Kesha'});
     }),
+    http.get(`${url}/product/all/male`, () => {
+        return HttpResponse.json([{}, {}, {}]);
+    }),
+    http.get(`${url}/product/all/female`, () => {
+        return HttpResponse.json([{}, {}]);
+    }),
     http.get(`${url}/cart`, () => {
         return HttpResponse.json(cart);
     }),

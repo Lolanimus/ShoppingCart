@@ -53,17 +53,29 @@ describe("routerMethods", async () => {
 
     describe("catalogItemLoader", () => {
         it("returns the item", async () => {
-            expect((await catalogItemLoader(
-                url + "/product/1"
-            ))
-            .productName).contains("Kesha");
+            expect((
+                await catalogItemLoader(url + "/product/1")
+            ).productName
+            ).contains("Kesha");
         })
     })
 
-    // describe("catalogLoader", () => {
-    //     it("returns the catalog of a specified gender", async () => {
-    //         const { returnCatalog } = await catalogLoader({ sex: params.sex } as unknown as Params<string>, url);
-    //         expect(returnCatalog.slice(0, 1)).toStrictEqual([data.contents[0]]);
-    //     })
-    // })
+    describe("catalogLoader", () => {
+        it("returns the catalog of male clothing", async () => {
+            expect((
+                await catalogLoader({gender: "male"}, url + "/product/all/male")
+            )).toStrictEqual({
+                returnCatalog: [{}, {}, {}],
+                gender: "male"
+            });
+        })
+        it("returns the catalog of female clothing", async () => {
+            expect((
+                await catalogLoader({gender: "female"}, url + "/product/all/female")
+            )).toStrictEqual({
+                returnCatalog: [{}, {}],
+                gender: "female"
+            });
+        })
+    })
 })
