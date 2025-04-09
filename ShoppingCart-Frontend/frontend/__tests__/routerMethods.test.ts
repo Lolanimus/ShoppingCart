@@ -51,17 +51,14 @@ describe("routerMethods", async () => {
         })
     });
 
-    // describe("cartItemsLoader", () => {
-    //     it("returns the cart", () => {
-    //         expect(cartItemsLoader()).toStrictEqual([{...data.contents[0], quantity: 1, size: "s"}, {...data.contents[1], quantity: 1, size: "s"}, {...data.contents[2], quantity: 1, size: "s"}])
-    //     })
-    // })
-
-    // describe("catalogItemLoader", () => {
-    //     it("returns the item", async () => {
-    //         expect(await catalogItemLoader(params as unknown as Params<string>, url)).toStrictEqual(data.contents[0]);
-    //     })
-    // })
+    describe("catalogItemLoader", () => {
+        it("returns the item", async () => {
+            expect((await catalogItemLoader(
+                url + "/product/1"
+            ))
+            .productName).contains("Kesha");
+        })
+    })
 
     // describe("catalogLoader", () => {
     //     it("returns the catalog of a specified gender", async () => {

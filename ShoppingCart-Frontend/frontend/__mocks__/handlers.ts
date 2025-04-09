@@ -4,6 +4,9 @@ let cart = [] as CartObjDto[];
 const url = "http://localhost:5072/api";
 
 export default [
+    http.get(`${url}/product/1`, () => {
+        return HttpResponse.json({productName: 'Kesha'});
+    }),
     http.get(`${url}/cart`, () => {
         return HttpResponse.json(cart);
     }),
