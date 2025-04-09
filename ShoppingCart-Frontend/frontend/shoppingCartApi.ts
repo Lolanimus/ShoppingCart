@@ -32,7 +32,7 @@ const fetchCartData = async (url: string): Promise<CartArr> => {
             const json: CartArr | CartObj = await data.json()!;
             res = json !instanceof Array ? json : [json];
         } else {
-            //throw { code: data.status, message: data.statusText };
+            throw { code: data.status, message: data.statusText };
         }
     } catch (error: unknown) {
         console.error("Error: " + error);
@@ -41,10 +41,10 @@ const fetchCartData = async (url: string): Promise<CartArr> => {
     return res;
 }
 
-const postCartData = async (data: CartObjDto | null, url: string): Promise<void> => {
+const postCartData = async (data: CartObjDto | null, url: string, cors: boolean = true): Promise<void> => {
     try {
         const response = await fetch(url, {
-            mode: "cors",
+            mode: cors ? "cors" : "no-cors",
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -64,7 +64,6 @@ const postCartData = async (data: CartObjDto | null, url: string): Promise<void>
 const deleteCartData = async (url: string): Promise<boolean> => {
     let result: boolean = false;
 
-    try {
         const response = await fetch(url, {
             mode: "cors",
             method: "DELETE",
@@ -75,9 +74,7 @@ const deleteCartData = async (url: string): Promise<boolean> => {
         } else {
             //throw { code: response.status, message: response.statusText };
         }
-    } catch (error: unknown) {
-        console.error("Error: " + error);
-    }
+
 
     return result;
 }

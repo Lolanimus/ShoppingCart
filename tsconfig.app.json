@@ -23,5 +23,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["./ShoppingCart-Frontend/frontend", "./ShoppingCart-Frontend/frontend/__tests__", "./ShoppingCart-Frontend/setup.ts", "./ShoppingCart-Frontend/tests/app.test.ts"]
+  "include": ["./ShoppingCart-Frontend/frontend", "./ShoppingCart-Frontend/frontend/__tests__", "setup.ts", "./ShoppingCart-Frontend/tests/app.test.ts"]
 }
