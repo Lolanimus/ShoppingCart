@@ -7,11 +7,26 @@ const url = "http://localhost:5072/api";
 
 async function postMock(index: number)
 {
-    await postCartData(
-        { 
-            productId: contents[index].productId,
-            productSize: contents[index].productSize
-        }, url + "/cart/add/");
+    try {
+        const response = await fetch(`${url}/cart/add`, {
+            mode: "no-cors",
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            credentials: "include",
+            body: JSON.stringify({
+                productId: contents[index].productId,
+                productSize: contents[index].productSize
+            })
+        })!;
+        if(!response.ok) {
+            throw { code: response.status, message: response.statusText };
+        }
+    } catch (error: unknown) {
+        console.error("Error: " + error);
+    }
 }
 
 async function clearCart()
@@ -26,11 +41,6 @@ async function mockCart() {
 }
 
 describe("routerMethods", async () => {
-    // const params = {
-    //     itemId: 1,
-    //     sex: "men"
-    // }
-
     beforeEach(async () => {
         await mockCart();
     })
@@ -53,10 +63,11 @@ describe("routerMethods", async () => {
 
     describe("catalogItemLoader", () => {
         it("returns the item", async () => {
+            const index = 1;
             expect((
-                await catalogItemLoader(url + "/product/1")
+                await catalogItemLoader(url + `/product/${index}`)
             ).productName
-            ).contains("Kesha");
+            ).contains(contents[index].product!.productName);
         })
     })
 
@@ -65,7 +76,7 @@ describe("routerMethods", async () => {
             expect((
                 await catalogLoader({gender: "male"}, url + "/product/all/male")
             )).toStrictEqual({
-                returnCatalog: [{}, {}, {}],
+                returnCatalog: [contents[0], contents[1]],
                 gender: "male"
             });
         })
@@ -73,9 +84,37 @@ describe("routerMethods", async () => {
             expect((
                 await catalogLoader({gender: "female"}, url + "/product/all/female")
             )).toStrictEqual({
-                returnCatalog: [{}, {}],
+                returnCatalog: [contents[0], contents[2]],
                 gender: "female"
             });
+        })
+    })
+
+    describe("catalogItemAction", () => {
+        it("adds the product to the cart", async () => {
+            const params = {
+                index: '3'
+            }
+            const formData = new FormData();
+            formData.append('productSize', "xl");
+          
+            const request = new Request(`${url}/product/${params.index}`, {
+              method: 'POST',
+              body: formData,
+            });
+
+            await catalogItemAction(
+                params,
+                request,
+                url
+            )
+
+            expect((await cartLoader(`${url}/cart`)).length).toStrictEqual(4);
+            const product = (await cartLoader(`${url}/cart`))[3];
+            expect(product).toStrictEqual({
+                productId: contents[Number.parseInt(params.index)].productId,
+                productSize: contents[Number.parseInt(params.index)].productSize
+            })
         })
     })
 })

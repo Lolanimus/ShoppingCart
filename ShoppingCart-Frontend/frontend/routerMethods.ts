@@ -13,7 +13,7 @@ const cartItemsActions = async (request: Request, url: string) => {
     const deleteAll = JSON.parse(formData.get("deleteAll") as string);
     if(deleteAll) await deleteCartData(url + "/cart");
     if(deleteItem) await deleteCartData(url + "/cart/delete/" + deleteItem.productId + "?size=" + deleteItem.productSize);
-    if(increaseQuantity) await postCartData(null, url + "/cart/qIncrement/" + increaseQuantity.productId + "?size=" + increaseQuantity.productSize);
+    if(increaseQuantity) await postCartData("", url + "/cart/qIncrement/" + increaseQuantity.productId + "?size=" + increaseQuantity.productSize);
     else if(decreaseQuantity) await deleteCartData(url + "/cart/qDecrement/" + decreaseQuantity.productId + "?size=" + decreaseQuantity.productSize);
     return redirect('/cart');
 }
@@ -23,15 +23,16 @@ const catalogItemLoader = async (url: string) => {
 }
 
 const catalogItemAction = async (params: Params<string>, request: Request, url: string) => {
-    const item = await catalogItemLoader(url + "/product/" + params.itemId);
+    const item = await catalogItemLoader(url + "/product/" + params.index);
     const form = await request.formData();
     const size = form.get("productSize")?.toString();
+    console.log(item);
     const data: CartObjDto = {
         // need to add id property
         productId: item.id,
         productSize: size
     }
-    await postCartData(data, url + "/cart/add/");
+    await postCartData(JSON.stringify(data), url + "/cart/add/");
     return null;
 }
 

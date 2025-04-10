@@ -41,7 +41,7 @@ const fetchCartData = async (url: string): Promise<CartArr> => {
     return res;
 }
 
-const postCartData = async (data: CartObjDto | null, url: string, cors: boolean = true): Promise<void> => {
+const postCartData = async (params: string, url: string, cors: boolean = true): Promise<void> => {
     try {
         const response = await fetch(url, {
             mode: cors ? "cors" : "no-cors",
@@ -51,7 +51,7 @@ const postCartData = async (data: CartObjDto | null, url: string, cors: boolean 
                 'Content-Type': 'application/json',
             },
             credentials: "include",
-            body: JSON.stringify(data)
+            body: params
         })!;
         if(!response.ok) {
             //throw { code: response.status, message: response.statusText };
