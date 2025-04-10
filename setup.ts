@@ -2,6 +2,7 @@ import { afterAll, afterEach, beforeAll } from 'vitest';
 import { cleanup } from '@testing-library/react';
 import "@testing-library/jest-dom/vitest";
 import { server } from './ShoppingCart-Frontend/frontend/__mocks__/node';
+import { resetItemActionsState } from './ShoppingCart-Frontend/frontend/__mocks__/handlers';
 
 beforeAll(() => {
   // Enable API mocking before all the tests.
@@ -16,6 +17,7 @@ afterEach(() => {
   server.resetHandlers()
   console.log("Resetting server handlers...")
   cleanup();
+  resetItemActionsState();
   console.log("Cleaning up...");
 })
 

@@ -23,17 +23,18 @@ const catalogItemLoader = async (url: string) => {
 }
 
 const catalogItemAction = async (params: Params<string>, request: Request, url: string) => {
-    const item = await catalogItemLoader(url + "/product/" + params.index);
+    const item = await catalogItemLoader(url + "/product/" + params.itemId);
     const form = await request.formData();
     const size = form.get("productSize")?.toString();
-    console.log(item);
+
     const data: CartObjDto = {
         // need to add id property
         productId: item.id,
         productSize: size
     }
-    await postCartData(JSON.stringify(data), url + "/cart/add/");
-    return null;
+    console.log("data: ");
+    console.log(data);
+    return await postCartData(JSON.stringify(data), url + "/cart/add/");
 }
 
 const catalogLoader = async (params: Params<string>, url: string) => {

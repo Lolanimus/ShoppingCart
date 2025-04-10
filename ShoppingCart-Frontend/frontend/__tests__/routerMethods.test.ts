@@ -1,120 +1,152 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { contents } from "../__mocks__/data";
-import { cartLoader, cartItemsActions, catalogItemLoader, catalogItemAction, catalogLoader } from '../routerMethods';
-import { deleteCartData, fetchCartData, postCartData } from '../shoppingCartApi';
+import { describe, expect, it } from 'vitest'
+import { cartItemsActions, cartLoader, catalogItemAction } from '../routerMethods';
+import { getWasCartDeleted, getWasDecremented, getWasIncremented, getWasItemDeleted, wasDecremented, wasIncremented } from '../__mocks__/handlers';
 
 const url = "http://localhost:5072/api";
 
-async function postMock(index: number)
-{
-    try {
-        const response = await fetch(`${url}/cart/add`, {
-            mode: "no-cors",
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            credentials: "include",
-            body: JSON.stringify({
-                productId: contents[index].productId,
-                productSize: contents[index].productSize
-            })
-        })!;
-        if(!response.ok) {
-            throw { code: response.status, message: response.statusText };
-        }
-    } catch (error: unknown) {
-        console.error("Error: " + error);
-    }
-}
-
-async function clearCart()
-{
-    await deleteCartData(url + "/cart");
-}
-
-async function mockCart() {
-    await postMock(0);
-    await postMock(1);
-    await postMock(2);
-}
-
 describe("routerMethods", async () => {
-    beforeEach(async () => {
-        await mockCart();
-    })
-
-    afterEach(async () => {
-        await clearCart();
-    })
-
     describe("cartLoader", async () => {
-        it("cart.length > 0", async () => {
-            const cart = await cartLoader(url + "/cart");
-            expect(cart.length).toStrictEqual(3);
-        })
-        it("cart.length === 0", async () => {
-            await clearCart();
-            const cart = await cartLoader(url + "/cart");
-            expect(cart.length).toStrictEqual(0);
+        it("loads the cart", async () => {
+            expect(await cartLoader(`${url}/cart`))
+            .toStrictEqual([{
+                result: "quired the cart"
+            }])
         })
     });
 
     describe("catalogItemLoader", () => {
-        it("returns the item", async () => {
-            const index = 1;
-            expect((
-                await catalogItemLoader(url + `/product/${index}`)
-            ).productName
-            ).contains(contents[index].product!.productName);
+        it("loads the item from a cart", async () => {
+            expect(await cartLoader(`${url}/product/all/male/suka`))
+            .toStrictEqual([{                
+                result: "quired the product",
+                id: "suka",
+                gender: "male"
+            }])
         })
     })
 
     describe("catalogLoader", () => {
-        it("returns the catalog of male clothing", async () => {
-            expect((
-                await catalogLoader({gender: "male"}, url + "/product/all/male")
-            )).toStrictEqual({
-                returnCatalog: [contents[0], contents[1]],
+        it("loads the catalog", async () => {
+            expect(await cartLoader(`${url}/product/all/male`))
+            .toStrictEqual([{                
+                result: "quired all products",
                 gender: "male"
-            });
-        })
-        it("returns the catalog of female clothing", async () => {
-            expect((
-                await catalogLoader({gender: "female"}, url + "/product/all/female")
-            )).toStrictEqual({
-                returnCatalog: [contents[0], contents[2]],
-                gender: "female"
-            });
+            }])
         })
     })
 
     describe("catalogItemAction", () => {
         it("adds the product to the cart", async () => {
             const params = {
-                index: '3'
+                itemId: '3',
+                gender: 'male'
             }
             const formData = new FormData();
             formData.append('productSize', "xl");
           
-            const request = new Request(`${url}/product/${params.index}`, {
+            const request = new Request(`${url}`, {
               method: 'POST',
               body: formData,
             });
 
-            await catalogItemAction(
+            
+            expect(JSON.parse(await (await catalogItemAction(
                 params,
                 request,
                 url
-            )
-
-            expect((await cartLoader(`${url}/cart`)).length).toStrictEqual(4);
-            const product = (await cartLoader(`${url}/cart`))[3];
-            expect(product).toStrictEqual({
-                productId: contents[Number.parseInt(params.index)].productId,
-                productSize: contents[Number.parseInt(params.index)].productSize
+            ))!.text())).toStrictEqual({
+                result: "add to cart",
+                cartObj: {
+                    productId: params.itemId,
+                    productSize: "xl"
+                }
             })
+        })
+    })
+
+    describe("cartItemActions", () => {
+        it("increase quantity", async () => {
+            const body = {
+                productId: '3',
+                productSize: 'xl'
+            }
+            const formData = new FormData();
+            formData.append('increase', JSON.stringify(body));
+          
+            const request = new Request(`${url}`, {
+              method: 'POST',
+              body: formData,
+            });
+            
+            const action = await cartItemsActions(
+                request,
+                url
+            );
+            expect(getWasIncremented()).toBeTruthy();
+            expect(action.status).toBe(302);
+        });
+
+        it("decrease quantity", async () => {
+            const body = {
+                productId: '3',
+                productSize: 'xl'
+            }
+            const formData = new FormData();
+            formData.append('decrease', JSON.stringify(body));
+          
+            const request = new Request(`${url}`, {
+              method: 'POST',
+              body: formData,
+            });
+            
+            const action = await cartItemsActions(
+                request,
+                url
+            );
+            expect(getWasDecremented()).toBeTruthy();
+            expect(action.status).toBe(302);
+        });
+
+        it("delete item", async () => {
+            const body = {
+                productId: '3',
+                productSize: 'xl'
+            }
+            const formData = new FormData();
+            formData.append('delete', JSON.stringify(body));
+          
+            const request = new Request(`${url}`, {
+              method: 'POST',
+              body: formData,
+            });
+            
+            const action = await cartItemsActions(
+                request,
+                url
+            );
+            expect(getWasItemDeleted()).toBeTruthy();
+            expect(action.status).toBe(302);
+        });
+
+        it("delete all items", async () => {
+            const body = {
+                productId: '3',
+                productSize: 'xl'
+            }
+            const formData = new FormData();
+            formData.append('deleteAll', JSON.stringify(body));
+          
+            const request = new Request(`${url}`, {
+              method: 'POST',
+              body: formData,
+            });
+            
+            const action = await cartItemsActions(
+                request,
+                url
+            );
+            expect(getWasCartDeleted()).toBeTruthy();
+            expect(action.status).toBe(302);
         })
     })
 })

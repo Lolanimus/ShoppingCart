@@ -41,9 +41,10 @@ const fetchCartData = async (url: string): Promise<CartArr> => {
     return res;
 }
 
-const postCartData = async (params: string, url: string, cors: boolean = true): Promise<void> => {
+const postCartData = async (params: string, url: string, cors: boolean = true): Promise<Response | null> => {
+    let response = null;
     try {
-        const response = await fetch(url, {
+        response = await fetch(url, {
             mode: cors ? "cors" : "no-cors",
             method: "POST",
             headers: {
@@ -59,6 +60,8 @@ const postCartData = async (params: string, url: string, cors: boolean = true): 
     } catch (error: unknown) {
         console.error("Error: " + error);
     }
+
+    return response;
 } 
 
 const deleteCartData = async (url: string): Promise<boolean> => {
