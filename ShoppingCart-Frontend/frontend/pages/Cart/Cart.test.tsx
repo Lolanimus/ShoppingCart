@@ -7,8 +7,6 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { cartLoader } from '../../routerMethods';
 import { getTotalPrice } from '../../shoppingCartApi';
 
-const url = "https://localhost:7151";
-
 let cart: CartArr = [contents[0], contents[1]];
 
 vi.mock("../../routerMethods.ts", () => ({
@@ -51,7 +49,7 @@ describe("Cart", () => {
             expect(totalLabel).toBeInTheDocument();
             const total = screen.getByTestId("total");
             const buyBtn = screen.getByRole("button", {name: "Buy"});
-            expect(total.textContent).toBe("$" + getTotalPrice(await cartLoader(`${url}/api/cart`)));
+            expect(total.textContent).toBe("$" + getTotalPrice(await cartLoader(``)));
             expect(buyBtn).toBeEnabled();
         })
 

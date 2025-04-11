@@ -11,7 +11,7 @@ const Item = (props: { item: CatalogObj }) => {
             </div>
             <div id={styles.itemInfo}>
                 <div>
-                    <p>{item.productName}</p>
+                    <p data-testid="name">{item.productName}</p>
                     <span>{`$${item.productPrice}`}</span>
                 </div>
                 <Form action={item.id.toString()} method="GET">
@@ -54,3 +54,4 @@ const Catalog = () => {
 
 export default Catalog;
 export { Item };
+export type { ReturnCatalog };
