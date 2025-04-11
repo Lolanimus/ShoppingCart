@@ -1,6 +1,4 @@
 import { http, HttpResponse } from "msw";
-import { contents } from "./data";
-import { getCart, setCart } from "./cart";
 import { afterEach } from "node:test";
 
 const url = "http://localhost:5072/api";
@@ -87,23 +85,11 @@ export default [
             cartObj: body
         }))
     }),
-    http.post(`${url}/cart/qIncrement/:id`, async params => {
-        const id = params.params.id as string;
-        const url = new URL(params.request.url);
-        const size = url.searchParams.get("size");
+    http.post(`${url}/cart/qIncrement/:id`, async () => {
         setWasIncremented(true);
-        console.log(getWasIncremented());
     }),
-    http.delete(`${url}/cart/qDecrement/:id`, async params => {
-        const id = params.params.id as string;
-        const url = new URL(params.request.url);
-        const size = url.searchParams.get("size");
+    http.delete(`${url}/cart/qDecrement/:id`, async () => {
         setWasDecremented(true);
-        return new HttpResponse(JSON.stringify({
-            result: "decreased",
-            id: id,
-            size: size
-        }))
     }),
     http.delete(`${url}/cart/delete/:id`, () => {
         setWasItemDeleted(true);

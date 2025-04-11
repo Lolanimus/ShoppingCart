@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { cartItemsActions, cartLoader, catalogItemAction } from '../routerMethods';
-import { getWasCartDeleted, getWasDecremented, getWasIncremented, getWasItemDeleted, wasDecremented, wasIncremented } from '../__mocks__/handlers';
+import { getWasCartDeleted, getWasDecremented, getWasIncremented, getWasItemDeleted } from '../__mocks__/handlers';
 
 const url = "http://localhost:5072/api";
 
