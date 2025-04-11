@@ -3,6 +3,7 @@ import { successPopUp } from "../../popup/popup";
 import stylesPopup from "../../popup/popup.module.scss";
 import styles from "./Cart.module.scss";
 import CartItems from "../CartItems/CartItems";
+import { getTotalPrice } from "../../shoppingCartApi";
 
 
 function buyBtnOnClick(totalVal: number) {
@@ -11,13 +12,6 @@ function buyBtnOnClick(totalVal: number) {
     successPopUp();
 }
 
-const getTotalPrice = (cart: CartArr) => {
-    let totalPrice = 0;
-    cart.forEach((item) => {
-        totalPrice += item.quantity * item.product.productPrice;
-    })
-    return parseFloat(totalPrice.toFixed(2));
-}
 
 const Cart = () => {
     const cart = useLoaderData() as CartArr;

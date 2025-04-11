@@ -82,4 +82,12 @@ const deleteCartData = async (url: string): Promise<boolean> => {
     return result;
 }
 
-export { fetchCartData, postCartData, fetchProductData, deleteCartData };
+const getTotalPrice = (cart: CartArr) => {
+    let totalPrice = 0;
+    cart.forEach((item) => {
+        totalPrice += item.quantity * item.product.productPrice;
+    })
+    return parseFloat(totalPrice.toFixed(2));
+}
+
+export { fetchCartData, postCartData, fetchProductData, deleteCartData, getTotalPrice };

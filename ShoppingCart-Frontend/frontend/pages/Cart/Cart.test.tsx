@@ -1,28 +1,29 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { expect, describe, it, beforeEach, afterEach } from 'vitest';
+import { expect, describe, it, afterEach, vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import * as data from "../../__mocks__/data";
+import { contents } from "../../__mocks__/data";
 import Cart from '../Cart/Cart';
-import { getTotalPrice, clearCart, addToCart } from '../../shoppingCartApi';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import CartItems from '../CartItems/CartItems';
-import { cartItemsLoader, cartLoader } from '../../routerMethods';
+import { cartLoader } from '../../routerMethods';
+import { getTotalPrice } from '../../shoppingCartApi';
 
+const url = "https://localhost:7151";
 
-function renderCart() {
+let cart: CartArr = [contents[0], contents[1]];
+
+vi.mock("../../routerMethods.ts", () => ({
+    cartLoader: vi.fn(() => cart)
+}));
+
+function renderCart(clear: boolean = false) {
+    if(clear)
+        cart = [];
     const user = userEvent.setup();
     const router = createMemoryRouter([
         {
             path: "/cart",
             element: <Cart />,
-            loader: cartLoader,
-            children: [
-                {
-                    path: '/cart',
-                    element: <CartItems />,
-                    loader: cartItemsLoader
-                }
-            ]
+            loader: () => cartLoader(``)
         }
     ], { initialEntries: ["/cart"] });
 
@@ -36,13 +37,8 @@ function renderCart() {
 
 
 describe("Cart", () => {
-    beforeEach(() => {
-        clearCart();
-        addToCart(data.contents[0]);
-    })
-    
     afterEach(() => {
-        clearCart();
+        vi.restoreAllMocks()
     })
 
     describe("renders correctly", () => {
@@ -55,14 +51,12 @@ describe("Cart", () => {
             expect(totalLabel).toBeInTheDocument();
             const total = screen.getByTestId("total");
             const buyBtn = screen.getByRole("button", {name: "Buy"});
-            expect(total.textContent).toBe("$" + getTotalPrice());
+            expect(total.textContent).toBe("$" + getTotalPrice(await cartLoader(`${url}/api/cart`)));
             expect(buyBtn).toBeEnabled();
-            
         })
 
         it("without total price", async () => {
-            clearCart();
-            renderCart();
+            renderCart(true);
             await waitFor(() => screen.getByTestId("total"));
             const buyBtn = screen.getByRole("button", {name: "Buy"});
             expect(screen.getByTestId("total").textContent).toBe("N/A");

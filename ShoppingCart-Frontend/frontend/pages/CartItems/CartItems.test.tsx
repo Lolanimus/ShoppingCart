@@ -5,7 +5,8 @@ import { addToCart, clearCart, incrementQuantityCart } from '../../shoppingCartA
 import * as data from "../../__mocks__/data"
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { cartItemsLoader } from '../../routerMethods';
+import { cartItemsLoader, cartLoader } from '../../routerMethods';
+import Cart from '../Cart/Cart';
 
 function renderOneCartItem(itemIndex: number, size = 'm') {
   const user = userEvent.setup();
@@ -32,12 +33,11 @@ function renderThreeCartItems(size = "m") {
 
   const router = createMemoryRouter([
     {
-      path: '/cart',
-      element: <CartItems />,
-      loader: cartItemsLoader,
-      action: () => vi.fn((id: number, isIncrement: boolean) => incrementQuantityCart(id, isIncrement))
+        path: "/cart",
+        element: <Cart />,
+        loader: () => cartLoader(``)
     }
-  ], { initialEntries: ["/cart"] })
+], { initialEntries: ["/cart"] });
   
   render(<RouterProvider router={router} />); 
 
