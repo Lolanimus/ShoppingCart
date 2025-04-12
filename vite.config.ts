@@ -10,9 +10,7 @@ export default defineConfig({
     server: {
       https: {
         key: fs.readFileSync(path.resolve(__dirname, 'shoppingcart-frontend-key.pem')),
-        cert: fs.readFileSync(path.resolve(__dirname, 'shoppingcart-frontend.pem')),
-        ca: fs.readFileSync(path.resolve("//wsl.localhost/Ubuntu/home/lolanimus/.local/share/mkcert/rootCA.pem")),
-      },
+        cert: fs.readFileSync(path.resolve(__dirname, 'shoppingcart-frontend.pem'))      },
       port: 5174,
       host: 'localhost'
     },

@@ -12,4 +12,6 @@ RUN npm install
 
 RUN npm run build
 
-CMD ["npm", "run", "dev"]
+EXPOSE 8080
+
+CMD ["npm", "run", "preview"]
