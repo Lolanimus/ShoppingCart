@@ -17,11 +17,11 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  retries: 2,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter:  process.env.CI ? 'html' : 'line',
+  reporter: process.env.CI ? 'html' : 'line',
 
   /* Configure projects for major browsers */
   projects: [
@@ -61,7 +61,8 @@ export default defineConfig({
     // },
   ],
   use: {
-    baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL || "http://localhost:5173",
+    baseURL: "https://localhost:5174",
     trace: 'on-first-retry',
+    ignoreHTTPSErrors: true,
   }
 });

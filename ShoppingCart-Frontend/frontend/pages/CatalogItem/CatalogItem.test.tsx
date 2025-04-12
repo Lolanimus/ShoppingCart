@@ -1,26 +1,29 @@
 import { render, within, screen, waitFor } from '@testing-library/react';
-import { expect, describe, it } from 'vitest';
-import * as data from "../../__mocks__/data";
+import { expect, describe, it, vi } from 'vitest';
+import { contents } from "../../__mocks__/data";
 import CatalogItem from './CatalogItem';
-import { createMemoryRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
+const catalogLoader = vi.fn((index: number) => contents[index].product);
+
 describe("CatalogItem", () => {
-    const item = data.contents[0];
+    const id = 1;
+    const gender = "men"
     it("renders correctly", async () => {
         const user = userEvent.setup();
-        const router = createMemoryRouter(
-            createRoutesFromElements(
-                <Route path='/catalog/:sex/:itemId' element={<CatalogItem />} 
-                    loader={
-                        () => item
-                    }
-                />
-            ), { initialEntries: ['/catalog/men/1']}
-        )
-        render(<RouterProvider router={router} />);
-        await waitFor(() => expect(screen.getByRole("heading", {name: item.title})).toBeInTheDocument());
-        expect(screen.getByRole("img", {name: item.title})).toBeInTheDocument();
+        
+        const router = createMemoryRouter([
+            {
+              path: "/product/all/:gender/:id",
+              element: <CatalogItem />,
+              loader: vi.fn().mockImplementation(() => catalogLoader(id))
+            }
+          ], { initialEntries: ["/product/all/" + gender + "/" + id] });
+        render(<RouterProvider router={router}/>);
+
+        await waitFor(() => expect(screen.getByRole("heading", {name: contents[id].product.productName})).toBeInTheDocument());
+        expect(screen.getByRole("img", {name: contents[id].product.productName})).toBeInTheDocument();
         const main = screen.getByRole("main");
         expect(main).toBeInTheDocument();
         // section

@@ -29,6 +29,7 @@ const CatalogItem = () => {
                         <Form method="POST" onSubmit={() => {
                             const addToCartBtn = addToCartRef.current! as HTMLButtonElement;
                             const popUp = popUpRef.current! as HTMLElement;
+                            popUp.classList.add("success_popup");
                             addToCartBtn.disabled = true;
                             successPopUp();
                             popUp.addEventListener("animationend", () => {

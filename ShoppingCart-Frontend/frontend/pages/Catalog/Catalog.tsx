@@ -32,7 +32,7 @@ const Catalog = () => {
     if (!catalog || !catalog.returnCatalog) {
         return <p>Loading or No Data Available...</p>; // Prevent errors
     }
-    const genderH1: string = catalog!.gender.charAt(0).toUpperCase() + catalog!.gender.substring(1, catalog!.gender.length);
+    const genderH1: string = catalog.gender == "male" ? "Men" : "Women";
     return (
         <div className={styles.catalog}>
             <header>
