@@ -10,7 +10,7 @@ import Catalog from './pages/Catalog/Catalog'
 import CatalogItem from './pages/CatalogItem/CatalogItem'
 import { cartItemsActions, cartLoader, catalogItemAction, catalogItemLoader, catalogLoader } from './routerMethods'
 
-const apiUrl = "https://localhost:7151/api";
+const apiUrl = process.env.API_URL!;
 
 const router = createBrowserRouter([
   {

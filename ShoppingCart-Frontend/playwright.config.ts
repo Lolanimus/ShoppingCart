@@ -61,7 +61,7 @@ export default defineConfig({
     // },
   ],
   use: {
-    baseURL: "https://localhost:5174",
+    baseURL: process.env.API_URL,
     trace: 'on-first-retry',
     ignoreHTTPSErrors: true,
   }

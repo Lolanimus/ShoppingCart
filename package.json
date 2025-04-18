@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview --port 8080",
+    "preview": "vite preview --port 3000",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "vitest",
     "test:e2e": "playwright test app"
@@ -42,7 +42,7 @@
     "react-responsive": "^10.0.0",
     "react-router-dom": "^6.25.1",
     "sass": "^1.77.8",
-    "serve": "^14.2.3",
+    "serve": "^14.2.4",
     "ts-jest": "^29.2.3",
     "typescript": "^5.2.2",
     "typescript-plugin-css-modules": "^5.1.0",

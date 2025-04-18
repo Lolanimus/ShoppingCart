@@ -1,7 +1,7 @@
 import { http, HttpResponse } from "msw";
 import { afterEach } from "node:test";
 
-const url = "http://localhost:5072/api";
+const url = process.env.API_URL;
 
 let wasIncremented = false;
 const getWasIncremented = () => wasIncremented;

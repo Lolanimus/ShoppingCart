@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { cartItemsActions, cartLoader, catalogItemAction } from '../routerMethods';
 import { getWasCartDeleted, getWasDecremented, getWasIncremented, getWasItemDeleted } from '../__mocks__/handlers';
 
-const url = "http://localhost:5072/api";
+const url = process.env.API_URL!;
 
 describe("routerMethods", async () => {
     describe("cartLoader", async () => {
