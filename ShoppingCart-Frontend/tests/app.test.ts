@@ -86,7 +86,7 @@ test.describe("Index", () => {
 test.describe("Catalog", () => {
   test("goes to a catalogItem when See More btn is clicked", async ({ page, baseURL }) => {
     await page.goto(baseURL + "/product/all/male");
-    await page.locator('#item759695d5-7aa2-459e-b72e-59ea740cecdd > [id="_itemInfo_ybmwe_1"] > form > button').click();
+    await page.locator(`#item${contents[1].productId} > [id="_itemInfo_ybmwe_1"] > form > button`).click();
     await expect(page.getByText('L', { exact: true })).toBeVisible();
     await expect(page.getByText('Slim-fitting style, contrast')).toBeVisible();
   })
