@@ -13,5 +13,7 @@ export default defineConfig({
       setupFiles: [
         './setup.ts'
       ],
+      include: ["**/*.test.ts", "**/*.test.tsx"],
+      exclude: ["./ShoppingCart-Frontend/e2e_tests/app.test.ts", "./node_modules"]
     }
 });

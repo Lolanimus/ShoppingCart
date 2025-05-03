@@ -4,7 +4,8 @@ const fetchProductData = async (url: string): Promise<CatalogArr> => {
     try {
         const data = await fetch(url, {
             mode: "cors",
-            method: "GET"
+            method: "GET",
+            credentials: 'include'
         })!;
         if(data.ok && data.status == 200) {
             const json: CatalogArr | CatalogObj = await data.json()!;
@@ -66,17 +67,21 @@ const postCartData = async (params: string, url: string, cors: boolean = true): 
 
 const deleteCartData = async (url: string): Promise<boolean> => {
     let result: boolean = false;
-
+    
+    try {
         const response = await fetch(url, {
             mode: "cors",
             method: "DELETE",
             credentials: "include",
-        })!;
+        });
         if(response.ok && response.status == 200) {
             result = true;
         } else {
-            //throw { code: response.status, message: response.statusText };
+            throw { code: response.status, message: response.statusText };
         }
+    } catch (error: unknown) {
+        console.error("Error: " + error);
+    }
 
 
     return result;

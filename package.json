@@ -9,13 +9,14 @@
     "preview": "vite preview --port 3000",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "vitest",
-    "test:e2e": "playwright test app --config=./ShoppingCart-Frontend/playwright.config.ts --ui"
+    "test:e2e": "playwright test app --config=./ShoppingCart-Frontend/playwright.config.ts"
   },
   "dependencies": {
     "@mdi/js": "^7.4.47",
     "@mdi/react": "^1.6.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "start": "^5.1.0"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.24.7",

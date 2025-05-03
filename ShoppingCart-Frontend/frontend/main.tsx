@@ -10,8 +10,11 @@ import Catalog from './pages/Catalog/Catalog'
 import CatalogItem from './pages/CatalogItem/CatalogItem'
 import { cartItemsActions, cartLoader, catalogItemAction, catalogItemLoader, catalogLoader } from './routerMethods'
 
-const apiUrl = "https://" + import.meta.env.VITE_BASE_SERVER_NAME + ":" + import.meta.env.VITE_BASE_PORT + "/api";
-console.log(apiUrl);
+const env = (import.meta.env.VITE_ENVIRONMENT).toLowerCase();
+const apiUrl = env === "development" 
+  ? "http://" + import.meta.env.VITE_BASE_SERVER_NAME + ":" + import.meta.env.VITE_BACKEND_PORT
+  : "https://api." + import.meta.env.VITE_BASE_SERVER_NAME;
+
 const router = createBrowserRouter([
   {
     path: '',

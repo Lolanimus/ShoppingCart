@@ -1,22 +1,22 @@
 import { test, expect, Page } from '@playwright/test';
 import { contents } from '../frontend/__mocks__/data';
 
-//test.describe.configure({ mode: 'serial' });
-
 const addProductsToCart = async (page: Page, baseURL: string) => {
   await page.goto(baseURL + "/product/all/male/" + contents[1].productId);
   await page.getByLabel("M", { exact: true }).click();
-  page.waitForResponse(response => 
+  const addToCartResponse1 = page.waitForResponse(response => 
     response.url().includes('/cart/add') && response.status() === 200
   );
   await page.getByRole("button", {name: "Add to Cart"}).click();
+  await addToCartResponse1;
   await expect(page.locator(".success_popup")).toBeVisible(); 
   await page.goto(baseURL + "/product/all/female/" + contents[2].productId);
   await page.getByLabel("L", { exact: true }).click();
-  page.waitForResponse(response => 
+  const addToCartResponse2 = page.waitForResponse(response => 
     response.url().includes('/cart/add') && response.status() === 200
   );
   await page.getByRole("button", {name: "Add to Cart"}).click(); 
+  await addToCartResponse2;
   await expect(page.locator(".success_popup")).toBeVisible();
   await page.goto(baseURL + "/cart");
 }

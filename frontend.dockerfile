@@ -1,8 +1,8 @@
 FROM alpine:3.21.3 AS base
+RUN apk update && apk add nodejs npm
 RUN mkdir -p /app
 WORKDIR /app
 COPY . /app
-RUN apk update && apk add nodejs npm
 RUN npm install
 
 FROM base AS dev
