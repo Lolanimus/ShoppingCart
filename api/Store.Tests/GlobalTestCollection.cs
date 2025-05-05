@@ -9,5 +9,6 @@ namespace Store.Tests
     [CollectionDefinition("Global Tests")]
     public class GlobalTestCollection : ICollectionFixture<GlobalTestAsyncLifetime>
     {
+        
     }
 }
