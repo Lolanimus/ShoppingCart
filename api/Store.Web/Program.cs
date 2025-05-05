@@ -8,14 +8,21 @@ using Store.Infrastracture.Services.Cookies.UserInteractor;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors(options => 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(int.Parse(Environment.GetEnvironmentVariable("CONTAINER_APP_PORT")!));
+});
+
+builder.Services.AddCors(options =>
 {
     options.AddPolicy("cors", policy =>
     {
-        policy.WithOrigins("https://localhost:5174").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            policy.WithOrigins($"http://{Environment.GetEnvironmentVariable("BASE_SERVER_NAME")}:{Environment.GetEnvironmentVariable("FRONTEND_P")}").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+        else
+            policy.WithOrigins($"https://{Environment.GetEnvironmentVariable("BASE_SERVER_NAME")}.com").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
     });
 });
-
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -36,7 +43,7 @@ builder.Services.AddScoped<IUserInteractor>(serviceProvider =>
         : new GuestInteractor(cartProductService);
 });
 
-var redisConnectionString = Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING");
+//var redisConnectionString = Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING");
 
 // Redis cache
 //builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConnectionString!));
@@ -53,9 +60,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("cors");
 
-//app.UseHttpsRedirection();
-
 app.UseAuthorization();
+
+app.UseHsts();
 
 app.MapControllers();
 

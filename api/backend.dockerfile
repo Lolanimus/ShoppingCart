@@ -1,15 +1,22 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0@sha256:483d6f3faa583c93d522c4ca9ee54e08e535cb112dceb252b2fbb7ef94839cc8 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS base
+
 WORKDIR /app
+EXPOSE $PORT
+ENV DOTNET_NUGET_SIGNATURE_VERIFICATION=false
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY [".", "./"]
+RUN dotnet restore
+
+COPY . .
+WORKDIR /src/Store.Web
+RUN dotnet publish -c Release -o /app/publish
 
 # Copy everything
-COPY . ./
-# Restore as distinct layers
-RUN dotnet restore
-# Build and publish a release
-RUN dotnet publish -o out
-
-# Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0@sha256:e223bd5d93b3042215c7aed59568933631121f7ff4f5268a5092ab54a7e20136
+FROM base AS final
 WORKDIR /app
-COPY --from=build /app/out .
-ENTRYPOINT ["dotnet", "DotNet.Docker.dll"]
+COPY ./entrypoint.sh .
+RUN chmod +x entrypoint.sh
+COPY --from=build /app/publish .
+ENTRYPOINT ["./entrypoint.sh"]

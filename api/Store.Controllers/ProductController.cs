@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Store.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ProductController : Controller
     {

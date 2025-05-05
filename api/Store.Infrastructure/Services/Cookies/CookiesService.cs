@@ -36,7 +36,7 @@ namespace Store.Infrastracture.Services.Cookies
             {
                 HttpOnly = true, // Prevents JavaScript from accessing the cookie
                 Secure = true,   // Ensures the cookie is only sent over HTTPS
-                SameSite = SameSiteMode.Strict // Prevents CSRF attacks
+                SameSite = SameSiteMode.None // Prevents CSRF attacks
             };
 
             if (expireMinutes.HasValue)

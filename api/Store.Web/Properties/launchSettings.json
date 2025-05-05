@@ -8,7 +8,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5072"
+      "applicationUrl": "${applicationUrl}"
     },
     "https": {
       "commandName": "Project",
@@ -18,7 +18,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7151;http://localhost:5072"
+      "applicationUrl": "${applicationUrl}"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -31,10 +31,13 @@
     "WSL": {
       "commandName": "WSL2",
       "launchBrowser": true,
-      "launchUrl": "https://localhost:7151/swagger",
+      "launchUrl": "https://*:7151/swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_URLS": "https://localhost:7151;http://localhost:5072"
+        "BASE_SERVER_NAME": "localhost",
+        "FRONTEND_P": "8080",
+        "CONTAINER_APP_PORT": "5072",
+        "ConnectionStrings__DefaultConnection": "Server=localhost,5433;Database=ShoppingCart;User Id=sa;Password=!Lolanimus;TrustServerCertificate=true"
       },
       "distributionName": ""
     }
@@ -44,7 +47,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:45290",
+      "applicationUrl": "http://*:45290",
       "sslPort": 44356
     }
   }

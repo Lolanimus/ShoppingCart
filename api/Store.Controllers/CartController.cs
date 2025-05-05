@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Store.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class CartController : Controller
     {
