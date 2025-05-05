@@ -1,0 +1,53 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+    paths: "api/**"
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ./api
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the API Docker image
+      run: docker build . --file=backend.dockerfile -t lolanimus/shoppingcart-prod-backend:${{ github.sha }}
+
+    - name: Run the API Docker image
+      run: docker run -d
+            -e ConnectionStrings__DefaultConnection=${{ secrets.CONNECTIONSTRINGS__DEFAULTCONNECTION }}
+            -e CONTAINER_APP_PORT=${{ BACKEND_P }} 
+            -e ASPNETCORE_ENVIRONMENT=Development 
+            -p ${{ BACKEND_P }}:${{ BACKEND_P }}
+            --name api
+               lolanimus/shoppingcart-prod-backend:latest
+
+    - name: Run API tests
+      run: docker exec docker exec -i api dotnet test src
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.SHOPPINGCARTPRODBACKEND_AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.SHOPPINGCARTPRODBACKEND_AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.SHOPPINGCARTPRODBACKEND_AZURE_SUBSCRIPTION_ID }}
+
+    - name: Build and push container image to registry
+      uses: azure/container-apps-deploy-action@v2
+      with:
+        appSourcePath: ${{ github.workspace }}/frontend.dockerfile
+        _dockerfilePathKey_: _dockerfilePath_
+        registryUrl: docker.io
+        registryUsername: ${{ secrets.SHOPPINGCARTPRODBACKEND_REGISTRY_USERNAME }}
+        registryPassword: ${{ secrets.SHOPPINGCARTPRODBACKEND_REGISTRY_PASSWORD }}
+        containerAppName: shoppingcart-prod-backend
+        resourceGroup: ShoppingCart
+        imageToBuild: lolanimus/shoppingcart-prod-backend:${{ github.sha }}
+        _buildArgumentsKey_: |
+          _buildArgumentsValues_
