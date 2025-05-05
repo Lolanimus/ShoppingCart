@@ -3,7 +3,9 @@ name: API workflow
 on:
   push:
     branches: [ "main" ]
-    paths: "api/**"
+    paths: 
+        - "api/**"
+        - ".github/workflows/api.yml"
 
 defaults:
   run:
