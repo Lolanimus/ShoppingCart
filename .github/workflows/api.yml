@@ -22,9 +22,9 @@ jobs:
     - name: Run the API Docker image
       run: docker run -d
             -e ConnectionStrings__DefaultConnection=${{ secrets.CONNECTIONSTRINGS__DEFAULTCONNECTION }}
-            -e CONTAINER_APP_PORT=${{ env.BACKEND_P }} 
+            -e CONTAINER_APP_PORT=${{ secrets.BACKEND_P }} 
             -e ASPNETCORE_ENVIRONMENT=Development 
-            -p ${{ env.BACKEND_P }}:${{ env.BACKEND_P }}
+            -p ${{ secrets.BACKEND_P }}:${{ secrets.BACKEND_P }}
             --name api
                lolanimus/shoppingcart-prod-backend:latest
 
