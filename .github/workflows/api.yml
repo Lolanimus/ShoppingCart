@@ -23,13 +23,13 @@ jobs:
     - name: Build the API Docker image
       run: docker build . --file=backend.dockerfile -t lolanimus/shoppingcart-prod-backend:${{ github.sha }}
 
+    - name: Run API tests
+      run: dotnet test src
+    
     - name: Setup Testcontainers Cloud Client
       uses: atomicjar/testcontainers-cloud-setup-action@v1
       with:
         token: ${{ secrets.TC_CLOUD_TOKEN }}
-
-    - name: Run API tests
-      run: dotnet test src
 
     - name: Azure Login
       uses: azure/login@v1
