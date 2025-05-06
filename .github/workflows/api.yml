@@ -24,9 +24,9 @@ jobs:
     - name: Run the API Docker image
       run: |
         set +H
-        docker run -d -e ConnectionStrings__DefaultConnection=${{ secrets.CONNECTIONSTRINGS__DEFAULTCONNECTION }} -e CONTAINER_APP_PORT=${{ secrets.BACKEND_P }} -e ASPNETCORE_ENVIRONMENT=Development -p ${{ secrets.BACKEND_P }}:${{ secrets.BACKEND_P }} --name api lolanimus/shoppingcart-prod-backend:${{ github.sha }}
         DOCKER_DEBUG=docker run -d -e ConnectionStrings__DefaultConnection=blya -e CONTAINER_APP_PORT=${{ secrets.BACKEND_P }} -e ASPNETCORE_ENVIRONMENT=Development -p ${{ secrets.BACKEND_P }}:${{ secrets.BACKEND_P }} --name api lolanimus/shoppingcart-prod-backend:${{ github.sha }}
         echo $DOCKER_DEBUG
+        docker run -d -e ConnectionStrings__DefaultConnection=${{ secrets.CONNECTIONSTRINGS__DEFAULTCONNECTION }} -e CONTAINER_APP_PORT=${{ secrets.BACKEND_P }} -e ASPNETCORE_ENVIRONMENT=Development -p ${{ secrets.BACKEND_P }}:${{ secrets.BACKEND_P }} --name api lolanimus/shoppingcart-prod-backend:${{ github.sha }}
 
     - name: Run API tests
       run: docker exec docker exec -i api dotnet test src
