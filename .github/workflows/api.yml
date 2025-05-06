@@ -15,7 +15,7 @@ defaults:
     working-directory: ./api
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,7 +36,7 @@ jobs:
     permissions: 
       id-token: write #This is required for requesting the OIDC JWT Token
       contents: read #Required when GH token is used to authenticate with private repo
-      
+
     steps:
     - name: Azure Login
       uses: azure/login@v1
