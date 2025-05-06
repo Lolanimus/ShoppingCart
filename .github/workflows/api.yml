@@ -21,12 +21,17 @@ jobs:
     - name: Build the API Docker image
       run: docker build . --file=backend.dockerfile -t lolanimus/shoppingcart-prod-backend:${{ github.sha }}
 
+    - name: Setup Testcontainers Cloud Client
+      uses: atomicjar/testcontainers-cloud-setup-action@v1
+      with:
+          token: ${{ secrets.TC_CLOUD_TOKEN }}
+
     - name: Run the API Docker image
       run: |
         set +H
         DOCKER_DEBUG="docker run -d -e ConnectionStrings__DefaultConnection=blya -e CONTAINER_APP_PORT=${{ secrets.BACKEND_P }} -e ASPNETCORE_ENVIRONMENT=Development -p ${{ secrets.BACKEND_P }}:${{ secrets.BACKEND_P }} --name api lolanimus/shoppingcart-prod-backend:${{ github.sha }}"
         echo "$DOCKER_DEBUG"
-        docker run -d -e ConnectionStrings__DefaultConnection=${{ secrets.CONNECTIONSTRINGS__DEFAULTCONNECTION }} -e CONTAINER_APP_PORT=${{ secrets.BACKEND_P }} -e ASPNETCORE_ENVIRONMENT=Development -p ${{ secrets.BACKEND_P }}:${{ secrets.BACKEND_P }} --name api lolanimus/shoppingcart-prod-backend:${{ github.sha }}
+        docker run --rm -d -e ConnectionStrings__DefaultConnection=${{ secrets.CONNECTIONSTRINGS__DEFAULTCONNECTION }} -e CONTAINER_APP_PORT=${{ secrets.BACKEND_P }} -e ASPNETCORE_ENVIRONMENT=Development -p ${{ secrets.BACKEND_P }}:${{ secrets.BACKEND_P }} --name api lolanimus/shoppingcart-prod-backend:${{ github.sha }}
 
     - name: Run API tests
       run: docker exec docker exec -i api dotnet test src
