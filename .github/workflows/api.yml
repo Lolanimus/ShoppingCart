@@ -28,6 +28,9 @@ jobs:
       with:
         token: ${{ secrets.TC_CLOUD_TOKEN }}
 
+    - name: Run API tests
+      run: dotnet test src
+
     - name: Azure Login
       uses: azure/login@v1
       with:
