@@ -1,4 +1,4 @@
-name: API build and test worflow
+name: API worflow
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - "main"
       - "github_actions_dev"
     paths: 
-      - "api/**"
       - ".github/workflows/api.yml"
+      - "api/**"
   # Allow manual trigger 
   workflow_dispatch:      
 
