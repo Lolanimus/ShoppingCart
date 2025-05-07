@@ -1,0 +1,33 @@
+name: Front-End build and test worflow
+
+on:
+  push:
+    branches:
+      - "main"
+      - "github_actions_dev"
+    paths:
+      - "**"
+      - "!api/**"
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ./
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Front-End Docker image
+      run: docker build . --file=frontend.dockerfile --target dev -t lolanimus/shoppingcart-dev-frontend:${{ github.sha }}
+
+    - name: Run the Front-End Docker image
+      run: docker run -d -p 8080:8080 --name frontend lolanimus/shoppingcart-dev-frontend:${{ github.sha }}
+
+    - name: Run API tests
+      run: docker exec -i frontend npm run test
+
+    - name: Kill the container
+      run: docker kill frontend
