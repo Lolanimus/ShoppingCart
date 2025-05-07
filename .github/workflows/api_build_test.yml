@@ -1,0 +1,35 @@
+name: API build and test worflow
+
+on:
+  push:
+    branches:
+      - "main"
+      - "github_actions_dev"
+    paths: 
+      - "api/**"
+      - ".github/workflows/api.yml"
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ./api
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the API Docker image
+      run: docker build . --file=backend.dockerfile -t lolanimus/shoppingcart-prod-backend:${{ github.sha }}
+
+    - name: Run the API Docker image
+      run: |
+        set +H
+        docker run -d -e ConnectionStrings__DefaultConnection=${{ secrets.CONNECTIONSTRINGS__DEFAULTCONNECTION }} -e CONTAINER_APP_PORT=${{ secrets.BACKEND_P }} -e ASPNETCORE_ENVIRONMENT=Development -p ${{ secrets.BACKEND_P }}:${{ secrets.BACKEND_P }} --name api lolanimus/shoppingcart-prod-backend:${{ github.sha }}
+
+    - name: Run API tests
+      run: docker exec -i api dotnet test src
+
+    - name: Kill the container
+      run: docker kill api
