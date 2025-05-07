@@ -30,3 +30,6 @@ jobs:
 
     - name: Run API tests
       run: docker exec -i api dotnet test src
+
+    - name: Kill the container
+      run: docker kill api
