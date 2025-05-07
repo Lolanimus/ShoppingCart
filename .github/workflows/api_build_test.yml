@@ -8,6 +8,8 @@ on:
     paths: 
       - "api/**"
       - ".github/workflows/api.yml"
+  # Allow manual trigger 
+  workflow_dispatch:      
 
 defaults:
   run:
@@ -33,3 +35,31 @@ jobs:
 
     - name: Kill the container
       run: docker kill api
+  
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+    
+    steps:
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.SHOPPINGCARTPRODBACKEND_AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.SHOPPINGCARTPRODBACKEND_AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.SHOPPINGCARTPRODBACKEND_AZURE_SUBSCRIPTION_ID }}
+
+    - name: Build and push container image to registry
+      uses: azure/container-apps-deploy-action@v2
+      with:
+        appSourcePath: ${{ github.workspace }}/api/backend.dockerfile
+        _dockerfilePathKey_: _dockerfilePath_
+        registryUrl: docker.io
+        registryUsername: ${{ secrets.SHOPPINGCARTPRODBACKEND_REGISTRY_USERNAME }}
+        registryPassword: ${{ secrets.SHOPPINGCARTPRODBACKEND_REGISTRY_PASSWORD }}
+        containerAppName: shoppingcart-prod-backend
+        resourceGroup: ShoppingCart
+        imageToBuild: lolanimus/shoppingcart-prod-backend:${{ github.sha }}
+        _buildArgumentsKey_: |
+          _buildArgumentsValues_
