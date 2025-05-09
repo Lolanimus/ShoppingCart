@@ -37,6 +37,7 @@ jobs:
       run: docker kill api
   
   build-and-deploy:
+    needs: build-and-test
     runs-on: ubuntu-latest
     permissions: 
       id-token: write #This is required for requesting the OIDC JWT Token
