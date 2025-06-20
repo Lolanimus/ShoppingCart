@@ -32,13 +32,19 @@ namespace Store.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCart(Guid? id = null)
         {
+            double total = 0.0;
+            
             try
             {
                 CartViewModel cartVm = new CartViewModel(_userInteractor) { Id = id };
                 List<CartViewModel>? allCartVm = await cartVm.GetCart()!;
                 if (allCartVm.IsNullOrEmpty())
                     return NotFound();
-                return Ok(allCartVm);
+                foreach (var cart in allCartVm)
+                {
+                    total += (double)(cart.Quantity! * cart.Product!.ProductPrice);
+                }
+                return Ok(new { CartArr = allCartVm, Total = total });
             }
             catch (Exception ex)
             {

@@ -1,8 +1,8 @@
 import { Params, redirect } from "react-router-dom";
-import { postCartData, deleteCartData, fetchCartData, fetchProductData } from "./shoppingCartApi";
+import { fetchCart, postCartData, deleteCartData, fetchProductData } from "./shoppingCartApi";
 
 const cartLoader = async (url: string) => {
-    return await fetchCartData(url)
+    return await fetchCart(url) as Cart;
 }
 
 const cartItemsActions = async (request: Request, url: string) => {

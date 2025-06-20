@@ -8,30 +8,30 @@ describe("routerMethods", async () => {
     describe("cartLoader", async () => {
         it("loads the cart", async () => {
             expect(await cartLoader(`${url}/cart`))
-            .toStrictEqual([{
+            .toStrictEqual({
                 result: "quired the cart"
-            }])
+            })
         })
     });
 
     describe("catalogItemLoader", () => {
         it("loads the item from a cart", async () => {
             expect(await cartLoader(`${url}/product/all/male/suka`))
-            .toStrictEqual([{                
+            .toStrictEqual({                
                 result: "quired the product",
                 id: "suka",
                 gender: "male"
-            }])
+            })
         })
     })
 
     describe("catalogLoader", () => {
         it("loads the catalog", async () => {
             expect(await cartLoader(`${url}/product/all/male`))
-            .toStrictEqual([{                
+            .toStrictEqual({                
                 result: "quired all products",
                 gender: "male"
-            }])
+            })
         })
     })
 

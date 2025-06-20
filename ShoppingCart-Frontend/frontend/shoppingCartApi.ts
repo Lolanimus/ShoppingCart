@@ -20,8 +20,8 @@ const fetchProductData = async (url: string): Promise<CatalogArr> => {
     return res;
 }
 
-const fetchCartData = async (url: string): Promise<CartArr> => {
-    let res: CartArr = [];
+const fetchCart = async (url: string): Promise<Cart> => {
+    let res: Cart = { cartArr: [], total: 0.0 };
     
     try {
         const data = await fetch(url, {
@@ -30,8 +30,7 @@ const fetchCartData = async (url: string): Promise<CartArr> => {
             credentials: "include"
         })!;
         if(data.ok && data.status == 200) {
-            const json: CartArr | CartObj = await data.json()!;
-            res = json !instanceof Array ? json : [json];
+            res = await data.json()!;
         } else {
             throw { code: data.status, message: data.statusText };
         }
@@ -87,12 +86,4 @@ const deleteCartData = async (url: string): Promise<boolean> => {
     return result;
 }
 
-const getTotalPrice = (cart: CartArr) => {
-    let totalPrice = 0;
-    cart.forEach((item) => {
-        totalPrice += item.quantity * item.product.productPrice;
-    })
-    return parseFloat(totalPrice.toFixed(2));
-}
-
-export { fetchCartData, postCartData, fetchProductData, deleteCartData, getTotalPrice };
+export { fetchCart, postCartData, fetchProductData, deleteCartData };

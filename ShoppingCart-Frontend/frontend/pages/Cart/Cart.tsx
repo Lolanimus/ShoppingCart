@@ -3,8 +3,6 @@ import { successPopUp } from "../../popup/popup";
 import stylesPopup from "../../popup/popup.module.scss";
 import styles from "./Cart.module.scss";
 import CartItems from "../CartItems/CartItems";
-import { getTotalPrice } from "../../shoppingCartApi";
-
 
 function buyBtnOnClick(totalVal: number) {
     const buyBtn = document.getElementById("buyBtn") as HTMLButtonElement;
@@ -12,15 +10,13 @@ function buyBtnOnClick(totalVal: number) {
     successPopUp();
 }
 
-
 const Cart = () => {
-    const cart = useLoaderData() as CartArr;
-    const total = getTotalPrice(cart);
+    const { cartArr, total } = useLoaderData() as Cart;
     return (
         <div className={styles.cart}>
             <h1>Cart</h1>
             <div>
-                <CartItems context={cart}/>
+                <CartItems context={cartArr}/>
                 <div>
                     <div>
                         <span>Total</span>

@@ -5,9 +5,20 @@ import { contents } from "../../__mocks__/data";
 import Cart from '../Cart/Cart';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { cartLoader } from '../../routerMethods';
-import { getTotalPrice } from '../../shoppingCartApi';
 
-let cart: CartArr = [contents[0], contents[1]];
+function calcTotal(cartArr: CartArr)
+{
+    let total = 0.0;
+    cartArr.forEach(cart => {
+        total += cart.quantity * cart.product.productPrice;
+    })
+
+    return total;
+}
+
+const cartArr: CartArr = [contents[0], contents[1]];
+
+let cart: Cart = { cartArr: cartArr, total: calcTotal(cartArr) };
 
 vi.mock("../../routerMethods.ts", () => ({
     cartLoader: vi.fn(() => cart)
@@ -15,7 +26,7 @@ vi.mock("../../routerMethods.ts", () => ({
 
 function renderCart(clear: boolean = false) {
     if(clear)
-        cart = [];
+        cart = { cartArr: [], total: 0.0 };
     const user = userEvent.setup();
     const router = createMemoryRouter([
         {
@@ -49,7 +60,7 @@ describe("Cart", () => {
             expect(totalLabel).toBeInTheDocument();
             const total = screen.getByTestId("total");
             const buyBtn = screen.getByRole("button", {name: "Buy"});
-            expect(total.textContent).toBe("$" + getTotalPrice(await cartLoader(``)));
+            expect(total.textContent).toBe("$" + cart.total);
             expect(buyBtn).toBeEnabled();
         })
 
