@@ -2,7 +2,7 @@ This is the Back-end API for ShoppingCart Project
 
 Its main purpose is to GET products and CRUD cart data.
 
-It uses cookies to store the cart data.
+It uses cookies for the cart data.
 
 This API follows Clean Architecture
 
