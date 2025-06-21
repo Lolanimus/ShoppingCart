@@ -5,7 +5,11 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "BASE_SERVER_NAME": "localhost",
+        "FRONTEND_P": "8080",
+        "CONTAINER_APP_PORT": "5072",
+        "ConnectionStrings__DefaultConnection": "Server=localhost,5433;Database=ShoppingCart;User Id=sa;Password=!Lolanimus;TrustServerCertificate=true"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "${applicationUrl}"
@@ -15,7 +19,11 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "BASE_SERVER_NAME": "localhost",
+        "FRONTEND_P": "8080",
+        "CONTAINER_APP_PORT": "5072",
+        "ConnectionStrings__DefaultConnection": "Server=localhost,5433;Database=ShoppingCart;User Id=sa;Password=!Lolanimus;TrustServerCertificate=true"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "${applicationUrl}"

@@ -11,12 +11,12 @@ function buyBtnOnClick(totalVal: number) {
 }
 
 const Cart = () => {
-    const { cartArr, total } = useLoaderData() as Cart;
+    const { viewModelArr, total } = useLoaderData() as Cart;
     return (
         <div className={styles.cart}>
             <h1>Cart</h1>
             <div>
-                <CartItems context={cartArr}/>
+                <CartItems context={viewModelArr}/>
                 <div>
                     <div>
                         <span>Total</span>

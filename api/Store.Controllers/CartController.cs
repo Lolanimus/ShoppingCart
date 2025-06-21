@@ -44,7 +44,7 @@ namespace Store.Controllers
                 {
                     total += (double)(cart.Quantity! * cart.Product!.ProductPrice);
                 }
-                return Ok(new { CartArr = allCartVm, Total = total });
+                return Ok(new CartControllerDTO<CartViewModel>{ ViewModelArr = allCartVm, Total = total });
             }
             catch (Exception ex)
             {

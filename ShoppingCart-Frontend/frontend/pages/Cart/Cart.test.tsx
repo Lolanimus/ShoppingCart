@@ -18,7 +18,7 @@ function calcTotal(cartArr: CartArr)
 
 const cartArr: CartArr = [contents[0], contents[1]];
 
-let cart: Cart = { cartArr: cartArr, total: calcTotal(cartArr) };
+let cart: Cart = { viewModelArr: cartArr, total: calcTotal(cartArr) };
 
 vi.mock("../../routerMethods.ts", () => ({
     cartLoader: vi.fn(() => cart)
@@ -26,7 +26,7 @@ vi.mock("../../routerMethods.ts", () => ({
 
 function renderCart(clear: boolean = false) {
     if(clear)
-        cart = { cartArr: [], total: 0.0 };
+        cart = { viewModelArr: [], total: 0.0 };
     const user = userEvent.setup();
     const router = createMemoryRouter([
         {

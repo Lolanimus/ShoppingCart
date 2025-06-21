@@ -21,7 +21,7 @@ const fetchProductData = async (url: string): Promise<CatalogArr> => {
 }
 
 const fetchCart = async (url: string): Promise<Cart> => {
-    let res: Cart = { cartArr: [], total: 0.0 };
+    let res: Cart = { viewModelArr: [], total: 0.0 };
     
     try {
         const data = await fetch(url, {

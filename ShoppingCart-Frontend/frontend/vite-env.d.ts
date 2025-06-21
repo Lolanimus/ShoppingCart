@@ -40,6 +40,6 @@ declare type CartCookies = {
 declare type CatalogArr = CatalogObj[];
 declare type CartArr = CartObj[];
 declare type Cart = {
-    cartArr: CartArr,
+    viewModelArr: CartArr,
     total: number
 }

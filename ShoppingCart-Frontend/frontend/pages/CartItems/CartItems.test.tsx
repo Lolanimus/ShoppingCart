@@ -6,17 +6,17 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { cartLoader } from '../../routerMethods';
 import Cart from '../Cart/Cart';
 
-let cart: Cart = { cartArr: [], total: 0.0 };
+let cart: Cart = { viewModelArr: [], total: 0.0 };
 
 vi.mock("../../routerMethods.ts", () => ({
     cartLoader: vi.fn(() => cart)
 }));
 
 function renderCartItems(quantity: number) {
-  cart = { cartArr: [], total: 0.0 };
+  cart = { viewModelArr: [], total: 0.0 };
   const user = userEvent.setup();
   for (let index = 0; index < quantity; index++) {
-    cart.cartArr.push(contents[index]);
+    cart.viewModelArr.push(contents[index]);
     cart.total += contents[index].quantity * contents[index].product.productPrice;
   }
   const router = createMemoryRouter([

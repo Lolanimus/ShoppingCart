@@ -22,6 +22,7 @@ namespace Store.Tests
         public async Task InitializeAsync()
         {
             Console.WriteLine("Setting global async products before all tests.");
+            Environment.SetEnvironmentVariable("ConnectionStrings__DefaultConnection", "Server=localhost,5433;Database=ShoppingCart;User Id=sa;Password=!Lolanimus;TrustServerCertificate=True;Encrypt=True;");
             await Data.SetAllProducts();
             Data.ResetGlobalCookies();
         }
