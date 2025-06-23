@@ -24,7 +24,7 @@ const Cart = () => {
                     <div>
                         {
                             total > 0 ? (
-                                <span data-testid="total" className={styles.total}>{`$${total}`}</span>
+                                <span data-testid="total" className={styles.total}>{`$${total.toFixed(2)}`}</span>
                             ) : (
                                 <span data-testid="total" className={styles.total}>N/A</span>
                             )
