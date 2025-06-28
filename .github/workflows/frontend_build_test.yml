@@ -20,7 +20,7 @@ jobs:
 
     steps:
     - name: Set Env
-      run: export $(cat ./scripts/.env | xargs)
+      run: export $(cat scripts/.env | xargs)
 
     - uses: actions/checkout@v4
     - name: Build and Run the Front-End Docker image
