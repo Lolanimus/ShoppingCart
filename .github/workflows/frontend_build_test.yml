@@ -19,12 +19,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Front-End Docker image
-      run: docker build . --file=frontend.dockerfile --target final -t lolanimus/shoppingcart-dev-frontend:${{ github.sha }}
+    - name: Set Env
+      run: export $(cat .env.development | xargs)
 
-    - name: Run the Front-End Docker image
-      run: docker run -d -p 8080:8080 --name frontend lolanimus/shoppingcart-dev-frontend:${{ github.sha }}
+    - uses: actions/checkout@v4
+    - name: Build and Run the Front-End Docker image
+      run: docker compose up -d --build frontend
 
     - name: Run API tests
       run: docker exec -i frontend npm run test

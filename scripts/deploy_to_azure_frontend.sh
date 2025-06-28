@@ -6,3 +6,4 @@ az containerapp update \
     --name shoppingcart-prod-frontend \
     --resource-group ShoppingCart \
     --image docker.io/$FRONTEND_IMAGE_NAME
+    
