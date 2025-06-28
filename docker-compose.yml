@@ -1,7 +1,7 @@
 services:
   db:
     build:
-      context: ./shoppingcart-db
+      context: ./shoppingcart-db-dev
       dockerfile: shoppingcart-db.dockerfile
     container_name: shoppingcart-db
     environment:
@@ -17,7 +17,7 @@ services:
 
   backend:
     build:
-      context: ./ShoppingCart/api
+      context: ./api
       dockerfile: backend.dockerfile
     container_name: shoppingcart-backend
     ports:
@@ -34,7 +34,7 @@ services:
 
   frontend:
     build:
-      context: ./ShoppingCart
+      context: ./
       dockerfile: frontend.dockerfile
       args:
         - BASE_SERVER_NAME=${BASE_SERVER_NAME}
