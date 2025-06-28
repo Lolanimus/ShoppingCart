@@ -17,6 +17,11 @@ defaults:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+      FRONTEND_P: 8080
+      BACKEND_P: 5072
+      BASE_SERVER_NAME: localhost
+      ENVIRONMENT: Development
 
     steps:
     - uses: actions/checkout@v4

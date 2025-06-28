@@ -8,6 +8,10 @@ COPY . /app
 RUN npm install
 RUN npm run test
 
+FROM base AS dev
+EXPOSE 3000
+CMD ["npm", "run", "dev"]
+
 FROM base AS build
 RUN if [ "$ENVIRONMENT" = "Production" ]; then \
       npm run build; \
