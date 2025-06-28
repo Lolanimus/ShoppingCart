@@ -17,11 +17,13 @@ defaults:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+      FRONTEND_P: 8080
+      BACKEND_P: 5072
+      BASE_SERVER_NAME: localhost
+      ENVIRONMENT: Development
 
     steps:
-    - name: Set Env
-      run: export $(cat .env | xargs)
-
     - uses: actions/checkout@v4
     - name: Build and Run the Front-End Docker image
       run: docker compose up -d --build frontend
