@@ -29,7 +29,7 @@ jobs:
       run: docker compose up -d --build frontend
 
     - name: Run API tests
-      run: docker exec -i frontend npm run test
+      run: docker exec -i shoppingcart-frontend npm run test
 
     - name: Kill the container
       run: docker compose down
