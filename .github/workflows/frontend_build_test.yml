@@ -28,6 +28,9 @@ jobs:
     - name: Build and Run the Front-End Docker image
       run: docker compose up -d --build frontend
 
+    - name: Install npm
+      run: docker exec -i shoppingcart-frontend apk add nodejs npm
+      
     - name: Run API tests
       run: docker exec -i shoppingcart-frontend npm run test
 
