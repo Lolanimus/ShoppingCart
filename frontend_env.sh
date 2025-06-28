@@ -22,18 +22,12 @@ while IFS='=' read -r key value; do
   fi
 done < <(env)
 
-if [ ${ENVIRONMENT} == "Development" ]; then
-    export API_URL=http://${BASE_SERVER_NAME}:${BACKEND_P}; else
-    export API_URL=https://api.${BASE_SERVER_NAME}
-fi
-
-echo "API_URL:"
-echo $API_URL
+echo $BASE_SERVER_NAME
 
 #incerts the following env vars into nginx conf
 envsubst '
     ${CONTAINER_APP_PORT} 
     ${BASE_SERVER_NAME} 
     ${BACKEND_P}
-    ${API_URL}
+    ${ENVIRONMENT}
 ' < /etc/nginx/conf.d/configfile.template > /etc/nginx/conf.d/default.conf

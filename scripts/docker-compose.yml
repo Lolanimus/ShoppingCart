@@ -1,0 +1,61 @@
+services:
+  db:
+    build:
+      context: ./shoppingcart-db
+      dockerfile: shoppingcart-db.dockerfile
+    container_name: shoppingcart-db
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${SHOPPINGCART_DB_PASSWORD}
+    ports:
+      - "5433:1433"
+    volumes:
+      - ShoppingCartDb:/var/opt/mssql
+    networks:
+      - ShoppingCartNetwork
+    restart: always
+
+  backend:
+    build:
+      context: ./ShoppingCart/api
+      dockerfile: backend.dockerfile
+    container_name: shoppingcart-backend
+    ports:
+      - "${BACKEND_P}:${BACKEND_P}"
+    environment:
+      - BASE_SERVER_NAME=${BASE_SERVER_NAME}
+      - CONTAINER_APP_PORT=${BACKEND_P}
+      - FRONTEND_P=${FRONTEND_P}
+      - ConnectionStrings__DefaultConnection=${ConnectionStrings__DefaultConnection}
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=${BACKEND_P}
+    networks:
+      - ShoppingCartNetwork
+
+  frontend:
+    build:
+      context: ./ShoppingCart
+      dockerfile: frontend.dockerfile
+      args:
+        - BASE_SERVER_NAME=${BASE_SERVER_NAME}
+        - CONTAINER_APP_PORT=${FRONTEND_P}
+        - BACKEND_P=${BACKEND_P}
+        - ENVIRONMENT=${ENVIRONMENT}
+    container_name: shoppingcart-frontend
+    ports:
+      - "${FRONTEND_P}:${FRONTEND_P}"
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT}
+      - BASE_SERVER_NAME=${BASE_SERVER_NAME}
+      - CONTAINER_APP_PORT=${FRONTEND_P}
+      - BACKEND_P=${BACKEND_P}
+    networks:
+      - ShoppingCartNetwork
+
+networks:
+  ShoppingCartNetwork:
+    driver: bridge
+
+volumes:
+  ShoppingCartDb:  # Ensure this is properly defined
+    driver: local  # Define the volume and its driver here

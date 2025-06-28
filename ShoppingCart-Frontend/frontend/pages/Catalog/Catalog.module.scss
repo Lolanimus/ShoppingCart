@@ -57,6 +57,15 @@
     }
 }
 
+@media (max-width: 1100px) {
+    #itemInfo {
+        flex-direction: column !important;
+        gap: 10px !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+}
+
 @media (max-width: 800px) {
     .catalog {
         main > section {
@@ -68,6 +77,8 @@
                 }
 
                 > #itemInfo {
+                    flex-direction: row !important;
+                    gap: 0 !important;
                     form {
                         display: grid;
 

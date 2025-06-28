@@ -11,7 +11,8 @@ import CatalogItem from './pages/CatalogItem/CatalogItem'
 import { cartItemsActions, cartLoader, catalogItemAction, catalogItemLoader, catalogLoader } from './routerMethods'
 
 const env = (import.meta.env.VITE_ENVIRONMENT).toLowerCase();
-const apiUrl = env === "development" 
+console.log(env);
+const apiUrl = env == "development" 
   ? "http://" + import.meta.env.VITE_BASE_SERVER_NAME + ":" + import.meta.env.VITE_BACKEND_PORT
   : "https://api." + import.meta.env.VITE_BASE_SERVER_NAME;
 console.log(apiUrl);
