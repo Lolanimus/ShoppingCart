@@ -12,7 +12,7 @@ on:
 defaults:
   run:
     shell: bash
-    working-directory: ./
+    working-directory: .
 
 jobs:
   build-and-test:
@@ -32,4 +32,4 @@ jobs:
       run: docker exec -i frontend npm run test
 
     - name: Kill the container
-      run: docker kill frontend
+      run: docker compose down
