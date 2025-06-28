@@ -26,7 +26,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Front-End Docker image
-      run: docker build . --file=frontend.dockerfile --target final -t lolanimus/shoppingcart-dev-frontend:${{ github.sha }}
+      run: docker build . --file=frontend.dockerfile --target dev -t lolanimus/shoppingcart-dev-frontend:${{ github.sha }}
 
     - name: Run the Front-End Docker image
       run: docker run -d -p 8080:8080 --name frontend lolanimus/shoppingcart-dev-frontend:${{ github.sha }}
