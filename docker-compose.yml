@@ -18,7 +18,7 @@ services:
       - CONTAINER_APP_PORT=${BACKEND_P}
       - FRONTEND_P=${FRONTEND_P}
       - ConnectionStrings__DefaultConnection=${ConnectionStrings__DefaultConnection}
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ASPNETCORE_HTTP_PORTS=${BACKEND_P}
     networks:
       - ShoppingCartNetwork
