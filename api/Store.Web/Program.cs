@@ -28,6 +28,7 @@ var clientUrl = aspNetCoreEnv == "Development"
 
 Console.WriteLine($"DEBUG: The connection string is: {connectionString}");
 Console.WriteLine($"DEBUG: The client URL is: {clientUrl}");
+Console.WriteLine($"DEBUG: The server port is: {containerPort}");
 
 var builder = WebApplication.CreateBuilder(args);
 
