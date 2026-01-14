@@ -3,7 +3,7 @@ networks:
     driver: bridge
   supabase:
     external: true
-    name: supabase_network_Sociophilia  # or whatever your Supabase network is called
+    name: ${SUPABASE_NETWORK}  # or whatever your Supabase network is called
 
 services:
   backend:
@@ -23,7 +23,7 @@ services:
     networks:
       - ShoppingCartNetwork
       - supabase
-
+      
   frontend:
     build:
       context: .
