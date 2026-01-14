@@ -24,7 +24,7 @@ var baseServerName = Environment.GetEnvironmentVariable("BASE_SERVER_NAME");
 var frontEndPort = Environment.GetEnvironmentVariable("FRONTEND_P");
 var clientUrl = aspNetCoreEnv == "Development"
     ? $"http://{baseServerName}:{frontEndPort}"
-    : $"https://{baseServerName}.com";
+    : $"https://{baseServerName}";
 
 Console.WriteLine($"DEBUG: The connection string is: {connectionString}");
 Console.WriteLine($"DEBUG: The client URL is: {clientUrl}");
