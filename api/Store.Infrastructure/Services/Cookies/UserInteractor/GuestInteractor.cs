@@ -22,10 +22,11 @@ namespace Store.Infrastracture.Services.Cookies.UserInteractor
             _cartProductsService = cartProductsService;
             _productDAO = new ProductDAO();
         }
-
+        
         virtual public async Task<CartProduct> IncludeProductAndUserInfo(CartProduct cartProduct)
         {
             var prod = await _productDAO.GetById(cartProduct.ProductId);
+            // Only assign product if it exists (product may have been deleted from database)
             cartProduct.Product = prod;
             // TODO: user info 
             return cartProduct;

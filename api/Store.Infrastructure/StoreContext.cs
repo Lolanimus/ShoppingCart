@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Store.Infrastracture.DAL;
 using Store.Infrastracture.Global.Helpers;
 using Store.Models;
+using Npgsql;
 
 namespace Store.Infrastracture;
 
@@ -28,12 +29,18 @@ public partial class StoreContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection"));
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
+        if (!string.IsNullOrEmpty(connectionString))
+        {
+            optionsBuilder.UseNpgsql(connectionString);
+        }
         optionsBuilder.UseLazyLoadingProxies();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    { 
+    {
+        modelBuilder.HasDefaultSchema("project_shoppingcart");
+
         modelBuilder.Entity<Product>(entity =>
         {
             entity.ToTable("Product");

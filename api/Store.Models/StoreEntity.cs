@@ -12,6 +12,6 @@ namespace Store.Models
         public Guid Id { get; set; }
 
         [Timestamp]
-        public byte[]? TimeStamp { get; set; }
+        public uint TimeStamp { get; set; }
     }
 }

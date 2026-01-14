@@ -9,9 +9,9 @@ namespace Store.Infrastracture.Global.Helpers.ProductGenderConverter
         {
             return value switch
             {
-                ProductGender.Male => "male",
-                ProductGender.Female => "female",
-                ProductGender.Uni => "uni",
+                ProductGender.Male => "Male",
+                ProductGender.Female => "Female",
+                ProductGender.Uni => "Uni",
                 _ => "wtfIsThis"
             };
         }

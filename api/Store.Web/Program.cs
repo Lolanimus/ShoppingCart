@@ -1,26 +1,46 @@
 //using StackExchange.Redis;
 
+using Store.Infrastracture;
 using Store.Infrastracture.Services.Cookies;
 using Store.Infrastracture.Services.Cookies.Authentication;
 using Store.Infrastracture.Services.Cookies.CartProducts;
 using Store.Infrastracture.Services.Cookies.Token;
 using Store.Infrastracture.Services.Cookies.UserInteractor;
+using Microsoft.EntityFrameworkCore;
+
+try
+{
+    DotNetEnv.Env.Load();
+}
+catch (FileNotFoundException)
+{
+    // .env file not found, environment variables should be set via docker-compose or system env
+}
+
+var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
+var containerPort = Environment.GetEnvironmentVariable("CONTAINER_APP_PORT");
+var aspNetCoreEnv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+var baseServerName = Environment.GetEnvironmentVariable("BASE_SERVER_NAME");
+var frontEndPort = Environment.GetEnvironmentVariable("FRONTEND_P");
+var clientUrl = aspNetCoreEnv == "Development"
+    ? $"http://{baseServerName}:{frontEndPort}"
+    : $"https://{baseServerName}.com";
+
+Console.WriteLine($"DEBUG: The connection string is: {connectionString}");
+Console.WriteLine($"DEBUG: The client URL is: {clientUrl}");
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenAnyIP(int.Parse(Environment.GetEnvironmentVariable("CONTAINER_APP_PORT")!));
+    options.ListenAnyIP(int.Parse(containerPort!));
 });
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("cors", policy =>
     {
-        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
-            policy.WithOrigins($"http://{Environment.GetEnvironmentVariable("BASE_SERVER_NAME")}:{Environment.GetEnvironmentVariable("FRONTEND_P")}").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
-        else
-            policy.WithOrigins($"https://{Environment.GetEnvironmentVariable("BASE_SERVER_NAME")}.com").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+        policy.WithOrigins(clientUrl).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
     });
 });
 
@@ -28,6 +48,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// Add DbContext with PostgreSQL connection
+if (!string.IsNullOrEmpty(connectionString))
+{
+    builder.Services.AddDbContext<StoreContext>(options =>
+        options.UseNpgsql(connectionString)
+               .UseLazyLoadingProxies());
+}
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<CookiesService>();
 builder.Services.AddScoped<CartProductsService>();

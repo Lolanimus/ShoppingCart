@@ -38,13 +38,36 @@ namespace Store.Controllers
             {
                 CartViewModel cartVm = new CartViewModel(_userInteractor) { Id = id };
                 List<CartViewModel>? allCartVm = await cartVm.GetCart()!;
-                if (allCartVm.IsNullOrEmpty())
-                    return NotFound();
+                
+                // Return empty cart instead of NotFound when cart is empty
+                if (allCartVm == null || allCartVm.IsNullOrEmpty())
+                {
+                    return Ok(new CartControllerDTO<CartViewModel> 
+                    { 
+                        ViewModelArr = new List<CartViewModel>(), 
+                        Total = 0.0 
+                    });
+                }
+                
+                // Filter out cart items with null products and calculate total
+                List<CartViewModel> validCartItems = new List<CartViewModel>();
                 foreach (var cart in allCartVm)
                 {
-                    total += (double)(cart.Quantity! * cart.Product!.ProductPrice);
+                    // Skip items where product is null (product may have been deleted from database)
+                    if (cart.Product == null || cart.Quantity == null)
+                    {
+                        continue;
+                    }
+                    
+                    total += (double)(cart.Quantity * cart.Product.ProductPrice);
+                    validCartItems.Add(cart);
                 }
-                return Ok(new CartControllerDTO<CartViewModel>{ ViewModelArr = allCartVm, Total = total });
+                
+                return Ok(new CartControllerDTO<CartViewModel>
+                { 
+                    ViewModelArr = validCartItems, 
+                    Total = total 
+                });
             }
             catch (Exception ex)
             {

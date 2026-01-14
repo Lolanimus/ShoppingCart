@@ -33,6 +33,7 @@ Thumbs.db
 .vs/
 obj/
 bin/
+Store.Web/.env
 
 .vercel
 .vs

@@ -27,7 +27,7 @@ namespace Store.ViewModels
 
         public string? ProductDesc { get; set; }
 
-        public string? TimeStamp { get; set; }
+        public uint TimeStamp { get; set; }
 
         public ProductViewModel()
         {
@@ -45,8 +45,7 @@ namespace Store.ViewModels
                 ProductImageUri = product.ProductImageUri;
                 ProductPrice = product.ProductPrice;
                 ProductDesc = product.ProductDesc;
-                // binary value needs to be stored on client as base64
-                TimeStamp = Convert.ToBase64String(product.TimeStamp!);
+                TimeStamp = product.TimeStamp;
             }
             catch (NullReferenceException nex)
             {
@@ -81,8 +80,7 @@ namespace Store.ViewModels
                         ProductImageUri = product.ProductImageUri,
                         ProductPrice = product.ProductPrice,
                         ProductDesc = product.ProductDesc,
-                        // binary value needs to be stored on client as base64
-                        TimeStamp = Convert.ToBase64String(product.TimeStamp!)
+                        TimeStamp = product.TimeStamp
                     };
                     allVms.Add(prodVm);
                 }

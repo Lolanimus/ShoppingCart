@@ -4,15 +4,14 @@
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:5072",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "BASE_SERVER_NAME": "localhost",
         "FRONTEND_P": "8080",
         "CONTAINER_APP_PORT": "5072",
-        "ConnectionStrings__DefaultConnection": "Server=localhost,5433;Database=ShoppingCart;User Id=sa;Password=!Lolanimus;TrustServerCertificate=true"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "${applicationUrl}"
     },
     "https": {
       "commandName": "Project",
@@ -23,7 +22,6 @@
         "BASE_SERVER_NAME": "localhost",
         "FRONTEND_P": "8080",
         "CONTAINER_APP_PORT": "5072",
-        "ConnectionStrings__DefaultConnection": "Server=localhost,5433;Database=ShoppingCart;User Id=sa;Password=!Lolanimus;TrustServerCertificate=true"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "${applicationUrl}"
@@ -45,7 +43,6 @@
         "BASE_SERVER_NAME": "localhost",
         "FRONTEND_P": "8080",
         "CONTAINER_APP_PORT": "5072",
-        "ConnectionStrings__DefaultConnection": "Server=localhost,5433;Database=ShoppingCart;User Id=sa;Password=!Lolanimus;TrustServerCertificate=true"
       },
       "distributionName": ""
     }
