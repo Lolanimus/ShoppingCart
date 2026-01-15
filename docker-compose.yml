@@ -12,7 +12,7 @@ services:
       dockerfile: backend.dockerfile
     container_name: shoppingcart-backend
     ports:
-      - "${BACKEND_P}:${BACKEND_P}"
+      - "${BACKEND_P}"
     environment:
       - BASE_SERVER_NAME=${BASE_SERVER_NAME}
       - CONTAINER_APP_PORT=${BACKEND_P}
@@ -35,7 +35,7 @@ services:
         - ENVIRONMENT=${ENVIRONMENT}
     container_name: shoppingcart-frontend
     ports:
-      - "${FRONTEND_P}:${FRONTEND_P}"
+      - "${FRONTEND_P}"
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
       - BASE_SERVER_NAME=${BASE_SERVER_NAME}
