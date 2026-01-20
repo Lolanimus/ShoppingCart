@@ -1,0 +1,5 @@
+[db.pooler]
+enabled = true
+port = 6543
+pool_mode = "transaction" # Can be 'transaction' or 'session'
+default_pool_size = 20

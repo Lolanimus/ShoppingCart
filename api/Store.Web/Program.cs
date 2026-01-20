@@ -53,8 +53,9 @@ builder.Services.AddSwaggerGen();
 if (!string.IsNullOrEmpty(connectionString))
 {
     builder.Services.AddDbContext<StoreContext>(options =>
-        options.UseNpgsql(connectionString)
-               .UseLazyLoadingProxies());
+        options.UseNpgsql(connectionString, npgsqlOptions => {
+            npgsqlOptions.EnableRetryOnFailure();
+        }));
 }
 
 builder.Services.AddHttpContextAccessor();
@@ -67,8 +68,8 @@ builder.Services.AddScoped<IUserInteractor>(serviceProvider =>
     var authService = serviceProvider.GetRequiredService<AuthenticationService>();
     var cartProductService = serviceProvider.GetRequiredService<CartProductsService>();
 
-    return authService.IsUserLoggedIn() 
-        ? new RegisteredUserInteractor(cartProductService) 
+    return authService.IsUserLoggedIn()
+        ? new RegisteredUserInteractor(cartProductService)
         : new GuestInteractor(cartProductService);
 });
 

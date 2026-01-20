@@ -12,7 +12,7 @@ import { cartItemsActions, cartLoader, catalogItemAction, catalogItemLoader, cat
 
 const env = (import.meta.env.VITE_ENVIRONMENT).toLowerCase();
 console.log(env);
-const apiUrl = env == "development" 
+const apiUrl = env == "development"
   ? "http://" + import.meta.env.VITE_BASE_SERVER_NAME + ":" + import.meta.env.VITE_BACKEND_PORT
   : "https://api." + import.meta.env.VITE_BASE_SERVER_NAME;
 console.log(apiUrl);
